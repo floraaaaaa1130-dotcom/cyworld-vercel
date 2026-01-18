@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>☆-..- 2005년의 어느 날 -..-☆</title>
+
+  <style>
+    /* ===== 갈무리 콘덴스드 폰트 ===== */
+    @font-face {
+      font-family: 'GalmuriCondensed';
+      src: url('/fonts/GalmuriCondensed.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      font-family: 'GalmuriCondensed' !important;
+      -webkit-font-smoothing: none;
+      -moz-osx-font-smoothing: grayscale;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --main-blue: #8cc6d1;
+      --bg-gray: #f6f6f6;
+      --cy-orange: #ff6600;
+      --cy-blue: #3b5998;
+    }
+
+    body {
+      background-color: #b1b1b1;
+      display: flex;
+      justify-content: center;
+      padding-top: 50px;
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .wrapper {
+      background-color: var(--main-blue);
+      padding: 25px 15px 15px 25px;
+      border-radius: 10px;
+      width: 850px;
+      height: 550px;
+      border: 1px solid #777;
+    }
+
+    .white-box {
+      background: white;
+      border: 1px solid #777;
+      border-radius: 8px;
+      height: 100%;
+      display: flex;
+      padding: 15px;
+    }
+
+    /* ===== 왼쪽 프로필 ===== */
+    .profile {
+      width: 28%;
+      border-right: 1px dashed #ccc;
+      padding-right: 15px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .profile-img {
+      width: 100%;
+      border: 1px solid #ddd;
+      margin-bottom: 15px;
+      filter: contrast(1.1) brightness(1.05);
+    }
+
+    .today-is {
+      color: var(--cy-orange);
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .highlight {
+      color: var(--cy-orange);
+      font-weight: bold;
+    }
+
+    /* ===== 오른쪽 ===== */
+    .main-content {
+      width: 72%;
+      padding-left: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-content h3 {
+      font-size: 16px;
+      color: var(--cy-blue);
+      border-bottom: 1px dotted #ccc;
+      padding-bottom: 8px;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    /* ===== 방명록 ===== */
+    #guestbook-list {
+      flex-grow: 1;
+    }
+
+    .guestbook-entry {
+      background: var(--bg-gray);
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #eee;
+      border-radius: 5px;
+      line-height: 1.5;
+    }
+
+    .ai-reply {
+      color: var(--cy-orange);
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dotted #ccc;
+      font-weight: bold;
+    }
+
+    /* ===== 입력 ===== */
+    .input-area {
+      margin-top: 10px;
+      background: #f9f9f9;
+      padding: 10px;
+      border-top: 2px solid var(--main-blue);
+    }
+
+    textarea {
+      width: 96%;
+      height: 40px;
+      border: 1px solid #ccc;
+      padding: 8px;
+      resize: none;
+      outline: none;
+    }
+
+    button {
+      background: #fff;
+      border: 1px solid #999;
+      padding: 4px 12px;
+      cursor: pointer;
+      float: right;
+      margin-top: 8px;
+    }
+
+    button:hover {
+      background: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="white-box">
+
+      <!-- 왼쪽 -->
+      <div class="profile">
+        <span class="today-is">TODAY IS... <span style="color:red">♥</span></span>
+        <img src="https://via.placeholder.com/150" class="profile-img">
+        <div style="font-size:12px; color:#666; line-height:1.6;">
+          난... ㄱㅏ끔... <br>눈물을 흘린ㄷㅏ... <br>
+          <span class="highlight">퍼가요~♡</span>
+        </div>
+        <hr style="border:0.5px dashed #eee; margin:15px 0;">
+        <p style="color: var(--cy-blue);"><b>TODAY 486<br>TOTAL 12345</b></p>
+      </div>
+
+      <!-- 오른쪽 -->
+      <div class="main-content">
+        <h3>GUESTBOOK <small style="font-size:10px;">방명록에 흔적 남겨주세효..</small></h3>
+
+        <div id="guestbook-list">
+          <div class="guestbook-entry">
+            <b>익명:</b> 오빠 오늘도 잘생겼다…
+            <div class="ai-reply">ㄴ 주인장: 그런 말 쉽게 하지마ㅋ</div>
+          </div>
+        </div>
+
+        <div class="input-area">
+          <textarea id="user-msg" placeholder="일촌 신청하고 가세효..."></textarea>
+          <button onclick="postMsg()">확인</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    async function postMsg() {
+      const msgInput = document.getElementById('user-msg');
+      const list = document.getElementById('guestbook-list');
+      const userMsg = msgInput.value;
+
+      if (!userMsg.trim()) {
+        alert('내용을 입력해주세효!');
+        return;
+      }
+
+      const entry = document.createElement('div');
+      entry.className = 'guestbook-entry';
+      const tempId = 'reply-' + Date.now();
+
+      entry.innerHTML = `
+        <b>Guest:</b> ${userMsg}
+        <div class="ai-reply" id="${tempId}">AI 주인장이 생각 중... (두근)</div>
+      `;
+
+      list.prepend(entry);
+      msgInput.value = '';
+
+      try {
+        const res = await fetch('/api/ai-reply', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: userMsg })
+        });
+
+        const data = await res.json();
+        document.getElementById(tempId).innerText =
+          'ㄴ 주인장: ' + data.reply;
+      } catch {
+        document.getElementById(tempId).innerText =
+          'ㄴ 주인장: 서버 점검중..ㅠ';
+      }
+    }
+  </script>
+</body>
+</html>
