@@ -384,6 +384,126 @@ button:hover {
     100% { transform: rotate(0deg); }
 }
 
+/* --- 오프닝 화면 스타일 --- */
+#intro-screen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url('../assets/images/backgrounds/farm.png'); /* 배경: 농장 */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 제일 위에 뜨도록 */
+    background-color: rgba(255, 255, 255, 0.3); /* 배경 살짝 밝게 */
+    backdrop-filter: blur(2px); /* 배경 살짝 흐리게 */
+}
+
+/* 로고 애니메이션 (위로 떠오르기) */
+.logo-area {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: floatUp 2s ease-out forwards;
+    opacity: 0; /* 처음엔 안 보임 */
+    transform: translateY(50px);
+}
+
+@keyframes floatUp {
+    0% { opacity: 0; transform: translateY(50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.game-title {
+    font-size: 60px;
+    color: var(--deep-pink);
+    text-shadow: 4px 4px 0px white, 6px 6px 0px var(--border-color);
+    margin: 0;
+}
+
+.game-subtitle {
+    font-size: 24px;
+    color: var(--text-color);
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* 메뉴 버튼 스타일 */
+.menu-btn {
+    display: block;
+    width: 200px;
+    margin: 10px auto;
+    font-size: 18px;
+    padding: 12px;
+    background-color: white;
+    border: 4px solid var(--pastel-pink);
+    border-radius: 20px;
+    color: var(--text-color);
+    transition: all 0.2s;
+}
+
+.menu-btn:hover {
+    background-color: var(--pastel-pink);
+    color: white;
+    transform: scale(1.1);
+}
+
+.cancel-btn {
+    background: none;
+    border: none;
+    color: gray;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* 이름 입력 영역 */
+#name-input-area {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    border: 4px solid var(--border-color);
+    text-align: center;
+    position: absolute; /* 메뉴 위에 덮어씌우기 */
+}
+
+#player-name-input {
+    font-size: 20px;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+    border: 2px solid var(--pastel-pink);
+    border-radius: 10px;
+    margin: 15px 0;
+    font-family: 'SUIT', sans-serif;
+}
+
+/* 공통 모달 스타일 (설명서, 크레딧) */
+.modal {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+}
+
+.modal-content {
+    background: #fff9fa;
+    padding: 30px;
+    border: 6px solid var(--pastel-pink);
+    border-radius: 15px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.modal.hidden, #intro-screen.hidden {
+    display: none !important;
+}
 
 
 
