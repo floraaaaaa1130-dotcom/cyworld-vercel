@@ -95,13 +95,52 @@ function displayDialogue(npcKey, dialogueObj) {
     const npc = npcs[npcKey];
     const textZone = document.getElementById('dialogue-text');
     const portraitImg = document.getElementById('current-portrait');
-    
+    const inputArea = document.getElementById('input-area');
+    const choiceArea = document.getElementById('choice-area');
+
+    // 1. 텍스트 & 표정 업데이트
     const emotionKey = dialogueObj.emotion || 'default';
     portraitImg.src = npc.portraits[emotionKey] || npc.portraits['default'];
     
+    let finalText = dialogueObj.text;
+    // 리쿠 말투 패치 등 기존 로직 유지
+    if (npcKey === 'riku') {
+        finalText = finalText.replace(/있/g, '잇').replace(/했/g, '햇'); 
+    }
     textZone.innerText = `[${npc.name}]\n${finalText}`;
-}
 
+    // 2. 선택지(Choices)가 있는 경우 처리
+    choiceArea.innerHTML = ""; // 기존 버튼 초기화
+
+    if (dialogueObj.choices) {
+        // 선택지 모드: 입력창 숨기고 선택지 영역 보여주기
+        inputArea.classList.add('hidden');
+        choiceArea.classList.remove('hidden');
+
+        // 버튼 생성
+        dialogueObj.choices.forEach(choice => {
+            const btn = document.createElement('button');
+            btn.innerText = choice.label;
+            btn.className = "choice-btn"; // CSS 꾸미기용 클래스
+            btn.style.marginRight = "10px"; // 간격
+            btn.onclick = () => {
+                // 선택 시 효과
+                if (choice.score) gameState.affinities[npcKey] += choice.score;
+                
+                // 답변 대사로 갱신 (선택지는 사라지고 입력창 다시 뜸)
+                displayDialogue(npcKey, { 
+                    text: choice.reply, 
+                    emotion: choice.score > 0 ? "happy" : "shock" 
+                });
+            };
+            choiceArea.appendChild(btn);
+        });
+    } else {
+        // 일반 대화 모드: 선택지 숨기고 입력창 보이기
+        inputArea.classList.remove('hidden');
+        choiceArea.classList.add('hidden');
+    }
+}
 // js/main.js 추가 및 수정
 
 let selectedSlotIndex = null; // 현재 선택된 인벤토리 슬롯 번호
@@ -172,10 +211,28 @@ function giveGift(npcKey) {
 // --- 대화창 열기 함수 수정 (선물 버튼 이벤트 연결) ---
 function openDialogue(npcKey) {
     document.getElementById('dialogue-overlay').classList.remove('hidden');
+    
+    // 1순위: 오늘 날짜의 고정 이벤트가 있는지 확인
     let dialogueObj = dailyScripts[gameState.day] && dailyScripts[gameState.day][npcKey];
-    if (!dialogueObj) dialogueObj = npcKeywords[npcKey]?.["안녕"] || { text: "...", emotion: "default" };
-    displayDialogue(npcKey, dialogueObj);
 
+    // 2순위: 없으면 날씨에 맞는 랜덤 대사 뽑기
+    if (!dialogueObj) {
+        const currentWeather = gameState.weather; // '맑음', '비', '벚꽃'
+        const npcRandomData = randomDialogues[npcKey];
+
+        if (npcRandomData && npcRandomData[currentWeather]) {
+            const list = npcRandomData[currentWeather];
+            // 배열에서 랜덤으로 하나 뽑기
+            dialogueObj = list[Math.floor(Math.random() * list.length)];
+        }
+    }
+
+    // 3순위: 데이터가 아예 없으면 기본 인사 (안전장치)
+    if (!dialogueObj) {
+        dialogueObj = { text: "안녕하세요.", emotion: "default" };
+    }
+
+    displayDialogue(npcKey, dialogueObj);
     // 선물하기 버튼에 함수 연결
     document.getElementById('gift-btn').onclick = () => giveGift(npcKey);
 
@@ -267,6 +324,7 @@ function checkEnding() {
 }
 
 window.onload = () => { move('farm'); };
+
 
 
 
