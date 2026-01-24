@@ -381,6 +381,7 @@ function renderInventorySlots() {
                         // toggleDeleteMode(); 
                         
                         renderInventorySlots(); // 화면 갱신
+                        updateUI();
                     }
                 } else {
                     // 1. 정보 팝업 띄우기 (아이템 설명 보기)
@@ -607,5 +608,6 @@ window.onload = () => {
     
     console.log("게임 로드 완료! 오프닝 대기 중...");
 };
+
 
 
