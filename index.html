@@ -71,6 +71,21 @@
             <button onclick="toggleInventory()">닫기</button>
         </div>
 
+        <div id="item-info-modal" class="hidden">
+    <div class="info-content">
+        <h3 id="info-name">아이템 이름</h3>
+        <div id="info-img-wrapper">
+            <img id="info-image" src="" alt="item">
+        </div>
+        <p id="info-desc">아이템 설명이 여기에 나옵니다.</p>
+        
+        <div class="popup-buttons">
+            <button id="btn-select-combine" onclick="selectForCombine()">조합 담기</button>
+            <button onclick="closeItemInfo()">닫기</button>
+        </div>
+    </div>
+</div>
+
         <div id="night-overlay" class="hidden">
             <div class="night-content">
                 <h2>오늘 하루가 끝났습니다...</h2>
@@ -83,5 +98,6 @@
     <script src="js/main.js"></script>
 </body>
 </html>
+
 
 
