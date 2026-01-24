@@ -23,16 +23,29 @@ function changeBgm(fileName) {
     currentBgm.play().catch(e => console.log("BGM 파일 없음"));
 }
 
-// --- 이동 및 렌더링 ---
+// js/main.js 수정
 function move(locId) {
+    // 이미 에너지가 0이라면 이동 불가 경고
     if (gameState.energy <= 0 && gameState.day !== 4) {
-        alert("에너지가 없어요! 잠을 자야 합니다."); return;
+        alert("에너지가 없어요! 잠을 자야 합니다."); 
+        return;
     }
+
     playSfx('walk');
     gameState.currentLocation = locId;
+    
+    // 축제일이 아니면 에너지 소모
     if (gameState.day !== 4) gameState.energy--;
+    
     updateUI();
     renderLocation();
+
+    // 핵심: 에너지가 0이 된 직후 하루를 종료하는 창을 띄움
+    if (gameState.energy === 0 && gameState.day !== 4) {
+        setTimeout(() => {
+            endDay(); // 밤 정산 화면(잠자기 버튼)을 보여주는 함수 호출
+        }, 500); // 0.5초 뒤에 실행 (이동 연출이 끝난 후)
+    }
 }
 
 function renderLocation() {
@@ -176,3 +189,4 @@ function checkEnding() {
 }
 
 window.onload = () => { move('farm'); };
+
