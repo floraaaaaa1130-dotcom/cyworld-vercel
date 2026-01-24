@@ -63,14 +63,16 @@
             </div>
         </div>
 
-        <div id="inventory-modal" class="hidden">
-            <h3>가방 & 조합</h3>
-            <div class="inventory-grid">
-                </div>
-            <button id="combine-btn" onclick="combineItems()">아이템 조합하기</button>
-            <button onclick="toggleInventory()">닫기</button>
+<div id="inventory-modal" class="hidden">
+    <h3>가방 & 조합</h3>
+    <div class="inventory-grid">
         </div>
+    
+    <button id="combine-btn" onclick="combineItems()">아이템 조합하기</button>
+    <button onclick="toggleInventory()">닫기</button>
 
+    <div id="delete-toggle-btn" onclick="toggleDeleteMode()">🗑️</div>
+</div>
         <div id="item-info-modal" class="hidden">
     <div class="info-content">
         <h3 id="info-name">아이템 이름</h3>
@@ -98,6 +100,7 @@
     <script src="js/main.js"></script>
 </body>
 </html>
+
 
 
 
