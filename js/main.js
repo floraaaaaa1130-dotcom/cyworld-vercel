@@ -38,7 +38,7 @@ function move(locId) {
         return;
     }
 
-    pplaySfx('walk');
+    playSfx('walk');
     gameState.currentLocation = locId;
     
     gameState.energy--; // 무조건 에너지 1 감소
@@ -52,7 +52,6 @@ function move(locId) {
             endDay(); 
         }, 500); 
     }
-}
 }
 
 function renderLocation() {
