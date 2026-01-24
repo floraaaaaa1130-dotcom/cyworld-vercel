@@ -152,11 +152,21 @@ const randomDialogues = {
         벚꽃: [{ text: "꽃잎이 떨어지는 속도가 초속 5센티미터래요.", emotion: "serious" }]
     },
     
-    // ... 다른 멤버들 (yushi, jaehee 등) 데이터도 형식 맞춰서 추가 ...
-    yushi: { 맑음: [{text:"날씨가 좋네요.", emotion:"default"}], 비: [], 벚꽃: [] },
-    jaehee: { 맑음: [{text:"허허 날씨 좋군요!", emotion:"happy"}], 비: [], 벚꽃: [] },
-    ryo: { 맑음: [{text:"야하~ 날씨 대박!", emotion:"happy"}], 비: [], 벚꽃: [] },
-    sakuya: { 맑음: [{text:"빵 굽기 좋은 날씨네요.", emotion:"default"}], 비: [], 벚꽃: [] }
+    yushi: { 맑음: [{text:"날씨가 좋네요.", emotion:"default"}],
+            비: [],
+            벚꽃: [] },
+    
+    jaehee: { 맑음: [{text:"허허 날씨 좋군요!", emotion:"happy"}],
+             비: [],
+             벚꽃: [] },
+    
+    ryo: { 맑음: [{text:"야하~ 날씨 대박!", emotion:"happy"}],
+          비: [],
+          벚꽃: [] },
+    
+    sakuya: { 맑음: [{text:"빵 굽기 좋은 날씨네요.", emotion:"default"}],
+             비: [],
+             벚꽃: [] }
 };
 
 const npcKeywords = {
@@ -213,4 +223,5 @@ const itemData = {
     "도토리": { img: "assets/images/items/acorn.png", desc: "다람쥐가 좋아할 것 같다" }, //ㅎㅇ
     "에너지 드링크": { img: "assets/images/items/energytonic.png", desc: "피로가 싹 가신다" } //ㅎㅇ
 };
+
 
