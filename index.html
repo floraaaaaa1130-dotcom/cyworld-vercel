@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>WISH VALLEY - 위시 밸리</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> 
     <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
 </head>
 <body>
@@ -48,31 +48,30 @@
                     </div>
                 </div>
                 <div id="input-area">
-                    <input type="text" id="keyword-input" placeholder="키워드를 입력하거나 대답하세요...">
+                    <input type="text" id="keyword-input" placeholder="키워드를 입력하세요...">
                     <button id="send-btn">보내기</button>
                 </div>
-                <div id="choice-buttons"></div>
             </div>
         </div>
 
-<img src="assets/images/ui/star_icon.png" id="inventory-icon" onclick="toggleInventory()">
+        <img src="assets/images/ui/star_icon.png" id="inventory-icon" onclick="toggleInventory()">
 
-<div id="inventory-modal" class="hidden">
-    <h3>가방 & 조합</h3>
-    <div class="inventory-grid"></div>
-    <button id="combine-btn" onclick="combineItems()">아이템 조합하기</button>
-    <button onclick="toggleInventory()" style="margin-top:5px; width:100%;">닫기</button>
-</div>
+        <div id="inventory-modal" class="hidden">
+            <h3>가방 & 조합</h3>
+            <div class="inventory-grid"></div>
+            <button id="combine-btn" onclick="combineItems()">아이템 조합하기</button>
+            <button onclick="toggleInventory()">닫기</button>
+        </div>
 
         <div id="night-overlay" class="hidden">
             <div class="night-content">
                 <h2>오늘 하루가 끝났습니다...</h2>
-                <div id="daily-report"></div>
                 <button onclick="startNextDay()">잠자기</button>
             </div>
         </div>
     </div>
 
     <script src="script.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
