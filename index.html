@@ -30,40 +30,14 @@
             <div id="inventory-container">
                 <p>인벤토리</p>
                 <div id="inventory-slots">
-                    <div class="slot" data-index="0"></div>
-                    <div class="slot" data-index="1"></div>
-                    <div class="slot" data-index="2"></div>
-                    <div class="slot" data-index="3"></div>
-                    <div class="slot" data-index="4"></div>
+                    <div class="slot" data-index="0" onclick="selectSlot(0)"></div>
+                    <div class="slot" data-index="1" onclick="selectSlot(1)"></div>
+                    <div class="slot" data-index="2" onclick="selectSlot(2)"></div>
+                    <div class="slot" data-index="3" onclick="selectSlot(3)"></div>
+                    <div class="slot" data-index="4" onclick="selectSlot(4)"></div>
                 </div>
             </div>
         </div>
-
-        <div id="inventory-slots">
-    <div class="slot" data-index="0" onclick="selectSlot(0)"></div>
-    <div class="slot" data-index="1" onclick="selectSlot(1)"></div>
-    <div class="slot" data-index="2" onclick="selectSlot(2)"></div>
-    <div class="slot" data-index="3" onclick="selectSlot(3)"></div>
-    <div class="slot" data-index="4" onclick="selectSlot(4)"></div>
-</div>
-
-<div id="dialogue-overlay" class="hidden">
-    <div id="dialogue-box">
-        <div id="dialogue-content">
-            <div id="dialogue-text"></div>
-            <div id="dialogue-portrait">
-                <img id="current-portrait" src="" alt="portrait">
-            </div>
-        </div>
-        <div id="input-area">
-            <input type="text" id="keyword-input" placeholder="키워드를 입력하세요...">
-            <button id="send-btn">보내기</button>
-            <button id="gift-btn" style="background-color: var(--pastel-green);">선물하기</button>
-        </div>
-    </div>
-</div>
-
-<img src="assets/images/ui/star_cursor.png" id="inventory-icon" onclick="toggleInventory()" alt="inventory">
 
         <div id="dialogue-overlay" class="hidden">
             <div id="dialogue-box">
@@ -76,11 +50,12 @@
                 <div id="input-area">
                     <input type="text" id="keyword-input" placeholder="키워드를 입력하세요...">
                     <button id="send-btn">보내기</button>
+                    <button id="gift-btn" style="background-color: var(--pastel-green);">선물하기</button>
                 </div>
             </div>
         </div>
 
-        <img src="assets/images/ui/star_icon.png" id="inventory-icon" onclick="toggleInventory()" alt="inventory">
+        <img src="assets/images/ui/star_cursor.png" id="inventory-icon" onclick="toggleInventory()" alt="inventory">
 
         <div id="inventory-modal" class="hidden">
             <h3>가방 & 조합</h3>
@@ -101,4 +76,3 @@
     <script src="js/main.js"></script>
 </body>
 </html>
-
