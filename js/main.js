@@ -203,67 +203,87 @@ function giveGift(npcKey) {
     playSfx('success');
 }
 
-// --- 대화창 열기 함수 수정 (선물 버튼 이벤트 연결) ---
+// js/main.js - openDialogue 함수 전체 교체
+
 function openDialogue(npcKey) {
-    document.getElementById('dialogue-overlay').classList.remove('hidden');
+    const overlay = document.getElementById('dialogue-overlay');
+    overlay.classList.remove('hidden');
     
+    // UI 초기화: 입력창 보이기, 닫기 버튼 숨기기 (필요하다면 HTML에 닫기 버튼 추가 필요)
+    document.getElementById('input-area').classList.remove('hidden');
+
     let dialogueObj = null;
 
-    // [1순위] 오늘 날짜의 고정 이벤트가 있는지 확인
-    // (예: 축제날, 이사 온 날 등 스토리가 진행될 때)
+    // 1순위: 오늘 날짜의 고정 이벤트 확인
     if (dailyScripts[gameState.day] && dailyScripts[gameState.day][npcKey]) {
         dialogueObj = dailyScripts[gameState.day][npcKey];
     }
 
-    // [2순위] 호감도가 높을 때 (예: 50점 이상) 특별 대사 출력
-    // 단, 오늘 이벤트가 없을 때만 실행
-    if (!dialogueObj) {
-        const currentScore = gameState.affinities[npcKey];
-        const highAffinityData = dailyScripts["highAffinity"];
-        
-        // 기준 점수 50점 (원하는 대로 숫자를 바꾸세요!)
-        if (currentScore >= 50 && highAffinityData && highAffinityData[npcKey]) {
-            dialogueObj = highAffinityData[npcKey];
-        }
+    // 2순위: 호감도 이벤트 (예: 50점 이상)
+    if (!dialogueObj && gameState.affinities[npcKey] >= 50 && dailyScripts["highAffinity"] && dailyScripts["highAffinity"][npcKey]) {
+        dialogueObj = dailyScripts["highAffinity"][npcKey];
     }
 
-    // [3순위] 위의 해당 사항이 없으면 날씨에 맞는 '랜덤 대사' 뽑기
+    // 3순위: 날씨별 랜덤 대사 (가장 중요! 평소엔 이게 뜹니다)
     if (!dialogueObj) {
         const currentWeather = gameState.weather; // '맑음', '비', '벚꽃'
         
-        // randomDialogues 변수와 데이터가 존재하는지 확인
+        // randomDialogues가 정의되어 있는지 확인 (script.js에 있어야 함)
         if (typeof randomDialogues !== 'undefined' && randomDialogues[npcKey] && randomDialogues[npcKey][currentWeather]) {
             const list = randomDialogues[npcKey][currentWeather];
-            // 배열에서 랜덤으로 하나 뽑기
             dialogueObj = list[Math.floor(Math.random() * list.length)];
         }
     }
 
-    // [4순위] 데이터가 아예 없으면 기본 인사 (안전장치)
+    // 4순위: 그래도 없으면 기본 인사 (안전장치)
     if (!dialogueObj) {
-        dialogueObj = { text: "안녕하세요.", emotion: "default" };
+        dialogueObj = { text: "안녕하세요. (할 말이 없는 것 같다)", emotion: "default" };
     }
 
-    // 결정된 대사로 화면 표시
+    // 화면에 대사 표시
     displayDialogue(npcKey, dialogueObj);
-    
-    // 선물하기 버튼에 함수 연결
-    document.getElementById('gift-btn').onclick = () => giveGift(npcKey);
 
-    // 키워드 대화 보내기 버튼 재연결
-    document.getElementById('send-btn').onclick = () => {
+    // --- 버튼 이벤트 연결 ---
+
+    // 1. 선물하기
+    const giftBtn = document.getElementById('gift-btn');
+    // 선물 버튼이 없을 경우를 대비해 체크
+    if(giftBtn) giftBtn.onclick = () => giveGift(npcKey);
+
+    // 2. 키워드 보내기 (수정됨: 전송 -> 답변 확인 -> 닫기)
+    const sendBtn = document.getElementById('send-btn');
+    sendBtn.onclick = () => {
         const input = document.getElementById('keyword-input').value;
-        if (npcKeywords[npcKey]?.[input]) {
+        const keywordData = npcKeywords[npcKey];
+
+        if (keywordData && keywordData[input]) {
+            // 키워드 정답! -> 호감도 오르고 답변 출력
             gameState.affinities[npcKey] += 10;
-            displayDialogue(npcKey, npcKeywords[npcKey][input]);
+            displayDialogue(npcKey, keywordData[input]);
         } else {
-            // 키워드가 없을 때 반응
-            displayDialogue(npcKey, { text: "그게 무슨 말이에여??", emotion: "default" });
+            // 키워드 모름 -> 모른다는 반응 출력
+            displayDialogue(npcKey, { text: "음.. 그게 무슨 말인지 잘 모르겠어요.", emotion: "shock" });
         }
+        
+        // ★ 대화 종료 처리 ★
+        // 답변을 보여준 뒤, 입력창을 비우고 1.5초 뒤에 대화창을 자동으로 닫거나
+        // 사용자가 화면을 클릭하면 닫히게 유도
         document.getElementById('keyword-input').value = "";
+        
+        // 팁: 답변을 읽어야 하므로 바로 닫지 않고, '보내기' 버튼을 '닫기'로 바꾸거나
+        // 여기서는 간단하게 alert 대신 1초 뒤 자동 닫힘 혹은 화면 클릭 유도를 추천
+        // 지금은 "답변이 출력되었습니다. 클릭해서 닫으세요" 상태로 둠.
     };
 }
 
+// (중요) 대화창 바깥이나 대화창을 클릭하면 닫히게 하는 기능 추가
+document.getElementById('dialogue-overlay').onclick = (e) => {
+    // 입력창(input)이나 버튼을 클릭했을 때는 닫히면 안 됨
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
+    
+    // 그 외 영역 클릭 시 대화창 닫기
+    document.getElementById('dialogue-overlay').classList.add('hidden');
+};
 // --- 인벤토리 및 조합 ---
 let selectedItems = [];
 function collectItem(name) {
@@ -342,3 +362,4 @@ function checkEnding() {
 }
 
 window.onload = () => { move('farm'); };
+
