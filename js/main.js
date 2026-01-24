@@ -61,14 +61,20 @@ function renderLocation() {
     }
 
     // NPC 렌더링
-    const npcLayer = document.getElementById('npc-layer');
+const npcLayer = document.getElementById('npc-layer');
     npcLayer.innerHTML = "";
+    
     for (let key in npcs) {
         const npc = npcs[key];
         const targetLoc = gameState.weather === '비' ? npc.locations.rainy : npc.locations.sunny;
+        
         if (targetLoc === gameState.currentLocation) {
             const npcSprite = document.createElement('div');
-            npcSprite.className = "npc-sprite";
+            npcSprite.className = "npc-sprite"; // 공통 클래스 (크기, 위치 등 담당)
+
+            // ▼▼▼ [핵심] 여기가 빠져 있었습니다! 이 줄을 추가하세요 ▼▼▼
+            npcSprite.style.backgroundImage = `url(${npc.sprite})`; 
+            
             npcSprite.onclick = () => openDialogue(key);
             npcLayer.appendChild(npcSprite);
         }
@@ -259,6 +265,7 @@ function checkEnding() {
 }
 
 window.onload = () => { move('farm'); };
+
 
 
 
