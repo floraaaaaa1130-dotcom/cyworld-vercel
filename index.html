@@ -27,48 +27,46 @@
                 <button onclick="move('saloon')">주점</button>
             </div>
             
-<div id="inventory-container">
-    <p>인벤토리</p>
-    <div id="inventory-slots">
-        <div class="slot" data-index="0" onclick="selectSlot(0)"></div>
-        <div class="slot" data-index="1" onclick="selectSlot(1)"></div>
-        <div class="slot" data-index="2" onclick="selectSlot(2)"></div>
-        <div class="slot" data-index="3" onclick="selectSlot(3)"></div>
-        <div class="slot" data-index="4" onclick="selectSlot(4)"></div>
-        <div class="slot" data-index="5" onclick="selectSlot(5)"></div>
-        <div class="slot" data-index="6" onclick="selectSlot(6)"></div>
-        <div class="slot" data-index="7" onclick="selectSlot(7)"></div>
-    </div>
-</div>
-            
-<img src="assets/images/ui/star_icon.png" id="inventory-icon" onclick="toggleInventory()" alt="inventory">
-
-<div id="inventory-modal" class="hidden">     
-        </div>
+            <div id="inventory-container">
+                <p>인벤토리</p>
+                <div id="inventory-slots">
+                    <div class="slot" data-index="0" onclick="selectSlot(0)"></div>
+                    <div class="slot" data-index="1" onclick="selectSlot(1)"></div>
+                    <div class="slot" data-index="2" onclick="selectSlot(2)"></div>
+                    <div class="slot" data-index="3" onclick="selectSlot(3)"></div>
+                    <div class="slot" data-index="4" onclick="selectSlot(4)"></div>
+                    <div class="slot" data-index="5" onclick="selectSlot(5)"></div>
+                    <div class="slot" data-index="6" onclick="selectSlot(6)"></div>
+                    <div class="slot" data-index="7" onclick="selectSlot(7)"></div>
+                </div>
+            </div>
+        </div> 
+        <img src="assets/images/ui/star_icon.png" id="inventory-icon" onclick="toggleInventory()" alt="inventory">
 
         <div id="dialogue-overlay" class="hidden">
             <div id="dialogue-box">
-                <div id="dialogue-box">
-    <div id="dialogue-content">
-        <div id="dialogue-text"></div>
-        <div id="dialogue-portrait">
-            <img id="current-portrait" src="" alt="portrait">
-        </div>
-    </div>
-    
-    <div id="choice-area" class="hidden">
-        </div>
+                <div id="dialogue-content">
+                    <div id="dialogue-text"></div>
+                    <div id="dialogue-portrait">
+                        <img id="current-portrait" src="" alt="portrait">
+                    </div>
+                </div>
+                
+                <div id="choice-area" class="hidden">
+                </div>
 
-    <div id="input-area">
-        <input type="text" id="keyword-input" placeholder="키워드를 입력하세요...">
-        <button id="send-btn">보내기</button>
-        <button id="gift-btn" style="background-color: var(--pastel-green);">선물하기</button>
-    </div>
-</div>
+                <div id="input-area">
+                    <input type="text" id="keyword-input" placeholder="키워드를 입력하세요...">
+                    <button id="send-btn">보내기</button>
+                    <button id="gift-btn" style="background-color: var(--pastel-green);">선물하기</button>
+                </div>
+            </div>
+        </div>
 
         <div id="inventory-modal" class="hidden">
             <h3>가방 & 조합</h3>
-            <div class="inventory-grid"></div>
+            <div class="inventory-grid">
+                </div>
             <button id="combine-btn" onclick="combineItems()">아이템 조합하기</button>
             <button onclick="toggleInventory()">닫기</button>
         </div>
@@ -85,6 +83,5 @@
     <script src="js/main.js"></script>
 </body>
 </html>
-
 
 
