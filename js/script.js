@@ -137,8 +137,19 @@ const dailyScripts = {
 const randomDialogues = {
     riku: {
         맑음: [
+            // 일반 대화
             { text: "누나 ! 오늘 날씨 짱 조타 그져??", emotion: "happy" },
-            { text: "광장에 비둘기 징짜 마나여.", emotion: "happy" }
+            { text: "광장에 비둘기 징짜 마나여.", emotion: "happy" },
+            
+            // ★ 선택지형 대화 (추가됨)
+            { 
+                text: "누나누나! 리쿠가 제일 조아하는 색깔이 뭐게~요?", 
+                emotion: "happy",
+                choices: [
+                    { label: "노란색?", score: 10, reply: "딩동댕! 병아리 가타서 조아해여!" },
+                    { label: "검은색?", score: -5, reply: "우으.. 칙칙해서 시러여.." }
+                ]
+            }
         ],
         비: [{ text: "비 오는 거 시러여..", emotion: "sad" }],
         벚꽃: [{ text: "와 핑크색 눈이 내리는 거 가타여 !!", emotion: "happy" }]
@@ -146,27 +157,26 @@ const randomDialogues = {
     sion: {
         맑음: [
             { text: "안녕하세요, 농장주님. 산책 나오셨나요?", emotion: "happy" },
-            { text: "오늘 같은 날은 독서하기 딱 좋죠.", emotion: "default" }
+            
+            // ★ 선택지형 대화 (추가됨)
+            { 
+                text: "이런 날씨엔 어떤 차를 마시는 게 좋을까요?", 
+                emotion: "default",
+                choices: [
+                    { label: "따뜻한 홍차", score: 10, reply: "훌륭한 선택이군요. 향이 좋죠." },
+                    { label: "시원한 콜라", score: 0, reply: "흐음.. 가끔은 탄산도 나쁘지 않겠네요." }
+                ]
+            }
         ],
         비: [{ text: "빗소리가 참 좋네요.", emotion: "happy" }],
         벚꽃: [{ text: "꽃잎이 떨어지는 속도가 초속 5센티미터래요.", emotion: "serious" }]
     },
     
-    yushi: { 맑음: [{text:"날씨가 좋네요.", emotion:"default"}],
-            비: [],
-            벚꽃: [] },
-    
-    jaehee: { 맑음: [{text:"허허 날씨 좋군요!", emotion:"happy"}],
-             비: [],
-             벚꽃: [] },
-    
-    ryo: { 맑음: [{text:"야하~ 날씨 대박!", emotion:"happy"}],
-          비: [],
-          벚꽃: [] },
-    
-    sakuya: { 맑음: [{text:"빵 굽기 좋은 날씨네요.", emotion:"default"}],
-             비: [],
-             벚꽃: [] }
+    // 나머지 주민들도 위와 같은 형식(choices)으로 추가하면 랜덤으로 뜹니다!
+    yushi: { 맑음: [{text:"날씨가 좋네요.", emotion:"default"}], 비: [], 벚꽃: [] },
+    jaehee: { 맑음: [{text:"허허 날씨 좋군요!", emotion:"happy"}], 비: [], 벚꽃: [] },
+    ryo: { 맑음: [{text:"야하~ 날씨 대박!", emotion:"happy"}], 비: [], 벚꽃: [] },
+    sakuya: { 맑음: [{text:"빵 굽기 좋은 날씨네요.", emotion:"default"}], 비: [], 벚꽃: [] }
 };
 
 const npcKeywords = {
@@ -223,5 +233,6 @@ const itemData = {
     "도토리": { img: "assets/images/items/acorn.png", desc: "다람쥐가 좋아할 것 같다" }, //ㅎㅇ
     "에너지 드링크": { img: "assets/images/items/energytonic.png", desc: "피로가 싹 가신다" } //ㅎㅇ
 };
+
 
 
