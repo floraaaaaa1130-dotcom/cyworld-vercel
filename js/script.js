@@ -12,6 +12,11 @@ const npcs = {
             love: ["별조각", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
         },
+        giftReactions: {
+            love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
+            hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
+            default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
+        },
         locations: { sunny: "hall", rainy: "hall" }
     },
     riku: {
@@ -27,6 +32,11 @@ const npcs = {
             love: ["별조각", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
         },
+        giftReactions: {
+            love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
+            hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
+            default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
+        },
         locations: { sunny: "shop", rainy: "shop" }
     },
     yushi: {
@@ -40,6 +50,11 @@ const npcs = {
         gifts: { // gifts 속성 추가 (코드 일관성을 위해 임의 추가함, 필요시 수정)
              love: ["별조각"],
              hate: ["쓰레기"]
+        },
+        giftReactions: {
+            love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
+            hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
+            default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
         },
         locations: { sunny: "forest", rainy: "saloon" }
     },
@@ -56,6 +71,11 @@ const npcs = {
             love: ["별조각", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
         },
+        giftReactions: {
+            love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
+            hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
+            default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
+        },
         locations: { sunny: "square", rainy: "saloon" } 
     },
     ryo: { 
@@ -71,6 +91,11 @@ const npcs = {
             love: ["별조각", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
         },
+        giftReactions: {
+            love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
+            hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
+            default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
+        },
         locations: { sunny: "square", rainy: "saloon" } 
     },
     sakuya: { 
@@ -85,6 +110,11 @@ const npcs = {
         gifts: {
             love: ["별조각", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
+        },
+        giftReactions: {
+            love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
+            hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
+            default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
         },
         locations: { sunny: "square", rainy: "saloon" } 
     }
@@ -133,4 +163,5 @@ const recipes = [
     { ingredients: ["수선화", "설탕"], result: "꽃 케이크" },
     { ingredients: ["별조각", "블루 재즈"], result: "반짝이는 유리병" }
 ];
+
 
