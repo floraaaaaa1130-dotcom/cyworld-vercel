@@ -321,26 +321,34 @@ function collectItem(name) {
 function toggleInventory() {
     const modal = document.getElementById('inventory-modal');
     modal.classList.toggle('hidden');
+    
+    if (modal.classList.contains('hidden')) {
+        isDeleteMode = false;
+        document.getElementById('delete-toggle-btn').classList.remove('active');
+        document.querySelector('.inventory-grid').classList.remove('delete-mode');
+    }
+    
     selectedItems = [];
     renderInventorySlots();
 }
 
-// js/main.js - renderInventorySlots 함수 교체
-
-// js/main.js 안에 있는 renderInventorySlots 함수를 찾아서 이 부분만 바꿔주세요!
 
 function renderInventorySlots() {
     const grid = document.querySelector('.inventory-grid');
     grid.innerHTML = "";
     
+    // 삭제 모드인지 확인해서 클래스 유지 (다시 그려질 때도 흔들림 유지)
+    if (isDeleteMode) grid.classList.add('delete-mode');
+    else grid.classList.remove('delete-mode');
+
     for (let i = 0; i < 8; i++) {
         const slot = document.createElement('div');
         slot.className = "item-slot";
         
-        const itemName = gameState.inventory[i];
+        const itemName = gameState.inventory[i]; // 인벤토리 배열에서 아이템 가져오기
         
         if (itemName) {
-            // 이미지 표시 부분 (기존과 동일)
+            // [이미지 표시]
             if (itemData[itemName] && itemData[itemName].img) {
                 const img = document.createElement('img');
                 img.src = itemData[itemName].img;
@@ -352,13 +360,28 @@ function renderInventorySlots() {
                 slot.style.fontSize = "10px";
             }
 
-            // [수정된 부분] 클릭 시 정보 팝업 띄우기!
+            // [클릭 이벤트 분기] ★ 여기가 핵심! ★
             slot.onclick = () => {
-                showItemInfo(itemName);
+                if (isDeleteMode) {
+                    // 1. 삭제 모드일 때: 정말 버릴지 물어보기
+                    if (confirm(`정말 [${itemName}] 아이템을 버릴까요?`)) {
+                        gameState.inventory.splice(i, 1); // 배열에서 삭제
+                        playSfx('click'); // 효과음 (있다면)
+                        
+                        // 아이템을 버렸으면 삭제 모드를 끌까요, 유지할까요?
+                        // 연속으로 버리기 좋게 유지하겠습니다. 끄고 싶으면 아래 주석 해제하세요.
+                        // toggleDeleteMode(); 
+                        
+                        renderInventorySlots(); // 화면 갱신
+                    }
+                } else {
+                    // 2. 일반 모드일 때: 정보 팝업 띄우기 (이전에 만든 기능)
+                    showItemInfo(itemName);
+                }
             };
 
-            // 만약 '조합 담기'로 선택된 아이템이면 배경색 표시
-            if (selectedItems.includes(itemName)) {
+            // [조합 선택 표시] (일반 모드일 때만 보이게 해도 됨)
+            if (!isDeleteMode && selectedItems.includes(itemName)) {
                 slot.style.backgroundColor = "var(--pastel-pink)";
                 slot.style.borderColor = "var(--deep-pink)";
             }
@@ -534,5 +557,23 @@ function updateInventorySlotStyles() {
     renderInventorySlots();
 }
 
+// [추가] 아이템 삭제 모드 변수
+let isDeleteMode = false;
+
+function toggleDeleteMode() {
+    isDeleteMode = !isDeleteMode; // 켜기/끄기 토글
+    
+    const btn = document.getElementById('delete-toggle-btn');
+    const grid = document.querySelector('.inventory-grid');
+    
+    if (isDeleteMode) {
+        btn.classList.add('active'); // 버튼 빨갛게
+        grid.classList.add('delete-mode'); // 슬롯 흔들리게
+        alert("버릴 아이템을 선택하세요. (다시 누르면 취소)");
+    } else {
+        btn.classList.remove('active');
+        grid.classList.remove('delete-mode');
+    }
+}
 
 
