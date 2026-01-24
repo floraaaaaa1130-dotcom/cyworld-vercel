@@ -99,10 +99,6 @@ function displayDialogue(npcKey, dialogueObj) {
     const emotionKey = dialogueObj.emotion || 'default';
     portraitImg.src = npc.portraits[emotionKey] || npc.portraits['default'];
     
-    let finalText = dialogueObj.text;
-    if (npcKey === 'riku') {
-        finalText = finalText.replace(/있/g, '잇').replace(/했/g, '햇').replace(/요/g, '여').replace(/\./g, '');
-    }
     textZone.innerText = `[${npc.name}]\n${finalText}`;
 }
 
@@ -271,6 +267,7 @@ function checkEnding() {
 }
 
 window.onload = () => { move('farm'); };
+
 
 
 
