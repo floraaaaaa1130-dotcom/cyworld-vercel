@@ -6,7 +6,8 @@ const npcs = {
             default: "assets/images/portraits/sion_default.png",
             happy: "assets/images/portraits/sion_happy.png",
             shock: "assets/images/portraits/sion_serious.png"
-            gifts: {
+        },
+        gifts: {
             love: ["별조각", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
         },
@@ -19,7 +20,8 @@ const npcs = {
             happy: "assets/images/portraits/riku_happy.png",
             sad: "assets/images/portraits/riku_sad.png",
             shock: "assets/images/portraits/riku_shock.png"
-            gifts: {
+        },
+        gifts: {
             love: ["별조각", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
         },
@@ -29,54 +31,57 @@ const npcs = {
         name: "유우시",
         portraits: {
             default: "assets/images/portraits/yushi_default.png",
-            locations: { sunny: "square", rainy: "saloon" } 
             happy: "assets/images/portraits/yushi_happy.png",
             shock: "assets/images/portraits/yushi_shock.png"
         },
+        gifts: { // gifts 속성 추가 (코드 일관성을 위해 임의 추가함, 필요시 수정)
+             love: ["별조각"],
+             hate: ["쓰레기"]
+        },
         locations: { sunny: "forest", rainy: "saloon" }
     },
-        
-    jaehee: { name: "재희",
+    jaehee: { 
+        name: "재희",
         portraits: { 
-            default: "assets/images/portraits/jaehee_default.png" },
-            happy: "assets/images/portraits/riku_happy.png",
+            default: "assets/images/portraits/jaehee_default.png",
+            happy: "assets/images/portraits/riku_happy.png", // 임시 이미지 경로 주의
             sad: "assets/images/portraits/riku_sad.png",
             shock: "assets/images/portraits/riku_shock.png"
-            gifts: {
+        },
+        gifts: {
             love: ["별조각", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
         },
-            locations: { sunny: "square", rainy: "saloon" } 
-            
-            },
-        
-    ryo: { name: "료", 
+        locations: { sunny: "square", rainy: "saloon" } 
+    },
+    ryo: { 
+        name: "료", 
         portraits: { 
-            default: "assets/images/portraits/ryo_default.png" }, 
+            default: "assets/images/portraits/ryo_default.png",
             happy: "assets/images/portraits/riku_happy.png",
             sad: "assets/images/portraits/riku_sad.png",
             shock: "assets/images/portraits/riku_shock.png"
-            gifts: {
+        },
+        gifts: {
             love: ["별조각", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
         },
-            locations: { sunny: "square", rainy: "saloon" } 
-         
-         },
-        
-    sakuya: { name: "사쿠야",
-             portraits: { 
-            default: "assets/images/portraits/sakuya_default.png" },
+        locations: { sunny: "square", rainy: "saloon" } 
+    },
+    sakuya: { 
+        name: "사쿠야",
+        portraits: { 
+            default: "assets/images/portraits/sakuya_default.png",
             happy: "assets/images/portraits/riku_happy.png",
             sad: "assets/images/portraits/riku_sad.png",
             shock: "assets/images/portraits/riku_shock.png"
-            gifts: {
+        },
+        gifts: {
             love: ["별조각", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
         },
-            locations: { sunny: "square", rainy: "saloon" } 
-         
-         },
+        locations: { sunny: "square", rainy: "saloon" } 
+    }
 };
 
 // 2. 대본 및 키워드 데이터
@@ -122,5 +127,3 @@ const recipes = [
     { ingredients: ["수선화", "설탕"], result: "꽃 케이크" },
     { ingredients: ["별조각", "블루 재즈"], result: "반짝이는 유리병" }
 ];
-
-
