@@ -5,8 +5,8 @@ let gameState = {
     currentLocation: 'farm',
     inventory: [], 
     affinities: { sion: 0, riku: 0, yushi: 0, jaehee: 0, ryo: 0, sakuya: 0 },
-    hasGiftedToday: {}, // 선물 여부 체크용
-    playerName: "농장주" // 기본 이름 (나중에 입력값으로 바뀜)
+    hasGiftedToday: {}, // ★ 이 부분이 꼭 있어야 선물하기가 작동합니다!
+    playerName: "농장주" // (이름 입력 기능을 넣으셨다면 이것도 유지하세요)
 };
 
 // --- 오디오 설정 ---
@@ -461,6 +461,10 @@ function startNextDay() {
     if (gameState.day >= 7) { checkEnding(); return; }
     gameState.day++;
     gameState.energy = 5;
+
+    // ★ 다음 날이 되면 선물 기록 초기화 (이 줄을 추가하세요!)
+    gameState.hasGiftedToday = {};
+    
     const weathers = ['맑음', '맑음', '비', '벚꽃'];
     gameState.weather = weathers[Math.floor(Math.random() * weathers.length)];
     document.getElementById('night-overlay').classList.add('hidden');
@@ -590,3 +594,4 @@ function closeModal(id) {
     document.getElementById(id).classList.add('hidden');
     playSfx('click');
 }
+
