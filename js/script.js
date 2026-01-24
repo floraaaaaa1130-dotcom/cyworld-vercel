@@ -134,61 +134,29 @@ const dailyScripts = {
     }
 };
 
-// ▼▼▼ [새로 추가] 날씨별 랜덤 대사 & 선택지 데이터 ▼▼▼
 const randomDialogues = {
     riku: {
         맑음: [
-            { text: "누나 ! 오늘 날씨 짱 조타 그져?? 나랑 공놀이 하까여?", emotion: "happy" },
-            { text: "광장에 비둘기 징짜 마나여. 내가 다 쫒아내써 !!", emotion: "happy" },
-            { text: "배고파여.. 누나 맛있는 거 없어여??", emotion: "sad" },
-            // 선택지형 대화 예시
-            { 
-                text: "누나는 강아지가 좋아여 고양이가 좋아여??", 
-                emotion: "happy",
-                choices: [
-                    { label: "강아지 (리쿠)", score: 10, reply: "헤헤 저두여 !! 우린 통해써 !" },
-                    { label: "고양이", score: -5, reply: "힝.. 고양이는 쫌 무서운데.." }
-                ]
-            }
+            { text: "누나 ! 오늘 날씨 짱 조타 그져??", emotion: "happy" },
+            { text: "광장에 비둘기 징짜 마나여.", emotion: "happy" }
         ],
-        비: [
-            { text: "비 오는 거 시러여.. 축축해..", emotion: "sad" },
-            { text: "누나 우산 이써여?? 나랑 같이 쓰까여??", emotion: "happy" },
-            { text: "장화 신었으니까 물웅덩이 밟아도 대져??", emotion: "happy" }
-        ],
-        벚꽃: [
-            { text: "와 핑크색 눈이 내리는 거 가타여 !!", emotion: "happy" },
-            { text: "벚꽃잎 잡으면 소원 이루어진대여 ! 빨리 잡으러 가여 !!", emotion: "shock" },
-            { text: "누나 머리에 꽃잎 붙어써여. ...이뿌다 헤헤.", emotion: "happy" }
-        ]
+        비: [{ text: "비 오는 거 시러여..", emotion: "sad" }],
+        벚꽃: [{ text: "와 핑크색 눈이 내리는 거 가타여 !!", emotion: "happy" }]
     },
-    yushi: {
+    sion: {
         맑음: [
-            { text: "에.. 햇살이 따뜻하네요. 낮잠 자기 좋은 날씨지요..", emotion: "default" },
-            { text: "산책 나오셨나요? 저도 잠시 걷고 있었답니다.", emotion: "happy" },
-            { text: "오늘따라 새들이 시끄럽네요.. 아, 싫다는 건 아니에요.", emotion: "shock" },
-             // 선택지형 대화 예시
-             { 
-                text: "농장주님은 어떤 계절을 좋아하시나요?", 
-                emotion: "default",
-                choices: [
-                    { label: "따뜻한 봄", score: 5, reply: "에.. 저도 봄을 제일 좋아해요. 마음이 편안해지니까요." },
-                    { label: "시원한 가을", score: 0, reply: "가을이라.. 쓸쓸하지만 운치 있죠." }
-                ]
-            }
+            { text: "안녕하세요, 농장주님. 산책 나오셨나요?", emotion: "happy" },
+            { text: "오늘 같은 날은 독서하기 딱 좋죠.", emotion: "default" }
         ],
-        비: [
-            { text: "에.. 비가 오니 숲이 더 조용해졌네요.", emotion: "default" },
-            { text: "빗소리를 들으며 책을 읽으면 집중이 잘 되지요.", emotion: "happy" },
-            { text: "감기 조심하세요. 비 맞으면 아프니까요.", emotion: "shock" }
-        ],
-        벚꽃: [
-            { text: "벚꽃이 참 예쁘지요? 금방 져버려서 아쉽지만요..", emotion: "sad" },
-            { text: "에.. 머리에 꽃잎이.. 떼어 드릴게요.", emotion: "happy" },
-            { text: "이런 날엔 도시락이라도 싸서 소풍을 가고 싶네요.", emotion: "happy" }
-        ]
-    }
-    // 시온, 재희, 료, 사쿠야 등 다른 캐릭터도 같은 형식으로 추가
+        비: [{ text: "빗소리가 참 좋네요.", emotion: "happy" }],
+        벚꽃: [{ text: "꽃잎이 떨어지는 속도가 초속 5센티미터래요.", emotion: "serious" }]
+    },
+    
+    // ... 다른 멤버들 (yushi, jaehee 등) 데이터도 형식 맞춰서 추가 ...
+    yushi: { 맑음: [{text:"날씨가 좋네요.", emotion:"default"}], 비: [], 벚꽃: [] },
+    jaehee: { 맑음: [{text:"허허 날씨 좋군요!", emotion:"happy"}], 비: [], 벚꽃: [] },
+    ryo: { 맑음: [{text:"야하~ 날씨 대박!", emotion:"happy"}], 비: [], 벚꽃: [] },
+    sakuya: { 맑음: [{text:"빵 굽기 좋은 날씨네요.", emotion:"default"}], 비: [], 벚꽃: [] }
 };
 
 const npcKeywords = {
@@ -220,6 +188,4 @@ const recipes = [
     { ingredients: ["수선화", "설탕"], result: "꽃 케이크" },
     { ingredients: ["별조각", "블루 재즈"], result: "반짝이는 유리병" }
 ];
-
-
 
