@@ -327,9 +327,49 @@ function toggleInventory() {
 
 // js/main.js - renderInventorySlots 함수 교체
 
+// js/main.js 안에 있는 renderInventorySlots 함수를 찾아서 이 부분만 바꿔주세요!
+
 function renderInventorySlots() {
     const grid = document.querySelector('.inventory-grid');
     grid.innerHTML = "";
+    
+    for (let i = 0; i < 8; i++) {
+        const slot = document.createElement('div');
+        slot.className = "item-slot";
+        
+        const itemName = gameState.inventory[i];
+        
+        if (itemName) {
+            // 이미지 표시 부분 (기존과 동일)
+            if (itemData[itemName] && itemData[itemName].img) {
+                const img = document.createElement('img');
+                img.src = itemData[itemName].img;
+                img.style.width = "100%"; 
+                img.style.height = "100%";
+                slot.appendChild(img);
+            } else {
+                slot.innerText = itemName;
+                slot.style.fontSize = "10px";
+            }
+
+            // [수정된 부분] 클릭 시 정보 팝업 띄우기!
+            slot.onclick = () => {
+                showItemInfo(itemName);
+            };
+
+            // 만약 '조합 담기'로 선택된 아이템이면 배경색 표시
+            if (selectedItems.includes(itemName)) {
+                slot.style.backgroundColor = "var(--pastel-pink)";
+                slot.style.borderColor = "var(--deep-pink)";
+            }
+
+        } else {
+            slot.style.cursor = "default";
+        }
+        
+        grid.appendChild(slot);
+    }
+}
     
     // 가방 8칸에 맞춰서 슬롯 생성
     // (현재 gameState.inventory에 있는 아이템만 보여주는 게 아니라 빈 칸도 보여줘야 함)
@@ -446,6 +486,53 @@ function checkEnding() {
 
 window.onload = () => { move('farm'); };
 
+// --- [추가] 아이템 정보 팝업 기능 ---
+let currentPopupItem = null; // 현재 팝업에 띄운 아이템 이름 저장
+
+function showItemInfo(itemName) {
+    currentPopupItem = itemName;
+    const data = itemData[itemName]; // script.js에 있는 데이터 가져오기
+
+    // 1. 내용 채우기
+    document.getElementById('info-name').innerText = itemName;
+    document.getElementById('info-desc').innerText = data ? data.desc : "정보가 없습니다.";
+    
+    const img = document.getElementById('info-image');
+    if (data && data.img) {
+        img.src = data.img;
+        img.style.display = 'block';
+    } else {
+        img.style.display = 'none';
+    }
+
+    // 2. 팝업 열기
+    document.getElementById('item-info-modal').classList.remove('hidden');
+}
+
+function closeItemInfo() {
+    document.getElementById('item-info-modal').classList.add('hidden');
+    currentPopupItem = null;
+}
+
+function selectForCombine() {
+    if (!currentPopupItem) return;
+
+    // 이미 선택된 아이템인지 확인
+    if (selectedItems.includes(currentPopupItem)) {
+        alert("이미 담은 아이템입니다!");
+    } else {
+        // 선택 리스트에 추가
+        selectedItems.push(currentPopupItem);
+        // 슬롯 디자인 업데이트 (선택된 표시)
+        updateInventorySlotStyles();
+    }
+    closeItemInfo();
+}
+
+function updateInventorySlotStyles() {
+    // 인벤토리 모달 다시 그리기 (선택 상태 반영을 위해)
+    renderInventorySlots();
+}
 
 
 
