@@ -31,25 +31,28 @@ function changeBgm(fileName) {
 
 // js/main.js 수정 제안
 function move(locId) {
-    if (gameState.energy <= 0 && gameState.day !== 5) {
+    // 날짜 상관없이 에너지가 0이면 이동 불가
+    if (gameState.energy <= 0) { 
         alert("에너지가 없어요! 잠을 자야 합니다."); 
-        endDay(); // 밤 정산 화면을 보여줍니다.
+        endDay(); 
         return;
     }
 
-    playSfx('walk');
+    pplaySfx('walk');
     gameState.currentLocation = locId;
-    if (gameState.day !== 5) gameState.energy--;
+    
+    gameState.energy--; // 무조건 에너지 1 감소
     
     updateUI();
     renderLocation();
 
-    // 에너지가 0이 된 직후 자동으로 endDay() 실행
-    if (gameState.energy === 0 && gameState.day !== 5) {
+// 에너지가 0이 되면 자동 종료
+    if (gameState.energy === 0) {
         setTimeout(() => {
             endDay(); 
-        }, 500); // 0.5초 뒤에 실행하여 부드럽게 전환
+        }, 500); 
     }
+}
 }
 
 function renderLocation() {
@@ -471,7 +474,7 @@ function updateUI() {
 function startNextDay() {
     if (gameState.day >= 7) { checkEnding(); return; }
     gameState.day++;
-    gameState.energy = 5;
+    gameState.energy = 4;
 
     // ★ 다음 날이 되면 선물 기록 초기화 (이 줄을 추가하세요!)
     gameState.hasGiftedToday = {};
@@ -608,6 +611,7 @@ window.onload = () => {
     
     console.log("게임 로드 완료! 오프닝 대기 중...");
 };
+
 
 
 
