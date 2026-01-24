@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>WISH VALLEY - 위시 밸리</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <div id="status-bar">
+            <div id="date-display">Day 1 - 맑음</div>
+            <div id="energy-display">에너지: <span id="energy-hearts">♥♥♥</span></div>
+        </div>
+
+        <div id="location-view">
+            <div id="npc-layer"></div>
+            <div id="item-layer"></div>
+        </div>
+
+        <div id="control-panel">
+            <div id="move-buttons">
+                <button onclick="move('square')">광장</button>
+                <button onclick="move('forest')">숲</button>
+                <button onclick="move('shop')">상점</button>
+                <button onclick="move('hall')">회관</button>
+                <button onclick="move('saloon')">주점</button>
+            </div>
+            
+            <div id="inventory-container">
+                <p>인벤토리</p>
+                <div id="inventory-slots">
+                    <div class="slot" data-index="0"></div>
+                    <div class="slot" data-index="1"></div>
+                    <div class="slot" data-index="2"></div>
+                    <div class="slot" data-index="3"></div>
+                    <div class="slot" data-index="4"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dialogue-overlay" class="hidden">
+            <div id="dialogue-box">
+                <div id="dialogue-content">
+                    <div id="dialogue-text"></div>
+                    <div id="dialogue-portrait">
+                        <img id="current-portrait" src="" alt="portrait">
+                    </div>
+                </div>
+                <div id="input-area">
+                    <input type="text" id="keyword-input" placeholder="키워드를 입력하거나 대답하세요...">
+                    <button id="send-btn">보내기</button>
+                </div>
+                <div id="choice-buttons"></div>
+            </div>
+        </div>
+
+<img src="assets/images/ui/star_icon.png" id="inventory-icon" onclick="toggleInventory()">
+
+<div id="inventory-modal" class="hidden">
+    <h3>가방 & 조합</h3>
+    <div class="inventory-grid"></div>
+    <button id="combine-btn" onclick="combineItems()">아이템 조합하기</button>
+    <button onclick="toggleInventory()" style="margin-top:5px; width:100%;">닫기</button>
+</div>
+
+        <div id="night-overlay" class="hidden">
+            <div class="night-content">
+                <h2>오늘 하루가 끝났습니다...</h2>
+                <div id="daily-report"></div>
+                <button onclick="startNextDay()">잠자기</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

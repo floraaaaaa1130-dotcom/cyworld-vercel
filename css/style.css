@@ -1,0 +1,223 @@
+/* 기본 설정 */
+:root {
+    --pastel-pink: #FFD1DC;
+    --pastel-green: #E2F0CB;
+    --deep-pink: #FFB7C5;
+    --border-color: #A5D6A7; /* 연두색 포인트 */
+    --text-color: #5D4037;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fce4ec;
+    font-family: 'SUIT', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    /* 연핑크 별 모양 마우스 포인터 (이미지 준비 필요) */
+    cursor: url('images/star_cursor.png'), auto;
+}
+
+#game-container {
+    width: 800px;
+    height: 600px;
+    background-color: white;
+    border: 8px solid var(--border-color);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 상태바 */
+#status-bar {
+    background-color: var(--pastel-pink);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: var(--text-color);
+    border-bottom: 4px solid var(--border-color);
+}
+
+/* 게임 뷰 */
+#location-view {
+    flex-grow: 1;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    image-rendering: pixelated; /* 픽셀 아트 선명하게 */
+}
+
+/* 컨트롤 패널 */
+#control-panel {
+    height: 150px;
+    background-color: var(--pastel-green);
+    display: flex;
+    padding: 10px;
+    gap: 20px;
+    border-top: 4px solid var(--border-color);
+}
+
+#move-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+}
+
+button {
+    background-color: var(--pastel-pink);
+    border: 3px solid white;
+    padding: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--text-color);
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+button:hover {
+    background-color: var(--deep-pink);
+}
+
+/* 인벤토리 */
+#inventory-slots {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.slot {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border: 3px solid var(--deep-pink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slot img {
+    width: 40px;
+    height: 40px;
+}
+
+/* 대화창 UI */
+#dialogue-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 20px;
+}
+
+#dialogue-box {
+    width: 90%;
+    background-color: #fff9fa;
+    border: 6px solid var(--pastel-pink);
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 0 0 4px var(--border-color);
+}
+
+#dialogue-content {
+    display: flex;
+    min-height: 120px;
+}
+
+#dialogue-text {
+    flex: 1;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+#dialogue-portrait {
+    width: 150px;
+    height: 150px;
+    border: 4px solid var(--pastel-green);
+    background-color: white;
+    margin-left: 20px;
+}
+
+#dialogue-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* 별 모양 인벤토리 버튼 */
+#inventory-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 100;
+    transition: transform 0.2s;
+}
+
+#inventory-icon:hover { transform: scale(1.1) rotate(15deg); }
+
+/* 인벤토리 & 조합 창 */
+#inventory-modal {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: #fff9fa;
+    border: 6px solid var(--pastel-pink);
+    box-shadow: 0 0 0 4px var(--border-color), 0 10px 20px rgba(0,0,0,0.2);
+    padding: 20px;
+    z-index: 200;
+}
+
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.item-slot {
+    width: 60px;
+    height: 60px;
+    border: 3px solid var(--pastel-green);
+    background: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+
+.item-slot.selected { border-color: var(--deep-pink); background: var(--pastel-pink); }
+
+#combine-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--pastel-green);
+    border: none;
+    font-weight: bold;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+/* 입력 영역 */
+#input-area {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+#keyword-input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid var(--pastel-pink);
+}
+
+.hidden { display: none !important; }
