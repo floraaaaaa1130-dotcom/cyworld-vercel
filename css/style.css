@@ -81,6 +81,25 @@ button:hover {
     background-color: var(--deep-pink);
 }
 
+/* css/style.css 추가 */
+.choice-btn {
+    background-color: var(--pastel-green);
+    color: var(--text-color);
+    border: 2px solid white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: 'SUIT', sans-serif;
+    font-weight: bold;
+    transition: transform 0.1s;
+}
+
+.choice-btn:hover {
+    background-color: var(--deep-pink);
+    color: white;
+    transform: scale(1.05);
+}
+
 .npc-sprite {
     width: 64px;           /* 캐릭터 크기 */
     height: 64px;
@@ -249,5 +268,6 @@ button:hover {
 
 
 .hidden { display: none !important; }
+
 
 
