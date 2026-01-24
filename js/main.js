@@ -383,8 +383,18 @@ function renderInventorySlots() {
                         renderInventorySlots(); // 화면 갱신
                     }
                 } else {
-                    // 2. 일반 모드일 때: 정보 팝업 띄우기 (이전에 만든 기능)
+                    // 1. 정보 팝업 띄우기 (아이템 설명 보기)
                     showItemInfo(itemName);
+
+                    // 2. 동시에 '선택' 상태로 만들기 (선물하기/조합하기 위해)
+                    selectSlot(i); 
+
+                    // 3. (선택사항) "손에 들었다"는 알림을 띄우거나, 바로 창을 닫을 수도 있습니다.
+                    //    하지만 정보창을 보고 싶다면, 바로 창을 닫으면 안 되겠죠?
+                    //    그래서 toggleInventory(); 는 빼는 게 더 자연스럽습니다.
+                    
+                    // 대신, 선택된 슬롯을 시각적으로 강조해주면 좋습니다.
+                    renderInventorySlots(); // 화면을 다시 그려서 선택 표시(분홍색 배경) 업데이트
                 }
             };
 
@@ -597,4 +607,5 @@ window.onload = () => {
     
     console.log("게임 로드 완료! 오프닝 대기 중...");
 };
+
 
