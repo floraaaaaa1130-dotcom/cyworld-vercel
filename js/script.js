@@ -226,8 +226,10 @@ const affinityDialogues = {
     sion: {
         very_low: {
             "맑음": [
+                [
                 { text: "...", emotion: "default" },
                 { text: "(가볍게 목례만 한다.)", emotion: "default" }
+                ]
             ],
             "비": [
                 { text: "비가 오네요.", emotion: "default" }
@@ -559,6 +561,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
