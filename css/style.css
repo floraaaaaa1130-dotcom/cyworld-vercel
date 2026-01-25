@@ -118,6 +118,19 @@ button:active { transform: translateY(1px); box-shadow: none; }
 }
 #inventory-icon:hover { transform: scale(1.1) rotate(10deg); }
 
+/* [수정 1] 편지 팝업 완벽한 중앙 정렬 */
+#letter-modal {
+    display: flex;           /* 플렉스 박스 사용 */
+    justify-content: center; /* 가로 중앙 */
+    align-items: center;     /* 세로 중앙 */
+    /* 기존에 혹시 top, left 등이 있다면 무시되도록 설정 */
+}
+.letter-paper {
+    /* 기존 margin이 있다면 제거해서 정중앙에 오게 함 */
+    margin: 0 !important; 
+    position: relative; /* 위치 잡기 */
+}
+
 /* 7. 인벤토리 팝업 (중앙 정렬 수정됨) */
 #inventory-modal {
     position: absolute;
@@ -310,6 +323,12 @@ button:active { transform: translateY(1px); box-shadow: none; }
     border: none; border-radius: 8px; box-shadow: 0 3px 0 var(--border-pink);
 }
 
+/* [수정 3] 엔딩 제목 폰트 크기 줄이기 */
+#ending-title {
+    font-size: 24px; /* 기존보다 작게 조절 (원하는 크기로 변경 가능) */
+    margin-bottom: 15px;
+}
+
 #ending-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     display: flex; justify-content: center; align-items: center;
@@ -336,11 +355,39 @@ button:active { transform: translateY(1px); box-shadow: none; }
     border: 3px solid var(--border-pink); border-radius: 10px;
     width: 300px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
-#item-info-modal {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2500;
+/* [수정 2] 아이템 정보 팝업 내부 요소 중앙 정렬 */
+#item-info-modal .modal-content {
+    display: flex;
+    flex-direction: column; /* 세로로 배치 */
+    align-items: center;    /* 가로축 기준 중앙 정렬 */
+    text-align: center;     /* 텍스트 중앙 정렬 */
 }
-.close-btn { margin-top: 15px; background-color: var(--text-color); color: white; border: none; padding: 8px 15px; }
-.hidden { display: none !important; }
+#info-image {
+    margin: 10px auto;      /* 이미지 위아래 여백 + 좌우 자동 중앙 */
+    display: block;
+}
+
+/* [수정 4] 커스텀 알림창(Alert) 스타일 (새로 추가) */
+#alert-modal {
+    z-index: 3000; /* 제일 위에 뜨도록 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.alert-content {
+    background: white;
+    border: 4px double var(--deep-green);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    min-width: 250px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.alert-content p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+}
 
 /* NPC 및 아이템 */
 .npc-sprite {
@@ -359,4 +406,5 @@ button:active { transform: translateY(1px); box-shadow: none; }
 @keyframes shake { 0% { transform: rotate(0deg); } 25% { transform: rotate(3deg); } 75% { transform: rotate(-3deg); } 100% { transform: rotate(0deg); } }
 .inventory-grid.delete-mode .item-slot { border-color: red !important; animation: shake 0.3s infinite; }
 #delete-toggle-btn { position: absolute; bottom: 15px; right: 15px; font-size: 20px; cursor: pointer; }
+
 
