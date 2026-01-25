@@ -167,13 +167,26 @@ function renderLocation() {
     
     for (let key in npcs) {
         const npc = npcs[key];
+        // 날씨에 따른 등장 장소 확인
         const targetLoc = gameState.weather === '비' ? npc.locations.rainy : npc.locations.sunny;
         
+        // 현재 장소에 있는 NPC라면?
         if (targetLoc === gameState.currentLocation) {
             const npcSprite = document.createElement('div');
             npcSprite.className = "npc-sprite"; 
             npcSprite.style.backgroundImage = `url(${npc.sprite})`; 
             npcSprite.onclick = () => openDialogue(key);
+
+            // ★ [추가된 부분] 좌표 데이터가 있으면 적용, 없으면 중앙(50%, 50%)
+            if (npc.positions && npc.positions[targetLoc]) {
+                npcSprite.style.top = npc.positions[targetLoc].top;
+                npcSprite.style.left = npc.positions[targetLoc].left;
+            } else {
+                // 좌표 안 적었으면 기본값 중앙
+                npcSprite.style.top = "50%";
+                npcSprite.style.left = "50%";
+            }
+
             npcLayer.appendChild(npcSprite);
         }
     }
@@ -865,3 +878,22 @@ function closeAlert() {
     document.getElementById('alert-modal').classList.add('hidden');
     playSfx('click');
 }
+
+/* [개발용] 클릭한 위치 좌표 알려주기 */
+document.getElementById('game-container').addEventListener('click', function(e) {
+    // 1. 게임 화면의 크기와 위치를 가져옴
+    const rect = this.getBoundingClientRect();
+    
+    // 2. 클릭한 위치 계산 (X, Y)
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // 3. 퍼센트(%)로 변환
+    const xPercent = Math.round((x / rect.width) * 100);
+    const yPercent = Math.round((y / rect.height) * 100);
+    
+    // 4. 알림창으로 알려줌 (복사해서 쓰세요!)
+    const coordMsg = `{ top: "${yPercent}%", left: "${xPercent}%" }`;
+    console.log(coordMsg); // 개발자 도구 콘솔에도 출력
+    alert("이 위치의 좌표:\n" + coordMsg);
+});
