@@ -132,12 +132,11 @@ const dailyScripts = {
                 emotion: "shy",
                 type: "keyword", // ★ 여기가 핵심! 키워드 입력 타입 지정
                 answers: {
-                    // 키워드 : { 반응 대사 데이터 }
                     "노랑": { text: "와! 저도 노란색 제일 좋아하는데! 통했네요!", emotion: "happy", score: 10 },
                     "노란": { text: "와! 저도 노란색 제일 좋아하는데! 통했네요!", emotion: "happy", score: 10 },
-                    // 그 외 답변일 때
                     "default": { text: "아~ 그 색을 좋아하는구낭", emotion: "default", score: 0 }
                 }
+            }
         ],
         yushi: [
             { text: "에.. 새로 오신 농장주님이시군요 ?", emotion: "default" },
@@ -321,5 +320,6 @@ const questScripts = {
     },
     // 나머지 멤버들도 같은 형식으로 추가 (jaehee, ryo, sakuya 등)
 };
+
 
 
