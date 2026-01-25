@@ -1,13 +1,17 @@
-/* 기본 설정 */
+/* =========================================
+   WISH VALLEY STYLE.CSS (최종 수정본)
+   ========================================= */
+
+/* 1. 기본 설정 및 폰트 */
 :root {
     --pastel-pink: #FFD1DC;
     --deep-pink: #FFB7C5;
-    --border-pink: #E5989B; /* 테두리용 */
+    --border-pink: #E5989B;
     --pastel-green: #E2F0CB;
     --deep-green: #A5D6A7;
-    --border-green: #81C784; /* 테두리용 */
+    --border-green: #81C784;
     --text-color: #5D4037;
-    --pixel-size: 2px; /* 테두리 두께 2px로 축소 (섬세한 느낌) */
+    --pixel-size: 3px; /* 테두리 두께 */
 }
 
 @font-face {
@@ -18,109 +22,80 @@
 }
 
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0; padding: 0;
     background-color: #fce4ec;
     font-family: 'DungGeunMo', 'SUIT', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
+    display: flex; justify-content: center; align-items: center;
+    height: 100vh; overflow: hidden;
     cursor: url('../assets/images/ui/star_cursor.png'), auto;
 }
 
-/* 게임 컨테이너 */
+/* 2. 게임 메인 컨테이너 */
 #game-container {
-    width: 800px;
-    height: 600px;
+    width: 800px; height: 600px;
     background-color: #fff0f5;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    /* 얇은 이중 테두리 */
+    position: relative; /* 모든 절대 위치 요소의 기준점 */
+    display: flex; flex-direction: column;
+    /* 이중 테두리 효과 */
     box-shadow: 
         0 0 0 var(--pixel-size) var(--border-pink),
         0 0 0 calc(var(--pixel-size) * 2) white,
         0 0 20px rgba(0,0,0,0.1);
 }
 
-/* --- 상단 상태바 --- */
+/* 3. 상단 상태바 */
 #status-bar {
     background-color: var(--pastel-pink);
     padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 16px;
-    color: var(--text-color);
+    display: flex; justify-content: space-between;
+    font-size: 16px; color: var(--text-color);
     border-bottom: var(--pixel-size) solid var(--border-pink);
 }
-
 #energy-display span { color: #e91e63; letter-spacing: 2px; }
 
-/* --- 게임 뷰 --- */
+/* 4. 게임 뷰 (배경) */
 #location-view {
     flex-grow: 1;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    image-rendering: pixelated;
+    background-size: cover; background-position: center;
+    position: relative; image-rendering: pixelated;
 }
 
-/* --- 컨트롤 패널 (하단) --- */
+/* 5. 하단 컨트롤 패널 */
 #control-panel {
     height: 140px;
     background-color: #fff9fa;
     border-top: var(--pixel-size) solid var(--border-pink);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 25px;
-    gap: 15px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 25px; gap: 15px;
 }
 
 #move-buttons {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    width: 40%;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 6px; width: 40%;
 }
 
-/* 공통 버튼 스타일 */
 button {
     font-family: 'DungGeunMo', sans-serif;
-    font-size: 14px;
-    color: var(--text-color);
+    font-size: 14px; color: var(--text-color);
     background-color: white;
     border: var(--pixel-size) solid var(--border-pink);
-    padding: 8px 5px;
-    cursor: pointer;
+    padding: 8px 5px; cursor: pointer;
     box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
     transition: all 0.1s;
 }
-
 button:hover { background-color: #fff0f5; transform: translateY(-1px); }
 button:active { transform: translateY(1px); box-shadow: none; }
 
-/* 인벤토리 영역 */
+/* 6. 하단 미니 인벤토리 */
 #inventory-container {
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: flex; flex-direction: column; align-items: center;
     background-color: var(--pastel-green);
     padding: 8px;
     border: var(--pixel-size) solid var(--border-green);
     border-radius: 4px;
 }
-
-#inventory-container p {
-    margin: 0 0 4px 0;
-    font-size: 12px;
-    font-weight: bold;
-    color: #2E7D32;
-}
-
+#inventory-container p { margin: 0 0 4px 0; font-size: 12px; font-weight: bold; color: #2E7D32; }
 #inventory-slots { display: flex; gap: 5px; }
 
 .slot {
@@ -128,22 +103,81 @@ button:active { transform: translateY(1px); box-shadow: none; }
     background-color: white;
     border: var(--pixel-size) solid var(--deep-green);
     display: flex; justify-content: center; align-items: center;
-    image-rendering: pixelated;
-    cursor: pointer;
+    image-rendering: pixelated; cursor: pointer;
 }
 .slot img { width: 30px; height: 30px; object-fit: contain; }
 .slot:hover { background-color: #f1f8e9; }
 
+/* 가방 아이콘 (우측 하단) */
 #inventory-icon {
-    position: absolute; top: 55px; right: 15px;
-    width: 45px; height: 45px;
-    cursor: pointer; z-index: 50;
+    position: absolute; bottom: 160px; right: 20px;
+    width: 60px; height: 60px;
+    cursor: pointer; z-index: 100;
+    filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2));
     transition: transform 0.2s;
 }
 #inventory-icon:hover { transform: scale(1.1) rotate(10deg); }
 
+/* 7. 인벤토리 팝업 (중앙 정렬 수정됨) */
+#inventory-modal {
+    position: absolute;
+    top: 50%; left: 50%; /* 화면 정중앙 배치 */
+    transform: translate(-50%, -50%);
+    width: 450px;
+    background-color: #fff9fa;
+    padding: 20px;
+    z-index: 2000;
+    text-align: center;
+    border: 3px solid var(--border-pink);
+    box-shadow: 0 0 0 6px white, 0 20px 50px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
 
-/* --- 대화창 UI --- */
+#inventory-modal h3 {
+    margin-top: 0; color: var(--border-pink);
+    border-bottom: 2px dashed var(--border-pink);
+    padding-bottom: 10px;
+}
+
+.inventory-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 10px; padding: 15px;
+    background-color: #fff0f5;
+    border: 2px solid var(--pastel-pink);
+    border-radius: 5px; margin-bottom: 15px;
+    min-height: 100px; justify-content: center;
+}
+
+.item-slot {
+    width: 60px; height: 60px;
+    background-color: white;
+    border: 2px solid var(--deep-pink);
+    cursor: pointer;
+    display: flex; justify-content: center; align-items: center;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+}
+.item-slot:hover { transform: scale(1.05); }
+.item-slot.selected { background-color: var(--pastel-pink); border-color: #e91e63; }
+.item-slot img { width: 45px; height: 45px; }
+
+/* 8. 잠자기 알림바 (신규 추가) */
+#sleep-alert {
+    position: absolute; bottom: 0; left: 0;
+    width: 100%;
+    background-color: rgba(44, 62, 80, 0.95);
+    color: white; padding: 15px 0;
+    display: flex; justify-content: center; align-items: center;
+    gap: 20px; z-index: 1500;
+    border-top: 3px solid var(--border-pink);
+    animation: slideUp 0.5s ease-out;
+}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+#sleep-alert button {
+    background-color: var(--pastel-pink); color: white;
+    border: none; padding: 8px 20px; border-radius: 5px;
+}
+
+/* 9. 대화창 UI */
 #dialogue-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.1);
@@ -152,12 +186,9 @@ button:active { transform: translateY(1px); box-shadow: none; }
 }
 
 #dialogue-box {
-    width: 720px;
-    background-color: white;
-    border: 3px solid var(--border-pink); /* 대화창은 조금 강조 */
-    padding: 15px;
-    position: relative;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+    width: 720px; background-color: white;
+    border: 3px solid var(--border-pink);
+    padding: 15px; box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
     display: flex; flex-direction: column;
 }
 
@@ -167,24 +198,17 @@ button:active { transform: translateY(1px); box-shadow: none; }
     width: 110px; height: 110px;
     background-color: #fff0f5;
     border: var(--pixel-size) solid var(--border-pink);
-    margin-right: 15px; /* 왼쪽 배치 */
-    flex-shrink: 0;
+    margin-right: 15px; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
 }
 #dialogue-portrait img { width: 90%; height: 90%; object-fit: contain; }
 
-#dialogue-text {
-    font-size: 18px; line-height: 1.6;
-    color: var(--text-color); padding: 5px;
-}
+#text-wrapper { flex-grow: 1; position: relative; height: 100%; }
+#dialogue-text { font-size: 18px; line-height: 1.6; color: var(--text-color); padding: 5px; }
 
-/* ▼ 커서 위치 수정 (오른쪽 아래 끝) */
 #next-cursor {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    color: var(--deep-pink);
-    font-size: 14px;
+    position: absolute; bottom: 0; right: 0;
+    color: var(--deep-pink); font-size: 14px;
     animation: blink 1s infinite;
 }
 
@@ -192,17 +216,15 @@ button:active { transform: translateY(1px); box-shadow: none; }
 #keyword-input {
     flex: 1; padding: 8px;
     font-family: 'DungGeunMo'; font-size: 16px;
-    border: var(--pixel-size) solid var(--border-pink);
-    outline: none;
+    border: var(--pixel-size) solid var(--border-pink); outline: none;
 }
-#choice-area { display: flex; flex-direction: column; gap: 5px; margin-top: 10px; }
 .choice-btn {
     width: 100%; text-align: left;
-    background-color: var(--pastel-green);
-    border-color: var(--border-green);
+    background-color: var(--pastel-green); border-color: var(--border-green);
+    margin-bottom: 5px;
 }
 
-/* --- 오프닝 화면 (수정됨) --- */
+/* 10. 오프닝 화면 */
 #intro-screen {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background-image: url('../assets/images/backgrounds/farm.png');
@@ -210,225 +232,89 @@ button:active { transform: translateY(1px); box-shadow: none; }
     display: flex; flex-direction: column;
     justify-content: center; align-items: center;
     z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(2px);
+    background-color: rgba(255, 255, 255, 0.3); backdrop-filter: blur(2px);
 }
+.logo-area { margin-bottom: 30px; animation: floatUp 2s ease-out forwards; opacity: 0; transform: translateY(30px); }
+@keyframes floatUp { to { opacity: 1; transform: translateY(0); } }
+.game-logo-img { max-width: 500px; height: auto; filter: drop-shadow(3px 3px 0 white); }
 
-/* 로고 애니메이션 */
-.logo-area {
-    margin-bottom: 40px;
-    animation: floatUp 2s ease-out forwards;
-    opacity: 0; transform: translateY(30px);
-}
-@keyframes floatUp {
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.game-logo-img {
-    max-width: 500px; /* 로고 크기 제한 */
-    height: auto;
-    filter: drop-shadow(3px 3px 0 white); /* 흰색 테두리 효과 */
-}
-
-/* 메뉴 버튼 세로 정렬 */
-#menu-area {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: center;
-}
-
+#menu-area { display: flex; flex-direction: column; gap: 10px; align-items: center; }
 .menu-btn {
-    width: 180px; /* 크기 줄임 */
-    padding: 12px;
-    font-size: 18px;
-    background-color: white;
-    border: 3px solid var(--border-pink); /* 메뉴 버튼 강조 */
-    border-radius: 10px; /* 살짝 둥글게 */
-    color: var(--text-color);
-    box-shadow: 0 4px 0 var(--pastel-pink); /* 입체감 */
+    width: 180px; padding: 12px; font-size: 18px;
+    background-color: white; border: 3px solid var(--border-pink);
+    border-radius: 10px; box-shadow: 0 4px 0 var(--pastel-pink);
 }
-.menu-btn:hover {
-    background-color: var(--pastel-pink);
-    color: white;
-    transform: scale(1.05);
-}
-.menu-btn:active { transform: scale(0.95); box-shadow: none; }
+.menu-btn:hover { background-color: var(--pastel-pink); color: white; transform: scale(1.05); }
 
-#night-overlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* 밤 느낌으로 약간 어둡게 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 500;
-}
-
-.night-content {
-    background-color: white;
-    padding: 25px 40px; /* 여백 조정 */
-    border: 3px solid var(--border-pink);
-    border-radius: 15px;
-    text-align: center; /* 텍스트 중앙 정렬 (핵심) */
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px; /* 글자와 버튼 사이 간격 */
-    min-width: 250px; /* 너무 좁아지지 않게 */
-}
-
-.night-content h2 {
-    font-size: 20px; /* 글자 크기 축소 (기존보다 작게) */
-    color: var(--text-color);
-    margin: 0; /* 불필요한 여백 제거 */
-    font-weight: normal; /* 너무 굵지 않게 */
-}
-
-/* 잠자기 버튼 스타일 별도 지정 */
-.night-content button {
-    padding: 8px 20px; /* 버튼 크기 축소 */
-    font-size: 16px;
-    background-color: var(--pastel-pink);
-    color: white;
-    border: none;
-    box-shadow: 0 3px 0 var(--border-pink);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.1s;
-}
-
-.night-content button:hover {
-    background-color: var(--deep-pink);
-    transform: translateY(-2px);
-}
-
-/* 엔딩 화면도 동일한 스타일 적용 */
-#ending-overlay {
-    /* night-overlay 안에 있으므로 위치는 자동 중앙 정렬됨 */
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    display: flex; justify-content: center; align-items: center;
-    background-color: rgba(0,0,0,0.8); /* 엔딩은 좀 더 어둡게 */
-    z-index: 600;
-}
-
-.ending-content {
-    background-color: #fff9fa;
-    border: 4px solid var(--border-pink);
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    max-width: 500px;
-}
-
-#ending-image-wrapper img {
-    width: 150px; height: 150px;
-    border-radius: 50%;
-    border: 4px solid white;
-    box-shadow: 0 0 15px var(--pastel-pink);
-    margin: 15px 0;
-}
-
-#ending-title {
-    font-size: 28px;
-    color: var(--deep-pink);
-    margin: 0 0 10px 0;
-    text-shadow: 2px 2px 0 white;
-}
-
-#ending-text {
-    font-size: 16px;
-    line-height: 1.6;
-    white-space: pre-line;
-}
-
-
-/* --- 이름 입력 화면 (디자인 정리) --- */
+/* 이름 입력창 */
 #name-input-area {
     background-color: rgba(255, 255, 255, 0.95);
-    padding: 30px;
-    border: 3px solid var(--border-pink);
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column; /* 세로 정렬 */
-    align-items: center;
-    gap: 15px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    padding: 25px; border: 3px solid var(--border-pink);
+    border-radius: 15px; display: flex; flex-direction: column;
+    align-items: center; gap: 15px; width: 300px;
 }
-
-.input-label {
-    font-size: 20px; font-weight: bold; margin: 0;
-    color: var(--text-color);
-}
-
 #player-name-input {
-    width: 200px;
-    padding: 10px;
+    width: 200px; padding: 10px;
     font-family: 'DungGeunMo'; font-size: 18px; text-align: center;
-    border: 2px solid var(--border-pink);
-    background-color: #fff0f5;
-    outline: none;
+    border: 2px solid var(--border-pink); background-color: #fff0f5; outline: none;
+}
+.button-row { display: flex; gap: 10px; width: 100%; justify-content: center; }
+.confirm-btn { width: 120px; padding: 10px; background-color: var(--pastel-pink); color: white; border: none; }
+.cancel-btn { width: 80px; padding: 10px; background-color: #e0e0e0; border: none; }
+
+/* 11. 밤 & 엔딩 화면 (중앙 정렬 수정됨) */
+#night-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 500;
+}
+.night-content {
+    background-color: white; padding: 20px 30px;
+    border: 3px solid var(--border-pink); border-radius: 15px;
+    text-align: center; display: flex; flex-direction: column; align-items: center; gap: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2); min-width: 300px;
+}
+.night-content h2 { font-size: 18px; margin: 0; font-weight: normal; }
+.night-content button {
+    padding: 8px 20px; font-size: 16px;
+    background-color: var(--pastel-pink); color: white;
+    border: none; border-radius: 8px; box-shadow: 0 3px 0 var(--border-pink);
 }
 
-/* 버튼 가로 정렬 컨테이너 */
-.button-row {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    justify-content: center;
+#ending-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; justify-content: center; align-items: center;
+    background-color: rgba(0,0,0,0.8); z-index: 600;
+}
+.ending-content {
+    background-color: #fff9fa; border: 4px solid var(--border-pink);
+    padding: 30px; border-radius: 20px; text-align: center; max-width: 500px;
+}
+#ending-image-wrapper img {
+    width: 150px; height: 150px; border-radius: 50%;
+    border: 4px solid white; box-shadow: 0 0 15px var(--pastel-pink); margin: 15px 0;
 }
 
-.confirm-btn {
-    flex: 2; /* 버튼 비율 2 */
-    padding: 12px;
-    background-color: var(--pastel-pink);
-    color: white;
-    border: none;
-    font-size: 16px;
-    box-shadow: 0 3px 0 var(--border-pink);
-}
-.confirm-btn:hover { background-color: var(--deep-pink); }
-
-.cancel-btn {
-    flex: 1; /* 버튼 비율 1 */
-    padding: 12px;
-    background-color: #e0e0e0;
-    border: none;
-    font-size: 16px;
-    box-shadow: 0 3px 0 #bdbdbd;
-}
-
-
-/* --- 모달 (Z-index 수정) --- */
+/* 12. 기타 모달 및 유틸리티 */
 .modal {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.5);
     display: flex; justify-content: center; align-items: center;
-    z-index: 2000; /* 오프닝(1000)보다 높게 설정 */
+    z-index: 2000;
 }
-
 .modal-content, .info-content {
     background: white; padding: 25px;
-    border: 3px solid var(--border-pink);
-    border-radius: 10px;
-    width: 300px; text-align: center;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    border: 3px solid var(--border-pink); border-radius: 10px;
+    width: 300px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
-
-.close-btn {
-    margin-top: 15px;
-    background-color: var(--text-color);
-    color: white;
-    border: none;
-    padding: 8px 15px;
+#item-info-modal {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2500;
 }
-
-/* 유틸리티 및 기타 */
+.close-btn { margin-top: 15px; background-color: var(--text-color); color: white; border: none; padding: 8px 15px; }
 .hidden { display: none !important; }
+
+/* NPC 및 아이템 */
 .npc-sprite {
     width: 64px; height: 64px;
     background-size: contain; background-repeat: no-repeat;
@@ -444,7 +330,4 @@ button:active { transform: translateY(1px); box-shadow: none; }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 @keyframes shake { 0% { transform: rotate(0deg); } 25% { transform: rotate(3deg); } 75% { transform: rotate(-3deg); } 100% { transform: rotate(0deg); } }
 .inventory-grid.delete-mode .item-slot { border-color: red !important; animation: shake 0.3s infinite; }
-.inventory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 15px; justify-content: center; }
-.item-slot.selected { background-color: var(--pastel-pink); border-color: #e91e63; }
 #delete-toggle-btn { position: absolute; bottom: 15px; right: 15px; font-size: 20px; cursor: pointer; }
-
