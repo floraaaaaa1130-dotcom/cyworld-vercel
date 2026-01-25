@@ -17,6 +17,7 @@ const npcs = {
             hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
             default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
         },
+        unknownReaction: { text: "음? 그게 무슨 말인가요? 제가 모르는 분야군요.", emotion: "default" },
         locations: { sunny: "hall", rainy: "hall", blossom: "forest" },
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
@@ -33,6 +34,7 @@ const npcs = {
             sad: "assets/images/portraits/riku_sad.png",
             shock: "assets/images/portraits/riku_shock.png"
         },
+        unknownReaction: { text: "엥? 그게 뭐예여? 먹는 거예여?", emotion: "shock" },
         gifts: {
             love: ["도토리", "초코케이크", "아이스크림"],
             hate: ["흙"]
@@ -66,6 +68,7 @@ const npcs = {
             hate: { text: "에..? 이건.. 너무해요 !", emotion: "serious" },
             default: { text: "고마워요 ! 잘 간직할게요 ^_^ 우리 기분 좋은 추억이 하나 더 생겼네요 ~", emotion: "default" }
         },
+        unknownReaction: { text: "에.. 죄송해요. 무슨 말씀이신지 잘 모르겠어요.. ^_^;", emotion: "shock" },
         locations: { sunny: "forest", rainy: "saloon", blossom: "forest" },
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
@@ -91,6 +94,7 @@ const npcs = {
             hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
             default: { text: "오..! 와! 대박! 뭔지 모르겠지만 그래도 {user}(이)가 준 거니까 일단 잘 챙겨둘게요! 허허", emotion: "default" }
         },
+        unknownReaction: { text: "에.. 죄송해요. 무슨 말씀이신지 잘 모르겠어요.. ^_^;", emotion: "shock" },
         locations: { sunny: "square", rainy: "saloon", blossom: "shop" },
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
@@ -118,6 +122,7 @@ const npcs = {
             hate: { text: "오, 센스 대박! 감사해료!", emotion: "serious" },
             default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
         },
+        unknownReaction: { text: "에.. 죄송해요. 무슨 말씀이신지 잘 모르겠어요.. ^_^;", emotion: "shock" },
         locations: { sunny: "square", rainy: "hall", blossom: "square" }, 
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
@@ -144,6 +149,7 @@ const npcs = {
             hate: { text: "아... 진짜 죄송한데... 이건 다른 사람 주는 게 어때요?", emotion: "serious" },
             default: { text: "에- 엄청 다정하네요. 이런 걸 다 챙겨주고. 고맙습니다.", emotion: "default" }
         },
+        unknownReaction: { text: "에.. 죄송해요. 무슨 말씀이신지 잘 모르겠어요.. ^_^;", emotion: "shock" },
         locations: { sunny: "square", rainy: "saloon", blossom: "forest" }, 
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
@@ -431,6 +437,7 @@ const questScripts = {
     },
     // 나머지 멤버들도 같은 형식으로 추가 (jaehee, ryo, sakuya 등)
 };
+
 
 
 
