@@ -521,10 +521,11 @@ function openDialogue(npcKey) {
     overlay.classList.remove('hidden');
 
     // (1) 호감도 단계 판단
-    let stage = 'low';
-    if (currentAffinity >= 70) stage = 'high';
-    else if (currentAffinity >= 30) stage = 'mid';
+    let stage = 'very_low'; // 기본값 (0~10점 구간)
 
+    if (currentAffinity >= 70) stage = 'high';       // 70점 이상
+    else if (currentAffinity >= 30) stage = 'mid';   // 30~69점
+    else if (currentAffinity > 10) stage = 'low';    // 11~29점 (10점 초과)
     // (2) 날씨 확인
     const weather = gameState.weather;
 
@@ -1088,6 +1089,7 @@ function endEvent() {
         if (fadeOverlay) fadeOverlay.classList.remove('visible');
     }, 1000);
 }
+
 
 
 
