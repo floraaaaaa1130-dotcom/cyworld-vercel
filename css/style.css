@@ -584,6 +584,27 @@ button:active { transform: translateY(1px); box-shadow: none; }
     background-image: url('../assets/effects/blossom.gif');
 }
 
+/* js/style.css 파일 맨 아래에 추가 */
+
+/* 페이드 아웃/인 효과를 위한 오버레이 */
+#fade-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none; /* 평소에는 클릭 방해 안 함 */
+    transition: opacity 1s ease; /* 1초 동안 부드럽게 변함 */
+}
+
+/* 화면을 가릴 때 붙일 클래스 */
+#fade-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
 
 
 
