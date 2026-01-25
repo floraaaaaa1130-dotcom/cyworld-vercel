@@ -126,7 +126,7 @@ const dailyScripts = {
     1: {
         riku: [
             { text: "누나 안냥 ! 새로 이사 왓어여??", emotion: "happy" },
-            { text: "리쿠는 리쿠에여 잘 부타캐여 히히", emotion: "happy" }
+            { text: "리쿠는 리쿠에여 잘 부타캐여 히히", emotion: "happy" },
             { 
                 text: "누나는 무슨 색이 제일 조아여?", 
                 emotion: "shy",
@@ -321,4 +321,5 @@ const questScripts = {
     },
     // 나머지 멤버들도 같은 형식으로 추가 (jaehee, ryo, sakuya 등)
 };
+
 
