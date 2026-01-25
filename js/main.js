@@ -417,6 +417,9 @@ function openDialogue(npcKey) {
     lastInteractedNPC = npcKey; 
     const overlay = document.getElementById('dialogue-overlay');
     overlay.classList.remove('hidden');
+
+   // ★ [수정] 대화 시작 시 변수 초기화 (이전 상태 잔상 방지)
+    shouldShowInput = false;
     
     // ★ 1. 일단 모든 입력창과 버튼을 숨기고 시작합니다. (텍스트가 먼저 나오게!)
     const inputArea = document.getElementById('input-area');
@@ -442,14 +445,14 @@ function openDialogue(npcKey) {
         dialogueQueue = [{ text: actionText, emotion: 'default' }];
         currentDialogueIndex = 0;
 
-        // ★ 입력창 설정: 선물 안 줬을 때만 '선물 버튼' 보여주기
+// ★ [수정] 선물 안 줬을 때만 '선물 버튼' 표시
         if (!gameState.hasGiftedToday[npcKey]) {
-            keywordInput.classList.add('hidden'); // 키워드 입력 숨김
-            sendBtn.classList.add('hidden');      // 말하기 버튼 숨김
+            keywordInput.classList.add('hidden'); // 키워드 입력 숨김 (확실하게!)
+            sendBtn.classList.add('hidden');      // 말하기 버튼 숨김 (확실하게!)
             giftBtn.classList.remove('hidden');   // 선물 버튼만 보임
-            shouldShowInput = true; // 타자 끝나면 보여줘!
+            shouldShowInput = true; 
         } else {
-            // 선물도 줬으면 아무것도 안 보여줌
+            // 이미 선물도 줬으면 아무 버튼도 안 보여줌
             shouldShowInput = false;
         }
 
@@ -542,7 +545,7 @@ function finishTyping() {
         // 커서 표시
         document.getElementById('next-cursor').classList.remove('hidden');
         
-        // ★ [핵심 수정] 엔딩 중이면 입력창을 절대 띄우지 않음
+        // ★ [수정] shouldShowInput이 true일 때만 입력창 표시 (엔딩 제외)
         if (shouldShowInput && !gameState.isEnding) {
             document.getElementById('input-area').classList.remove('hidden');
         }
@@ -627,6 +630,9 @@ function giveGift(npcKey) {
     // 아이템 제거
     gameState.inventory.splice(selectedSlotIndex, 1);
     selectedSlotIndex = null;
+
+   // ★ [수정] 선물 준 직후에는 입력창이 다시 뜨지 않도록 설정
+    shouldShowInput = false;
 
     displayDialogue(npcKey, response); // 반응 대사 출력
     updateUI();
@@ -855,11 +861,4 @@ function showFinalPopup() {
     
     btn.classList.remove('hidden');
 }
-
-
-
-
-
-
-
 
