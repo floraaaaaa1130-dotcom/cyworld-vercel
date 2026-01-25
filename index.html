@@ -7,150 +7,143 @@
     <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
 </head>
 <body>
-    <div id="game-container">
-        <div id="status-bar">
-            <div id="date-display">Day 1 - 맑음</div>
-            <div id="energy-display">에너지: <span id="energy-hearts">♥♥♥</span></div>
-        </div>
+<div id="game-container">
+    <div id="status-bar">
+        <div id="date-display">Day 1 - 맑음</div>
+        <div id="energy-display">에너지: <span id="energy-hearts">♥♥♥</span></div>
+    </div>
 
-        <div id="location-view">
-            <div id="npc-layer"></div>
-            <div id="item-layer"></div>
-        </div>
+    <div id="location-view">
+        <div id="npc-layer"></div>
+        <div id="item-layer"></div>
+    </div>
 
-        <div id="control-panel">
-            <div id="move-buttons">
-                <button onclick="move('square')">광장</button>
-                <button onclick="move('forest')">숲</button>
-                <button onclick="move('shop')">상점</button>
-                <button onclick="move('hall')">회관</button>
-                <button onclick="move('saloon')">주점</button>
+    <div id="control-panel">
+        <div id="move-buttons">
+            <button onclick="move('square')">광장</button>
+            <button onclick="move('forest')">숲</button>
+            <button onclick="move('shop')">상점</button>
+            <button onclick="move('hall')">회관</button>
+            <button onclick="move('saloon')">주점</button>
+        </div>
+        
+        <div id="inventory-container">
+            <p>가방</p>
+            <div id="inventory-slots">
+                <div class="slot" data-index="0" onclick="selectSlot(0)"></div>
+                <div class="slot" data-index="1" onclick="selectSlot(1)"></div>
+                <div class="slot" data-index="2" onclick="selectSlot(2)"></div>
+                <div class="slot" data-index="3" onclick="selectSlot(3)"></div>
+                <div class="slot" data-index="4" onclick="selectSlot(4)"></div>
+                <div class="slot" data-index="5" onclick="selectSlot(5)"></div>
+                <div class="slot" data-index="6" onclick="selectSlot(6)"></div>
+                <div class="slot" data-index="7" onclick="selectSlot(7)"></div>
+            </div>
+        </div>
+    </div> 
+    <img src="assets/images/ui/star_icon.png" id="inventory-icon" onclick="toggleInventory()" alt="inventory">
+
+    <div id="dialogue-overlay" class="hidden">
+        <div id="dialogue-box">
+            <div id="dialogue-content">
+                <div id="dialogue-portrait">
+                    <img id="current-portrait" src="" alt="portrait">
+                </div>
+                <div id="text-wrapper" style="position: relative; flex: 1;">
+                    <div id="dialogue-text"></div>
+                    <div id="next-cursor" class="hidden">▼</div> 
+                </div>
             </div>
             
-            <div id="inventory-container">
-                <p>인벤토리</p>
-                <div id="inventory-slots">
-                    <div class="slot" data-index="0" onclick="selectSlot(0)"></div>
-                    <div class="slot" data-index="1" onclick="selectSlot(1)"></div>
-                    <div class="slot" data-index="2" onclick="selectSlot(2)"></div>
-                    <div class="slot" data-index="3" onclick="selectSlot(3)"></div>
-                    <div class="slot" data-index="4" onclick="selectSlot(4)"></div>
-                    <div class="slot" data-index="5" onclick="selectSlot(5)"></div>
-                    <div class="slot" data-index="6" onclick="selectSlot(6)"></div>
-                    <div class="slot" data-index="7" onclick="selectSlot(7)"></div>
-                </div>
+            <div id="choice-area" class="hidden"></div>
+
+            <div id="input-area">
+                <input type="text" id="keyword-input" placeholder="대화 키워드 입력...">
+                <button id="send-btn">말하기</button>
+                <button id="gift-btn" style="background-color: var(--pastel-green);">선물</button>
             </div>
-        </div> 
-        <img src="assets/images/ui/star_icon.png" id="inventory-icon" onclick="toggleInventory()" alt="inventory">
-
-        <div id="dialogue-overlay" class="hidden">
-            <div id="dialogue-box">
-                <div id="dialogue-content">
-                    <div id="dialogue-text"></div>
-                    <div id="next-cursor" class="hidden">▼</div>
-                    
-                    <div id="dialogue-portrait">
-                        <img id="current-portrait" src="" alt="portrait">
-                    </div>
-                </div>
-                
-                <div id="choice-area" class="hidden">
-                </div>
-
-                <div id="input-area">
-                    <input type="text" id="keyword-input" placeholder="키워드를 입력하세요...">
-                    <button id="send-btn">보내기</button>
-                    <button id="gift-btn" style="background-color: var(--pastel-green);">선물하기</button>
-                </div>
-            </div>
-        </div>
-
-<div id="inventory-modal" class="hidden">
-    <h3>가방 & 조합</h3>
-    <div class="inventory-grid">
-        </div>
-    
-    <button id="combine-btn" onclick="combineItems()">아이템 조합하기</button>
-    <button onclick="toggleInventory()">닫기</button>
-
-    <div id="delete-toggle-btn" onclick="toggleDeleteMode()">🗑️</div>
-</div>
-        <div id="item-info-modal" class="hidden">
-    <div class="info-content">
-        <h3 id="info-name">아이템 이름</h3>
-        <div id="info-img-wrapper">
-            <img id="info-image" src="" alt="item">
-        </div>
-        <p id="info-desc">아이템 설명이 여기에 나옵니다.</p>
-        
-        <div class="popup-buttons">
-            <button id="btn-select-combine" onclick="selectForCombine()">조합 담기</button>
-            <button onclick="closeItemInfo()">닫기</button>
         </div>
     </div>
-</div>
 
-        <div id="night-overlay" class="hidden">
-            <div class="night-content">
-                <h2>오늘 하루가 끝났습니다...</h2>
-                <button onclick="startNextDay()">잠자기</button>
-            </div>
-            <div id="ending-overlay" class="hidden">
-    <div class="ending-content">
-        <h1 id="ending-title">Happy Ending</h1>
-        <div id="ending-image-wrapper">
-            <img id="ending-image" src="" alt="ending">
-        </div>
-        <p id="ending-text"></p>
-        <button id="restart-btn" onclick="location.reload()" class="hidden">처음으로 돌아가기</button>
+    <div id="inventory-modal" class="hidden">
+        <h3>가방 & 조합</h3>
+        <div class="inventory-grid"></div>
+        <button id="combine-btn" onclick="combineItems()">조합하기</button>
+        <button class="close-btn" onclick="toggleInventory()">닫기</button>
+        <div id="delete-toggle-btn" onclick="toggleDeleteMode()">🗑️</div>
     </div>
-</div>
+
+    <div id="item-info-modal" class="hidden">
+        <div class="info-content">
+            <h3 id="info-name">아이템 이름</h3>
+            <div id="info-img-wrapper"><img id="info-image" src="" alt="item"></div>
+            <p id="info-desc">설명</p>
+            <div class="popup-buttons">
+                <button id="btn-select-combine" onclick="selectForCombine()">조합 담기</button>
+                <button class="close-btn" onclick="closeItemInfo()">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="night-overlay" class="hidden">
+        <div class="night-content">
+            <h2>오늘 하루가 끝났습니다...</h2>
+            <button onclick="startNextDay()">잠자기</button>
+        </div>
+        <div id="ending-overlay" class="hidden">
+            <div class="ending-content">
+                <h1 id="ending-title">Happy Ending</h1>
+                <div id="ending-image-wrapper"><img id="ending-image" src="" alt="ending"></div>
+                <p id="ending-text"></p>
+                <button id="restart-btn" onclick="location.reload()" class="hidden">처음으로</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="intro-screen">
+        <div class="logo-area">
+            <img src="assets/images/logo.png" alt="WISH VALLEY" class="game-logo-img"> 
         </div>
 
-        <div id="intro-screen">
-            <div class="logo-area">
-                <h1 class="game-title">WISH VALLEY</h1>
-                <p class="game-subtitle">위시 밸리의 이야기</p>
-            </div>
+        <div id="menu-area">
+            <button class="menu-btn" onclick="showNameInput()">시작하기</button>
+            <button class="menu-btn" onclick="openModal('manual-modal')">설명서</button>
+            <button class="menu-btn" onclick="openModal('credit-modal')">크레딧</button>
+        </div>
 
-            <div id="menu-area">
-                <button class="menu-btn" onclick="showNameInput()">시작하기</button>
-                <button class="menu-btn" onclick="openModal('manual-modal')">설명서</button>
-                <button class="menu-btn" onclick="openModal('credit-modal')">크레딧</button>
-            </div>
-
-            <div id="name-input-area" class="hidden">
-                <p>당신의 이름은 무엇인가요?</p>
-                <input type="text" id="player-name-input" placeholder="이름 입력 (최대 6글자)" maxlength="6">
-                <button class="menu-btn" onclick="startGame()">모험 떠나기</button>
+        <div id="name-input-area" class="hidden">
+            <p class="input-label">당신의 이름은 무엇인가요?</p>
+            <input type="text" id="player-name-input" placeholder="이름 (최대 6글자)" maxlength="6">
+            
+            <div class="button-row">
+                <button class="confirm-btn" onclick="startGame()">모험 떠나기</button>
                 <button class="cancel-btn" onclick="hideNameInput()">취소</button>
             </div>
         </div>
+    </div>
 
-        <div id="manual-modal" class="modal hidden">
-            <div class="modal-content">
-                <h2>📖 게임 설명서</h2>
-                <p>1. 마을을 돌아다니며 아이템을 수집하세요.</p>
-                <p>2. 주민들에게 선물을 주어 호감도를 높이세요.</p>
-                <p>3. 인벤토리에서 재료를 조합해 특별한 물건을 만드세요!</p>
-                <p>4. 7일이 지나면 엔딩을 볼 수 있습니다.</p>
-                <button onclick="closeModal('manual-modal')">닫기</button>
-            </div>
+    <div id="manual-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>📖 설명서</h2>
+            <p>1. 마을을 탐험하며 아이템을 수집하세요.</p>
+            <p>2. 주민들에게 선물을 주세요.</p>
+            <p>3. 7일 뒤 엔딩이 나옵니다.</p>
+            <button class="close-btn" onclick="closeModal('manual-modal')">닫기</button>
         </div>
+    </div>
 
-        <div id="credit-modal" class="modal hidden">
-            <div class="modal-content">
-                <h2>✨ 만든 사람들</h2>
-                <p><strong>기획 & 아트:</strong> [여기에 이름]</p>
-                <p><strong>개발:</strong> [여기에 이름]</p>
-                <p><strong>Special Thanks:</strong> 위시 밸리 주민들</p>
-                <button onclick="closeModal('credit-modal')">닫기</button>
-            </div>
+    <div id="credit-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>✨ 크레딧</h2>
+            <p>기획 & 아트: 이윤지</p>
+            <p>개발: Gemini</p>
+            <button class="close-btn" onclick="closeModal('credit-modal')">닫기</button>
         </div>
-        </div> <script src="js/script.js"></script>
-    <script src="js/main.js"></script>
+    </div>
+</div>
 </body>
 </html>
+
 
 
 
