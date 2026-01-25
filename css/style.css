@@ -234,14 +234,22 @@ button:active { transform: translateY(1px); box-shadow: none; }
     padding-bottom: 20px; z-index: 100;
 }
 
+/* [수정] 대화 박스: 높이 제한을 풀거나 flex 설정을 단순화 */
 #dialogue-box {
-    width: 720px; background-color: white;
-    border: 2px solid var(--border-pink);
-    padding: 15px;
-    display: flex; flex-direction: column;
+    width: 720px; 
+    background-color: white;
+    border: 3px solid var(--border-pink);
+    padding: 15px; 
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+    /* flex-direction: column;  <-- 이 줄은 이제 굳이 없어도 되지만 둬도 상관없습니다. */
 }
 
-#dialogue-content { display: flex; align-items: flex-start; min-height: 120px; }
+/* [수정] 대화 컨텐츠 영역: 내부 요소 정렬 방식 변경 */
+#dialogue-content { 
+    display: flex; 
+    align-items: flex-start; /* 위쪽 정렬 (초상화와 텍스트 높이 맞춤) */
+    min-height: 120px; 
+}
 
 #dialogue-portrait {
     width: 110px; height: 110px;
@@ -252,16 +260,42 @@ button:active { transform: translateY(1px); box-shadow: none; }
 }
 #dialogue-portrait img { width: 100%; height: 100%; object-fit: contain; }
 
-#text-wrapper { flex-grow: 1; position: relative; height: 100%; }
-#dialogue-text { font-size: 18px; line-height: 1.6; color: var(--text-color); padding: 5px; }
-
-#next-cursor {
-    position: absolute; bottom: 0; right: 0;
-    color: var(--deep-pink); font-size: 14px;
-    animation: blink 1s infinite;
+/* [수정] 텍스트 래퍼: 내부 요소들을 세로로 배치 */
+#text-wrapper { 
+    flex-grow: 1; 
+    position: relative; 
+    /* height: 100%; <-- 이 줄 삭제! 높이를 강제로 100%로 하면 버튼이 밀려날 수 있음 */
+    display: flex;           /* 플렉스 박스 적용 */
+    flex-direction: column;  /* 위에서 아래로 쌓이게 */
+    justify-content: space-between; /* 공간 배분 */
 }
 
-#input-area { margin-top: 10px; display: flex; gap: 8px; }
+/* [수정] 대화 텍스트: 여백 조정 */
+#dialogue-text { 
+    font-size: 18px; 
+    line-height: 1.6; 
+    color: var(--text-color); 
+    padding: 5px; 
+    margin-bottom: 10px; /* 버튼과 간격 띄우기 */
+}
+
+/* [수정] 커서 위치: 우측 하단 고정은 유지하되 조금 다듬기 */
+#next-cursor {
+    position: absolute; 
+    bottom: 5px;     /* 바닥에서 살짝 띄우기 */
+    right: 5px; 
+    color: var(--deep-pink); 
+    font-size: 14px;
+    animation: blink 1s infinite;
+}
+/* [수정] 입력창 영역: 상단 여백 제거 (text-wrapper 흐름에 맡김) */
+#input-area { 
+    margin-top: 5px; /* 필요하면 조절 */
+    display: flex; 
+    gap: 8px; 
+    /* width: 100%; <-- 필요하면 추가 */
+}
+
 #keyword-input {
     flex: 1; padding: 8px;
     font-family: 'MyGameFont'; font-size: 16px;
@@ -532,6 +566,7 @@ button:active { transform: translateY(1px); box-shadow: none; }
     background-color: rgba(255, 192, 203, 0.15); /* 연한 핑크색 틴트 */
     background-image: url('../assets/effects/blossom.gif');
 }
+
 
 
 
