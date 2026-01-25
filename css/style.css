@@ -517,6 +517,81 @@ body.game-running #text-box {
     display: flex; /* 원래 display 속성에 맞춰주세요 (flex 또는 block) */
 }
 
+/* --- 엔딩 화면 스타일 --- */
+#ending-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* 최상위 */
+    opacity: 0;
+    transition: opacity 2s ease-in; /* 서서히 나타나는 효과 */
+}
+
+#ending-overlay.visible {
+    opacity: 1;
+}
+
+.ending-content {
+    text-align: center;
+    max-width: 600px;
+}
+
+#ending-title {
+    font-size: 40px;
+    color: var(--pastel-pink);
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px #fff;
+}
+
+#ending-image-wrapper img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 0 20px var(--pastel-pink);
+    margin-bottom: 20px;
+}
+
+#ending-text {
+    font-size: 20px;
+    line-height: 1.8;
+    white-space: pre-line; /* 줄바꿈 적용 */
+}
+
+#restart-btn {
+    margin-top: 30px;
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: var(--deep-pink);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* --- 대화창 커서 (▼) 깜빡임 애니메이션 --- */
+#next-cursor {
+    position: absolute;
+    bottom: 20px;
+    right: 200px; /* 초상화 왼쪽 쯤 */
+    font-size: 20px;
+    color: var(--deep-pink);
+    animation: blink 1s infinite;
+    cursor: pointer;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; transform: translateY(0); }
+    50% { opacity: 0; transform: translateY(5px); }
+}
+
+/* 타자 효과 중에는 커서 숨김 */
+.hidden { display: none !important; }
 
 
 
