@@ -20,7 +20,7 @@ const npcs = {
         locations: { sunny: "hall", rainy: "hall" }
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
-            hall: { top: "75%", left: "25%" }
+            hall: { top: "75%", left: "25%" },
             square: { top: "50%", left: "30%" } // 광장에서는 왼쪽 중간에
         }
     },
@@ -350,6 +350,7 @@ const questScripts = {
     },
     // 나머지 멤버들도 같은 형식으로 추가 (jaehee, ryo, sakuya 등)
 };
+
 
 
 
