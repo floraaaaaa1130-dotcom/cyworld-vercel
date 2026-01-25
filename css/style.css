@@ -271,30 +271,40 @@ button:active { transform: translateY(1px); box-shadow: none; }
 #text-wrapper { 
     flex-grow: 1; 
     position: relative; 
-    /* height: 100%; <-- 이 줄 삭제! 높이를 강제로 100%로 하면 버튼이 밀려날 수 있음 */
-    display: flex;           /* 플렉스 박스 적용 */
-    flex-direction: column;  /* 위에서 아래로 쌓이게 */
-    justify-content: space-between; /* 공간 배분 */
+    /* display: flex;        <-- 삭제 또는 주석 처리 */
+    /* flex-direction: column; <-- 삭제 또는 주석 처리 */
+    /* justify-content: space-between; <-- 삭제 또는 주석 처리 */
 }
 
-/* [수정] 대화 텍스트: 여백 조정 */
+/* [수정] 대화 텍스트: 인라인(Inline)으로 바꿔서 커서가 옆에 붙게 함 */
 #dialogue-text { 
+    display: inline;       /* 중요! block -> inline 변경 */
     font-size: 18px; 
     line-height: 1.6; 
     color: var(--text-color); 
     padding: 5px; 
-    margin-bottom: 10px; /* 버튼과 간격 띄우기 */
+    /* margin-bottom 제거 (inline에서는 위아래 마진이 안 먹힘) */
 }
 
-/* [수정] 커서 위치: 우측 하단 고정은 유지하되 조금 다듬기 */
+/* [수정] 커서: 절대 위치(absolute)를 풀고 글자 옆에 붙임 */
 #next-cursor {
-    position: absolute; 
-    bottom: 5px;     /* 바닥에서 살짝 띄우기 */
-    right: 5px; 
+    position: static;      /* 고정 위치 해제 */
+    display: inline-block; /* 글자처럼 취급 */
+    margin-left: 5px;      /* 텍스트와의 간격 */
+    vertical-align: baseline; /* 텍스트 줄 맞춤 */
+    
+    /* 기존 스타일 유지 */
     color: var(--deep-pink); 
     font-size: 14px;
     animation: blink 1s infinite;
 }
+
+/* [추가] 선택지와 입력창: 텍스트 바로 뒤가 아니라 '다음 줄'에 나오도록 */
+#choice-area, #input-area {
+    margin-top: 15px;      /* 텍스트와의 간격 */
+    display: block;        /* 줄바꿈 강제 */
+}
+
 /* [수정] 입력창 영역: 상단 여백 제거 (text-wrapper 흐름에 맡김) */
 #input-area { 
     margin-top: 5px; /* 필요하면 조절 */
@@ -573,6 +583,7 @@ button:active { transform: translateY(1px); box-shadow: none; }
     background-color: rgba(255, 192, 203, 0.15); /* 연한 핑크색 틴트 */
     background-image: url('../assets/effects/blossom.gif');
 }
+
 
 
 
