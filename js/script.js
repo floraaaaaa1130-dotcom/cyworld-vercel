@@ -3,7 +3,7 @@ const npcs = {
     sion: {
         name: "시온",
         sprite: "assets/images/sprites/sion.png",
-        portraits: "assets/images/portraits/sion_default.png",
+        portrait: "assets/images/portraits/sion_default.png",
         gifts: {
             love: ["커피", "에너지 드링크", "설탕", "회"],
             hate: ["블롭피쉬"]
@@ -24,14 +24,14 @@ const npcs = {
     riku: {
         name: "리쿠",
         sprite: "assets/images/sprites/riku.png",
-        portraits: "assets/images/portraits/riku_default.png",
+        portrait: "assets/images/portraits/riku_default.png",
         unknownReaction: { text: "엥? 그게 뭐예여? 먹는 거예여?", emotion: "shock" },
         gifts: {
-            : ["도토리", "초코케이크", "아이스크림"],
+            love: ["도토리", "초코케이크", "아이스크림"],
             hate: ["흙"]
         },
         giftReactions: {
-            : { text: "{user}(은)는 리쿠를 잘 아는구낭? 고마워영!", emotion: "happy" },
+            love: { text: "{user}(은)는 리쿠를 잘 아는구낭? 고마워영!", emotion: "happy" },
             hate: { text: "왜 리쿠한테 이런 거 줬어여? 리쿠 이거 싫어하는 거 몰랏어여? 속상해여 ㅠㅠ", emotion: "serious" },
             default: { text: "와아, 리쿠 넘 행복해영!", emotion: "default" }
         },
@@ -45,13 +45,13 @@ const npcs = {
     yushi: {
         name: "유우시",
         sprite: "assets/images/sprites/yushi.png",
-        portraits: "assets/images/portraits/yushi_default.png",
+        portrait: "assets/images/portraits/yushi_default.png",
         gifts: { // gifts 속성 추가 (코드 일관성을 위해 임의 추가함, 필요시 수정)
-             : ["스타푸르트", "블루 재즈"],
+             love: ["스타푸르트", "블루 재즈"],
              hate: ["쓰레기"]
         },
         giftReactions: {
-            : { text: "에 ! 저 주는 거예요 ? 너무 예쁘다 ~ {user} 저 이거 진짜 좋아해요 ! ^_^", emotion: "happy" },
+            love: { text: "에 ! 저 주는 거예요 ? 너무 예쁘다 ~ {user} 저 이거 진짜 좋아해요 ! ^_^", emotion: "happy" },
             hate: { text: "에..? 이건.. 너무해요 !", emotion: "serious" },
             default: { text: "고마워요 ! 잘 간직할게요 ^_^ 우리 기분 좋은 추억이 하나 더 생겼네요 ~", emotion: "default" }
         },
@@ -66,13 +66,13 @@ const npcs = {
     jaehee: { 
         name: "재희",
         sprite: "assets/images/sprites/jaehee.png",
-        portraits: "assets/images/portraits/jaehee_default.png",
+        portrait: "assets/images/portraits/jaehee_default.png",
         gifts: {
-            : ["행운의 점심", "에너지 드링크"],
+            love: ["행운의 점심", "에너지 드링크"],
             hate: ["쓰레기"]
         },
         giftReactions: {
-            : { text: "우와아!! 진짜 대박!! 저 이거 진짜 좋아하는데! 최고예요!!", emotion: "happy" },
+            love: { text: "우와아!! 진짜 대박!! 저 이거 진짜 좋아하는데! 최고예요!!", emotion: "happy" },
             hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
             default: { text: "오..! 와! 대박! 뭔지 모르겠지만 그래도 {user}(이)가 준 거니까 일단 잘 챙겨둘게요! 허허", emotion: "default" }
         },
@@ -89,9 +89,9 @@ const npcs = {
     ryo: { 
         name: "료", 
         sprite: "assets/images/sprites/ryo.png",
-        portraits: "assets/images/portraits/ryo_default.png",
+        portrait: "assets/images/portraits/ryo_default.png",
         gifts: {
-            : ["블롭피쉬", "에너지 드링크"],
+            love: ["블롭피쉬", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
         },
         giftReactions: {
@@ -111,7 +111,7 @@ const npcs = {
     sakuya: { 
         name: "사쿠야",
         sprite: "assets/images/sprites/sakuya.png",
-        portraits: "assets/images/portraits/sakuya_default.png",
+        portrait: "assets/images/portraits/sakuya_default.png",
         gifts: {
             love: ["핑크케이크"],
             hate: ["쓰레기", "잉어"]
@@ -507,6 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
