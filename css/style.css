@@ -393,14 +393,21 @@ button:active { transform: translateY(1px); box-shadow: none; }
 .npc-sprite {
     width: 64px; height: 64px;
     background-size: contain; background-repeat: no-repeat;
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    cursor: pointer; z-index: 10;
+    position: absolute; 
+    /* top: 50%; left: 50%;  <-- 이 줄을 지우세요! (중요) */
+    transform: translate(-50%, -50%); /* 이건 남겨두세요 (좌표를 캐릭터 중앙 기준으로 잡기 위해) */
+    cursor: pointer; 
+    z-index: 10;
 }
+
+/* 채집 아이템 */
 .collectible-item {
     width: 40px; height: 40px;
-    position: absolute; z-index: 5;
+    position: absolute; 
+    z-index: 20; /* [수정] 5 -> 20으로 변경 (캐릭터보다 위에 오게) */
     animation: bounce 1.5s infinite; cursor: pointer;
 }
+
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 @keyframes shake { 0% { transform: rotate(0deg); } 25% { transform: rotate(3deg); } 75% { transform: rotate(-3deg); } 100% { transform: rotate(0deg); } }
@@ -488,5 +495,6 @@ button:active { transform: translateY(1px); box-shadow: none; }
     transform: translateY(-2px);
     background-color: var(--deep-pink);
 }
+
 
 
