@@ -211,16 +211,6 @@ const randomDialogues = {
     sakuya: { 맑음: [{text:"빵 굽기 좋은 날씨네요.", emotion:"default"}], 비: [], 벚꽃: [] }
 };
 
-const npcKeywords = {
-    riku: {
-        "안녕": { text: "누나 오하욘 ! 리쿠 보러 왓어여?? 히히", emotion: "happy" },
-        "질투": { text: "왜 리쿠를 두고 먼저 갓어여?? 리쿠 서운해여 ㅠㅠ", emotion: "sad" }
-    },
-    yushi: {
-        "안녕": { text: "에.. 안녕하세요 ! 오늘 날씨가 참 맑지요 ? ^_^", emotion: "happy" }
-    }
-};
-
 const questLetters = {
     riku: "누나.. 리쿠는 쪼금 서운해여.. ㅠㅠ 나 이거 진짜 필요한뎅..",
     sion: "안녕하세요, 농장주님. 실은 제가 꼭 필요한 물건이 있는데.."
@@ -312,4 +302,23 @@ const endingScripts = {
     }
 };
 
+// [신규] 5일차 퀘스트 데이터 (편지 내용 + 요구 아이템 + 보상 대사)
+const questScripts = {
+    riku: {
+        letter: "누나.. 리쿠는 쪼금 서운해여.. ㅠㅠ 나 '딸기'가 진짜 먹고 싶은데.. 구해줄 수 이써여?",
+        item: "딸기", // 인벤토리의 아이템 이름과 정확히 일치해야 함
+        success: { text: "와아!! 진짜 구해왔네?! 역시 누나밖에 없어! 사랑해!!", emotion: "love" }
+    },
+    sion: {
+        letter: "안녕하세요, 농장주님. 실은 제가 '점토'가 꼭 필요한데.. 혹시 구해주실 수 있나요?",
+        item: "점토",
+        success: { text: "아, 이걸 정말 구해주셨군요. 당신의 성실함에 다시 한번 반했습니다.", emotion: "happy" }
+    },
+    yushi: {
+        letter: "저기.. 혹시 '우유' 남는 거 있으세요? 요리 연습을 하고 싶은데 재료가 없어서요..",
+        item: "우유",
+        success: { text: "우와! 덕분에 맛있는 거 만들 수 있겠어요! 짱이다!", emotion: "happy" }
+    },
+    // 나머지 멤버들도 같은 형식으로 추가 (jaehee, ryo, sakuya 등)
+};
 
