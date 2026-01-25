@@ -639,38 +639,53 @@ function giveGift(npcKey) {
     playSfx('success');
 }
 
-// [수정] 대화창 클릭 처리 (엔딩 팝업 연결)
+// [수정] 대화창 클릭 처리 (선물 후 빈 창 뜨는 오류 해결)
 document.getElementById('dialogue-overlay').onclick = (e) => {
+    // 버튼이나 입력창 클릭 시에는 반응하지 않음
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
 
+    // 1. 타자 치는 중이면 바로 완성
     if (isTyping) {
         finishTyping(); 
         return;
     }
 
-    // 다음 대사가 남아있으면
+    // 2. 다음 대사가 남아있으면 넘어감
     if (currentDialogueIndex < dialogueQueue.length - 1) {
         currentDialogueIndex++;
         showNextLine(lastInteractedNPC);
         return;
     }
 
-    // 선택지가 있으면 대기
+    // 3. 선택지가 있는 상황이면 클릭 막음
     if (dialogueQueue[currentDialogueIndex].choices) return;
 
-    // ★ [핵심] 엔딩 모드이고 마지막 대사라면 -> 결과 팝업 표시
+    // 4. 엔딩 모드면 최종 팝업 띄움
     if (gameState.isEnding) {
         showFinalPopup();
         return;
     }
 
-    // 일반 대화 종료 처리
+    // 5. [핵심 수정] 일반 대화 종료 처리
     const inputArea = document.getElementById('input-area');
+
+    // 이미 입력창이 떠 있는 상태에서 배경을 누르면 -> 창 닫기
     if (!inputArea.classList.contains('hidden')) {
         document.getElementById('dialogue-overlay').classList.add('hidden');
         return;
     }
 
+    // 대사가 끝났을 때: 입력창을 띄울지, 그냥 닫을지 결정
+    if (shouldShowInput) {
+        // 더 할 말이 있으면 (선물 안 줬거나 첫 대화 등) -> 입력창 표시
+        document.getElementById('next-cursor').classList.add('hidden');
+        inputArea.classList.remove('hidden');
+        document.getElementById('dialogue-text').innerText = ""; 
+    } else {
+        // 더 할 말이 없으면 (선물 준 직후 등) -> 대화창 닫기
+        document.getElementById('dialogue-overlay').classList.add('hidden');
+    }
+};
     document.getElementById('next-cursor').classList.add('hidden');
     inputArea.classList.remove('hidden');
     document.getElementById('dialogue-text').innerText = ""; 
@@ -861,4 +876,5 @@ function showFinalPopup() {
     
     btn.classList.remove('hidden');
 }
+
 
