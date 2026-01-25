@@ -91,6 +91,9 @@ function hideNameInput() {
     playSfx('click');
 }
 
+const setupOrder = ['sion', 'riku', 'yushi', 'jaehee', 'ryo', 'sakuya'];
+let currentSetupIndex = 0;
+
 function startGame() {
     const input = document.getElementById('player-name-input');
     const name = input.value.trim();
@@ -103,14 +106,63 @@ function startGame() {
     gameState.playerName = name;
     playSfx('success');
     
-    // ▼▼▼ [수정된 부분] ▼▼▼
-    // 1. 이름 입력창만 숨김
+    // 1. 이름 입력창 숨기기
     document.getElementById('name-input-area').classList.add('hidden');
+
+    // ★ [추가] 로고 이미지 숨기기 (공간 확보)
+    // (index.html에 있는 로고 이미지 태그를 찾아서 숨깁니다. ID가 없으면 img 태그를 찾습니다)
+    const logo = document.querySelector('img[src*="logo.png"]');
+    if (logo) logo.style.display = 'none';
     
-    // 2. 사진 설정 화면을 보여줌
-    document.getElementById('portrait-setup').style.display = 'block'; 
-    // ▲▲▲ [수정 끝] ▲▲▲
+    // 2. 사진 설정 화면 보여주기
+    document.getElementById('portrait-setup').style.display = 'block';
+    
+    // 3. 첫 번째 멤버(시온)부터 시작하도록 초기화
+    currentSetupIndex = 0;
+    updateSetupUI();
 }
+
+// [신규] 다음 멤버로 넘어가는 함수
+function nextMemberStep() {
+    playSfx('click');
+
+    // 현재 인덱스 증가
+    currentSetupIndex++;
+
+    // 모든 멤버 설정이 끝났으면 게임 시작
+    if (currentSetupIndex >= setupOrder.length) {
+        enterGame();
+    } else {
+        // 아니면 다음 멤버 보여주기
+        updateSetupUI();
+    }
+}
+
+// [신규] 현재 순서에 맞는 멤버만 화면에 보여주는 함수
+function updateSetupUI() {
+    // 1. 모든 단계 숨기기
+    setupOrder.forEach(member => {
+        document.getElementById(`step-${member}`).style.display = 'none';
+    });
+
+    // 2. 현재 멤버만 보여주기
+    const currentMember = setupOrder[currentSetupIndex];
+    document.getElementById(`step-${currentMember}`).style.display = 'block';
+
+    // 3. 타이틀 업데이트 (1/6 -> 2/6 ...)
+    document.getElementById('setup-title').innerText = `멤버 사진 설정 (${currentSetupIndex + 1}/${setupOrder.length})`;
+
+    // 4. 마지막 멤버(사쿠야)일 경우 버튼 텍스트 변경
+    const btn = document.getElementById('next-step-btn');
+    if (currentSetupIndex === setupOrder.length - 1) {
+        btn.innerText = "설정 완료 & 게임 시작!";
+        btn.style.backgroundColor = "#ff9999"; // 마지막 버튼은 색 다르게
+    } else {
+        btn.innerText = "다음 멤버 설정 >";
+        btn.style.backgroundColor = "var(--deep-green)";
+    }
+}
+
 function openModal(id) {
     document.getElementById(id).classList.remove('hidden');
     playSfx('click');
@@ -920,4 +972,5 @@ function enterGame() {
     updateUI(); 
     move('farm'); 
 }
+
 
