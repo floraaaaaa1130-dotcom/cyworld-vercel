@@ -528,27 +528,39 @@ function typeWriter(text, element, speed = 50) {
     }, speed);
 }
 
-// [교체] 타자 효과 종료 함수
+// [수정] 타자 효과 종료 후 처리 (대사 타입 분기)
 function finishTyping() {
     clearInterval(typingInterval);
     isTyping = false;
-    document.getElementById('dialogue-text').innerHTML = currentFullText; // 전체 텍스트 표시
+    document.getElementById('dialogue-text').innerHTML = currentFullText;
     
     const currentData = dialogueQueue[currentDialogueIndex];
-    
-    // 1. 선택지가 있는 경우 -> 선택지 표시
+    const inputArea = document.getElementById('input-area');
+    const choiceArea = document.getElementById('choice-area');
+    const nextCursor = document.getElementById('next-cursor');
+
+    // 초기화: 모든 입력 UI 일단 숨김
+    inputArea.classList.add('hidden');
+    choiceArea.classList.add('hidden');
+    nextCursor.classList.add('hidden');
+
+    // --- [1] 선택지형 대사 ---
     if (currentData.choices) {
         renderChoices(currentData.choices);
     } 
-    // 2. 선택지가 없는 경우
-    else {
-        // 커서 표시
-        document.getElementById('next-cursor').classList.remove('hidden');
+    // --- [2] 키워드 입력형 대사 ---
+    else if (currentData.type === "keyword") {
+        inputArea.classList.remove('hidden'); // 입력창 표시
+        document.getElementById('keyword-input').value = ""; // 입력란 비우기
+        document.getElementById('keyword-input').placeholder = "답변을 입력하세요...";
         
-        // ★ [수정] shouldShowInput이 true일 때만 입력창 표시 (엔딩 제외)
-        if (shouldShowInput && !gameState.isEnding) {
-            document.getElementById('input-area').classList.remove('hidden');
-        }
+        // 전송 버튼에 현재 대사 데이터(정답지)를 연결
+        const sendBtn = document.getElementById('send-btn');
+        sendBtn.onclick = () => checkKeywordAnswer(currentData);
+    }
+    // --- [3] 일반 대사 (그냥 읽고 넘기기) ---
+    else {
+        nextCursor.classList.remove('hidden'); // 다음 화살표 표시
     }
 }
 
@@ -582,21 +594,35 @@ function renderChoices(choices) {
 }
 
 // 키워드 대화 기능
-function sendKeyword(npcKey) {
-    const input = document.getElementById('keyword-input').value;
-    const keywordData = npcKeywords[npcKey];
+// [신규] 키워드 정답 체크 함수
+function checkKeywordAnswer(currentData) {
+    const inputVal = document.getElementById('keyword-input').value.trim();
+    if (!inputVal) return; // 빈칸이면 무시
 
-    if (keywordData && keywordData[input]) {
-        gameState.affinities[npcKey] += 10;
-        dialogueQueue = Array.isArray(keywordData[input]) ? keywordData[input] : [keywordData[input]];
-    } else {
-        dialogueQueue = [{ text: "음.. 무슨 말인지 잘 모르겠어요.", emotion: "shock" }];
+    let reaction = currentData.answers.default; // 기본 반응 설정
+
+    // 정답 키워드 찾기 (포함 여부 확인)
+    // 예: "노란"이 키워드라면 "노란색"이라고 입력해도 정답 처리
+    for (let key in currentData.answers) {
+        if (key !== "default" && inputVal.includes(key)) {
+            reaction = currentData.answers[key];
+            break;
+        }
     }
-    
-    document.getElementById('keyword-input').value = "";
+
+    // 호감도 반영
+    if (reaction.score) {
+        gameState.affinities[lastInteractedNPC] += reaction.score;
+    }
+
+    // 반응 대사 출력
+    // 배열로 만들어서 대사 큐에 넣음 (반응 후 대화가 이어지거나 끝남)
+    dialogueQueue = [reaction];
     currentDialogueIndex = 0;
+
+    // 입력창 숨기고 대사 출력
     document.getElementById('input-area').classList.add('hidden');
-    showNextLine(npcKey);
+    showNextLine(lastInteractedNPC);
 }
 
 // 선물하기 기능
@@ -639,32 +665,36 @@ function giveGift(npcKey) {
     playSfx('success');
 }
 
-// [수정] 대화창 클릭 처리 (선물 후 빈 창 뜨는 오류 해결)
+// [수정] 대화창 클릭 처리
 document.getElementById('dialogue-overlay').onclick = (e) => {
-    // 버튼이나 입력창 클릭 시에는 반응하지 않음
+    // 버튼, 입력창 클릭은 무시
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
 
-    // 1. 타자 치는 중이면 바로 완성
+    // 타자 치는 중이면 스킵
     if (isTyping) {
         finishTyping(); 
         return;
     }
 
-    // 2. 다음 대사가 남아있으면 넘어감
+    const currentData = dialogueQueue[currentDialogueIndex];
+
+    // ★ 중요: 선택지나 키워드 입력 상태면 클릭으로 넘어가지 않음
+    if (currentData.choices || currentData.type === "keyword") return;
+
+    // 다음 대사가 있으면 진행
     if (currentDialogueIndex < dialogueQueue.length - 1) {
         currentDialogueIndex++;
         showNextLine(lastInteractedNPC);
         return;
     }
 
-    // 3. 선택지가 있는 상황이면 클릭 막음
-    if (dialogueQueue[currentDialogueIndex].choices) return;
-
-    // 4. 엔딩 모드면 최종 팝업 띄움
+    // 대사가 끝났으면 창 닫기
     if (gameState.isEnding) {
         showFinalPopup();
-        return;
+    } else {
+        document.getElementById('dialogue-overlay').classList.add('hidden');
     }
+};
 
     // 5. [핵심 수정] 일반 대화 종료 처리
     const inputArea = document.getElementById('input-area');
@@ -872,6 +902,7 @@ function showFinalPopup() {
     
     btn.classList.remove('hidden');
 }
+
 
 
 
