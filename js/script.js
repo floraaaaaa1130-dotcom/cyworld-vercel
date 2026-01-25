@@ -9,8 +9,8 @@ const npcs = {
             shock: "assets/images/portraits/sion_serious.png"
         },
         gifts: {
-            love: ["별조각", "에너지 드링크"],
-            hate: ["쓰레기", "잉어"]
+            love: ["커피", "에너지 드링크", "초코케이크"],
+            hate: ["블롭피쉬"]
         },
         giftReactions: {
             love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
@@ -45,8 +45,8 @@ const npcs = {
         locations: { sunny: "shop", rainy: "saloon", blossom: "shop" },
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
-            shop: { top: "49%", left: "24%" },
-            saloon: { top: "62%", left: "14%" }
+            shop: { top: "53%", left: "24%" },
+            saloon: { top: "70%", left: "14%" }
         }
     },
     yushi: {
@@ -70,7 +70,7 @@ const npcs = {
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
             forest: { top: "28%", left: "61%" }, // 회관에서는 오른쪽 위에
-            saloon: { top: "62%", left: "20%" }
+            saloon: { top: "70%", left: "20%" }
         }
     },
     jaehee: { 
@@ -94,8 +94,8 @@ const npcs = {
         locations: { sunny: "square", rainy: "saloon", blossom: "shop" },
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
-            shop: { top: "42%", left: "64%" }, 
-            saloon: { top: "63%", left: "30%" },
+            shop: { top: "47%", left: "64%" }, 
+            saloon: { top: "70%", left: "80%" },
             square: { top: "41%", left: "7%" }
         }
     },
@@ -121,8 +121,8 @@ const npcs = {
         locations: { sunny: "square", rainy: "hall", blossom: "square" }, 
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
-            hall: { top: "40%", left: "70%" },
-            square: { top: "48%", left: "48%" }
+            hall: { top: "66%", left: "49%" },
+            square: { top: "54%", left: "48%" }
         }
     },
     
@@ -148,7 +148,7 @@ const npcs = {
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
             forest: { top: "62%", left: "48%" },
-            saloon: { top: "65%", left: "75%" },
+            saloon: { top: "70%", left: "38%" },
             square: { top: "25%", left: "43%" }
         }
     }
@@ -353,6 +353,7 @@ const questScripts = {
     },
     // 나머지 멤버들도 같은 형식으로 추가 (jaehee, ryo, sakuya 등)
 };
+
 
 
 
