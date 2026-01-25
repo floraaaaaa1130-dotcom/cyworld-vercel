@@ -407,4 +407,10 @@ button:active { transform: translateY(1px); box-shadow: none; }
 .inventory-grid.delete-mode .item-slot { border-color: red !important; animation: shake 0.3s infinite; }
 #delete-toggle-btn { position: absolute; bottom: 15px; right: 15px; font-size: 20px; cursor: pointer; }
 
+/* [필수 수정] 모든 팝업 숨김 처리 강제 적용 */
+.hidden {
+    display: none !important;
+}
+
+
 
