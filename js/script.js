@@ -298,84 +298,6 @@ const affinityDialogues = {
     // 유우시, 재희, 료, 사쿠야도 위와 똑같은 구조(low/mid/high -> 맑음/비/벚꽃)로 만드시면 됩니다.
 };
 
-// const randomDialogues = {
-    riku: {
-        맑음: [
-            // 일반 대화
-            { text: "오늘 날씨 짱 조타 그져??", emotion: "happy" },
-            { text: "오하욘 ! 리쿠 보러 왓어여?? 히히", emotion: "happy" },
-            
-            // ★ 선택지형 대화 (추가됨)
-            { 
-                text: "리쿠가 제일 조아하는 색깔이 뭐게~요?", 
-                emotion: "happy",
-                choices: [
-                    { label: "노란색?", score: 10, reply: "딩동댕! 병아리 가타서 조아해여!" },
-                    { label: "검은색?", score: -5, reply: "우으.. 칙칙해서 시러여.." }
-                ]
-            },
-            { 
-                text: "누나는 무슨 색이 제일 조아여?", 
-                emotion: "shy",
-                type: "keyword", // ★ 여기가 핵심! 키워드 입력 타입 지정
-                answers: {
-                    "노랑": { text: "와! 저도 노란색 제일 좋아하는데! 통했네요!", emotion: "happy", score: 10 },
-                    "노란": { text: "와! 저도 노란색 제일 좋아하는데! 통했네요!", emotion: "happy", score: 10 },
-                    "default": { text: "아~ 그 색을 좋아하는구낭", emotion: "default", score: 0 }
-                }
-            }
-        ],
-        비: [{ text: "비 오는 거 시러여..", emotion: "sad" }],
-        벚꽃: [{ text: "와 핑크색 눈이 내리는 거 가타여 !!", emotion: "happy" }]
-    },
-    
-    sion: {
-        맑음: [
-            { text: "안녕하세요. 산책 나오셨어요? 저는 할 일이 좀 남아서요. 먼저 가보세요.", emotion: "happy" },
-            { text: "안녕하세요. 농장 일은 적응되셨나요? 무리하지 마시고 천천히 하세요.", emotion: "happy" },
-            
-            // ★ 선택지형 대화 (추가됨)
-            { 
-                text: "이런 날씨엔 어떤 차를 마시는 게 좋을까요?", 
-                emotion: "default",
-                choices: [
-                    { label: "따뜻한 홍차", score: 10, reply: "훌륭한 선택이군요. 향이 좋죠." },
-                    { label: "시원한 콜라", score: 0, reply: "흐음.. 가끔은 탄산도 나쁘지 않겠네요." }
-                ]
-            }
-        ],
-        비: [{ text: "빗소리가 참 좋네요.", emotion: "happy" }],
-        벚꽃: [{ text: "꽃잎이 떨어지는 속도가 초속 5센티미터래요.", emotion: "serious" }]
-    },
-    
-    yushi: { 맑음:
-        [
-            {text: "농장주님 ! 오늘도 열심히 일하고 오시는 길인가요 ? 대단해요 !", emotion:"default"},
-            {text: "저는 가끔 숲속에서 춤을 추곤 해요. 누군가 볼까 봐 조금 부끄럽지만요 ^_^", emotion: "happy" },
-            {text: "위시듀밸리의 밤하늘은 별이 참 잘 보여서 좋지요 ? 꼭 저를 비춰주는 것 같아요 !", emotion: "happy" },
-        ],
-
-            비: [],
-            벚꽃: [] },
-    
-    jaehee: { 맑음: [{text:"허허 날씨 좋군요!", emotion:"happy"}],
-             비: [],
-             벚꽃: [] },
-    
-    ryo: { 맑음: [{text:"야하~ 날씨 대박!", emotion:"happy"}],
-          비: [],
-          벚꽃: [] },
-    
-    sakuya: { 맑음: [{text:"빵 굽기 좋은 날씨네요.", emotion:"default"}],
-             비: [],
-             벚꽃: [] }
-};
-
-const questLetters = {
-    riku: "누나.. 리쿠는 쪼금 서운해여.. ㅠㅠ 나 이거 진짜 필요한뎅..",
-    sion: "안녕하세요, 농장주님. 실은 제가 꼭 필요한 물건이 있는데.."
-};
-
 // 3. 장소 및 레시피 데이터
 const locations = {
     farm: { name: "농장", bg: "assets/images/backgrounds/farm.png", items: ["수선화", "흙", "딸기"] },
@@ -578,6 +500,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
