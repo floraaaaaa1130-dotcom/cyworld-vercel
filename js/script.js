@@ -17,11 +17,11 @@ const npcs = {
             hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
             default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
         },
-        locations: { sunny: "hall", rainy: "hall" },
+        locations: { sunny: "hall", rainy: "hall", blossom: "forest" },
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
             hall: { top: "75%", left: "25%" },
-            square: { top: "50%", left: "30%" } // 광장에서는 왼쪽 중간에
+            forest: { top: "48%", left: "16%" }
         }
     },
     riku: {
@@ -42,11 +42,11 @@ const npcs = {
             hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
             default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
         },
-        locations: { sunny: "shop", rainy: "shop" },
+        locations: { sunny: "shop", rainy: "saloon", blossom: "shop" },
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
-            hall: { top: "40%", left: "70%" }, // 회관에서는 오른쪽 위에
-            square: { top: "50%", left: "30%" } // 광장에서는 왼쪽 중간에
+            shop: { top: "49%", left: "24%" },
+            saloon: { top: "62%", left: "14%" }
         }
     },
     yushi: {
@@ -66,11 +66,11 @@ const npcs = {
             hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
             default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
         },
-        locations: { sunny: "forest", rainy: "saloon" },
+        locations: { sunny: "forest", rainy: "saloon", blossom: "forest" },
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
-            hall: { top: "40%", left: "70%" }, // 회관에서는 오른쪽 위에
-            square: { top: "50%", left: "30%" } // 광장에서는 왼쪽 중간에
+            forest: { top: "28%", left: "61%" }, // 회관에서는 오른쪽 위에
+            saloon: { top: "62%", left: "20%" }
         }
     },
     jaehee: { 
@@ -91,13 +91,15 @@ const npcs = {
             hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
             default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
         },
-        locations: { sunny: "square", rainy: "saloon" },
+        locations: { sunny: "square", rainy: "saloon", blossom: "shop" },
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
-            hall: { top: "40%", left: "70%" }, // 회관에서는 오른쪽 위에
-            square: { top: "50%", left: "30%" } // 광장에서는 왼쪽 중간에
+            shop: { top: "42%", left: "64%" }, 
+            saloon: { top: "63%", left: "30%" },
+            square: { top: "41%", left: "7%" }
         }
     },
+                    
     ryo: { 
         name: "료", 
         sprite: "assets/images/sprites/ryo.png",
@@ -116,13 +118,14 @@ const npcs = {
             hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
             default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
         },
-        locations: { sunny: "square", rainy: "saloon" }, 
+        locations: { sunny: "square", rainy: "hall", blossom: "square" }, 
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
-            hall: { top: "40%", left: "70%" }, // 회관에서는 오른쪽 위에
-            square: { top: "50%", left: "30%" } // 광장에서는 왼쪽 중간에
+            hall: { top: "40%", left: "70%" },
+            square: { top: "48%", left: "48%" }
         }
     },
+    
     sakuya: { 
         name: "사쿠야",
         sprite: "assets/images/sprites/sakuya.png",
@@ -141,11 +144,12 @@ const npcs = {
             hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
             default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
         },
-        locations: { sunny: "square", rainy: "saloon" }, 
+        locations: { sunny: "square", rainy: "saloon", blssom: "forest" }, 
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
-            hall: { top: "40%", left: "70%" }, // 회관에서는 오른쪽 위에
-            square: { top: "50%", left: "30%" } // 광장에서는 왼쪽 중간에
+            forest: { top: "62%", left: "48%" },
+            saloon: { top: "65%", left: "75%" },
+            square: { top: "25%", left: "43%" }
         }
     }
 };
@@ -193,7 +197,6 @@ const dailyScripts = {
         ]
     }
 };
-
 
 const randomDialogues = {
     riku: {
@@ -350,6 +353,7 @@ const questScripts = {
     },
     // 나머지 멤버들도 같은 형식으로 추가 (jaehee, ryo, sakuya 등)
 };
+
 
 
 
