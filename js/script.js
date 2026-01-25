@@ -5,13 +5,13 @@ const npcs = {
         sprite: "assets/images/sprites/sion.png",
         portraits: "assets/images/portraits/sion_default.png",
         gifts: {
-            love: ["커피", "에너지 드링크", "설탕", "회",],
+            love: ["커피", "에너지 드링크", "설탕", "회"],
             hate: ["블롭피쉬"]
         },
         giftReactions: {
-            love: { text: "와... 이거 제가 제일 좋아하는 건데. 어떻게 아셨어요? 진짜 감동이다. 고마워요."},
-            hate: { text: "마음은 고맙지만... 이건 좀 처치하기 곤란하네요."},
-            default: { text: "오, 선물인가요? 고맙습니다."}
+            love: { text: "와... 이거 제가 제일 좋아하는 건데. 어떻게 아셨어요? 진짜 감동이다. 고마워요.", emotion: "default" },
+            hate: { text: "마음은 고맙지만... 이건 좀 처치하기 곤란하네요.", emotion: "default" },
+            default: { text: "오, 선물인가요? 고맙습니다.", emotion: "default" }
         },
         unknownReaction: { text: "음? 그게 무슨 말인가요? 제가 모르는 분야군요.", emotion: "default" },
         locations: { sunny: "hall", rainy: "hall", blossom: "forest" },
@@ -257,10 +257,11 @@ const randomDialogues = {
         비: [{ text: "비 오는 거 시러여..", emotion: "sad" }],
         벚꽃: [{ text: "와 핑크색 눈이 내리는 거 가타여 !!", emotion: "happy" }]
     },
+    
     sion: {
         맑음: [
-            { text: "안녕하세요. 산책 나오셨어요?\n\n저는 할 일이 좀 남아서요. 먼저 가보세요.", emotion: "happy" },
-            { text: "안녕하세요. 농장 일은 적응되셨나요?\n\n무리하지 마시고 천천히 하세요.", emotion: "happy" },
+            { text: "안녕하세요. 산책 나오셨어요? 저는 할 일이 좀 남아서요. 먼저 가보세요.", emotion: "happy" },
+            { text: "안녕하세요. 농장 일은 적응되셨나요? 무리하지 마시고 천천히 하세요.", emotion: "happy" },
             
             // ★ 선택지형 대화 (추가됨)
             { 
@@ -506,6 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
