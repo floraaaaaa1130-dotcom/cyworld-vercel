@@ -15,10 +15,13 @@
 }
 
 @font-face {
-    font-family: 'DungGeunMo';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+    font-family: 'MyGameFont'; /* 기본 게임 폰트 이름 */
+    src: url('../assets/fonts/main_font.ttf'); /* 파일명 정확히 맞출 것 */
+}
+
+@font-face {
+    font-family: 'MyLetterFont'; /* 편지용 폰트 이름 */
+    src: url('../assets/fonts/letter_font.ttf');
 }
 
 body {
@@ -28,6 +31,11 @@ body {
     display: flex; justify-content: center; align-items: center;
     height: 100vh; overflow: hidden;
     cursor: url('../assets/images/ui/star_cursor.png'), auto;
+}
+
+/* 편지 본문에만 손글씨 폰트 적용 */
+#letter-text {
+    font-family: 'MyLetterFont', serif !important;
 }
 
 /* 2. 게임 메인 컨테이너 */
@@ -117,6 +125,19 @@ button:active { transform: translateY(1px); box-shadow: none; }
     transition: transform 0.2s;
 }
 #inventory-icon:hover { transform: scale(1.1) rotate(10deg); }
+
+/* [수정 1] 편지 팝업 완벽한 중앙 정렬 */
+#letter-modal {
+    display: flex;           /* 플렉스 박스 사용 */
+    justify-content: center; /* 가로 중앙 */
+    align-items: center;     /* 세로 중앙 */
+    /* 기존에 혹시 top, left 등이 있다면 무시되도록 설정 */
+}
+.letter-paper {
+    /* 기존 margin이 있다면 제거해서 정중앙에 오게 함 */
+    margin: 0 !important; 
+    position: relative; /* 위치 잡기 */
+}
 
 /* 7. 인벤토리 팝업 (중앙 정렬 수정됨) */
 #inventory-modal {
@@ -310,6 +331,12 @@ button:active { transform: translateY(1px); box-shadow: none; }
     border: none; border-radius: 8px; box-shadow: 0 3px 0 var(--border-pink);
 }
 
+/* [수정 3] 엔딩 제목 폰트 크기 줄이기 */
+#ending-title {
+    font-size: 24px; /* 기존보다 작게 조절 (원하는 크기로 변경 가능) */
+    margin-bottom: 15px;
+}
+
 #ending-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     display: flex; justify-content: center; align-items: center;
@@ -336,27 +363,174 @@ button:active { transform: translateY(1px); box-shadow: none; }
     border: 3px solid var(--border-pink); border-radius: 10px;
     width: 300px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
-#item-info-modal {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2500;
+/* [수정 2] 아이템 정보 팝업 내부 요소 중앙 정렬 */
+#item-info-modal .modal-content {
+    display: flex;
+    flex-direction: column; /* 세로로 배치 */
+    align-items: center;    /* 가로축 기준 중앙 정렬 */
+    text-align: center;     /* 텍스트 중앙 정렬 */
 }
-.close-btn { margin-top: 15px; background-color: var(--text-color); color: white; border: none; padding: 8px 15px; }
-.hidden { display: none !important; }
+#info-image {
+    margin: 10px auto;      /* 이미지 위아래 여백 + 좌우 자동 중앙 */
+    display: block;
+}
+
+/* [수정 4] 커스텀 알림창(Alert) 스타일 (새로 추가) */
+#alert-modal {
+    z-index: 3000; /* 제일 위에 뜨도록 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.alert-content {
+    background: white;
+    border: 4px double var(--deep-green);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    min-width: 250px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.alert-content p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+}
 
 /* NPC 및 아이템 */
 .npc-sprite {
     width: 64px; height: 64px;
     background-size: contain; background-repeat: no-repeat;
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    cursor: pointer; z-index: 10;
+    position: absolute; 
+    transform: translate(-50%, -50%);
+    cursor: pointer; 
+    z-index: 10;
 }
+
+/* 채집 아이템 */
 .collectible-item {
     width: 40px; height: 40px;
-    position: absolute; z-index: 5;
+    position: absolute; 
+    z-index: 20; /* [수정] 5 -> 20으로 변경 (캐릭터보다 위에 오게) */
     animation: bounce 1.5s infinite; cursor: pointer;
 }
+
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 @keyframes shake { 0% { transform: rotate(0deg); } 25% { transform: rotate(3deg); } 75% { transform: rotate(-3deg); } 100% { transform: rotate(0deg); } }
 .inventory-grid.delete-mode .item-slot { border-color: red !important; animation: shake 0.3s infinite; }
 #delete-toggle-btn { position: absolute; bottom: 15px; right: 15px; font-size: 20px; cursor: pointer; }
+
+/* [필수 수정] 모든 팝업 숨김 처리 강제 적용 */
+.hidden {
+    display: none !important;
+}
+
+/* =========================================================
+   [최종 수정 요청 반영] 팝업창 중앙 정렬 & 오버레이 설정
+   (아이템 정보, 알림창, 편지함 적용 / 잠자기 알림 제외)
+   ========================================================= */
+
+/* 1. 팝업 컨테이너: 화면 전체를 덮고 내용을 정중앙에 배치 */
+#alert-modal,
+#letter-modal,
+#item-info-modal {
+    position: absolute;  /* 게임 화면 기준 절대 위치 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;        /* 화면 꽉 채우기 (배경 역할) */
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은 배경 */
+    display: flex;       
+    justify-content: center; /* 가로 중앙 */
+    align-items: center;     /* 세로 중앙 */
+    z-index: 3000;       /* 다른 요소들보다 제일 위에 뜨도록 */
+}
+
+/* 2. 팝업 내부 하얀 박스 디자인 (통일) */
+#alert-modal .alert-content,
+#letter-modal .modal-content,
+#item-info-modal .info-content {
+    background-color: white;
+    padding: 25px 30px;
+    border: 3px solid var(--border-pink);
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3); /* 그림자 효과 */
+    
+    /* 크기 및 정렬 */
+    min-width: 280px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin: 0 !important; /* 기존 마진 강제 제거 */
+}
+
+/* 3. 내부 텍스트 스타일 */
+#alert-msg, 
+#letter-text, 
+#info-desc {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+/* 4. 팝업 내 버튼 스타일 */
+#alert-modal button,
+#letter-modal button,
+#item-info-modal button {
+    background-color: var(--pastel-pink);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'DungGeunMo';
+    font-size: 16px;
+    box-shadow: 0 4px 0 var(--border-pink); /* 버튼 입체감 */
+    transition: transform 0.1s;
+    margin-top: 5px;
+}
+
+/* 버튼 마우스 올렸을 때 효과 */
+#alert-modal button:hover,
+#letter-modal button:hover,
+#item-info-modal button:hover {
+    transform: translateY(-2px);
+    background-color: var(--deep-pink);
+}
+
+/* =========================================
+   [추가] 날씨 효과 오버레이
+   ========================================= */
+
+/* 공통 설정: 위치 잡기 및 클릭 통과시키기 */
+#location-view.weather-rain::after,
+#location-view.weather-blossom::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-size: cover;      /* 화면에 꽉 차게 */
+    background-position: center;
+    pointer-events: none;        /* 효과 위를 클릭해도 아래 아이템이 눌리도록 설정 */
+    z-index: 5;                  /* 배경(0)보다 위, NPC(10)보다 아래 */
+}
+
+/* 1. 비 오는 날: 어두운 배경 + 비 GIF */
+#location-view.weather-rain::after {
+    background-color: rgba(0, 0, 0, 0.3); /* 검은색 30% 투명도 (화면 어둡게) */
+    background-image: url('../assets/images/effects/rain.gif');
+    opacity: 0.8; /* 너무 진하면 조절하세요 */
+}
+
+/* 2. 벚꽃 날리는 날: 분홍빛 배경 + 벚꽃 GIF */
+#location-view.weather-blossom::after {
+    background-color: rgba(255, 192, 203, 0.15); /* 연한 핑크색 틴트 */
+    background-image: url('../assets/images/effects/blossom.gif');
+    /* mix-blend-mode: screen; */ /* 벚꽃 GIF 배경이 검정이면 이 주석을 푸세요 */
+}
 

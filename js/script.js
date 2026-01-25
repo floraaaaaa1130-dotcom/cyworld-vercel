@@ -9,15 +9,21 @@ const npcs = {
             shock: "assets/images/portraits/sion_serious.png"
         },
         gifts: {
-            love: ["별조각", "에너지 드링크"],
-            hate: ["쓰레기", "잉어"]
+            love: ["커피", "에너지 드링크", "설탕", "회"],
+            hate: ["블롭피쉬"]
         },
         giftReactions: {
-            love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
+            love: { text: "와... 고마워요. 마침 집중력이 떨어지던 참이었는데, 덕분에 힘이 나네요!", emotion: "happy" },
             hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
             default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
         },
-        locations: { sunny: "hall", rainy: "hall" }
+        unknownReaction: { text: "음? 그게 무슨 말인가요? 제가 모르는 분야군요.", emotion: "default" },
+        locations: { sunny: "hall", rainy: "hall", blossom: "forest" },
+        // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
+        positions: {
+            hall: { top: "75%", left: "25%" },
+            forest: { top: "48%", left: "16%" }
+        }
     },
     riku: {
         name: "리쿠",
@@ -28,16 +34,22 @@ const npcs = {
             sad: "assets/images/portraits/riku_sad.png",
             shock: "assets/images/portraits/riku_shock.png"
         },
+        unknownReaction: { text: "엥? 그게 뭐예여? 먹는 거예여?", emotion: "shock" },
         gifts: {
-            love: ["별조각", "에너지 드링크"],
-            hate: ["쓰레기", "잉어"]
+            love: ["도토리", "초코케이크", "아이스크림"],
+            hate: ["흙"]
         },
         giftReactions: {
-            love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
-            hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
-            default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
+            love: { text: "{user}(은)는 리쿠를 잘 아는구낭? 고마워영!", emotion: "happy" },
+            hate: { text: "왜 리쿠한테 이런 거 줬어여? 리쿠 이거 싫어하는 거 몰랏어여? 속상해여 ㅠㅠ", emotion: "serious" },
+            default: { text: "와아, 리쿠 넘 행복해영!", emotion: "default" }
         },
-        locations: { sunny: "shop", rainy: "shop" }
+        locations: { sunny: "shop", rainy: "saloon", blossom: "shop" },
+        // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
+        positions: {
+            shop: { top: "75%", left: "24%" },
+            saloon: { top: "80%", left: "16%" }
+        }
     },
     yushi: {
         name: "유우시",
@@ -48,15 +60,21 @@ const npcs = {
             shock: "assets/images/portraits/yushi_shock.png"
         },
         gifts: { // gifts 속성 추가 (코드 일관성을 위해 임의 추가함, 필요시 수정)
-             love: ["별조각"],
+             love: ["스타푸르트", "블루 재즈"],
              hate: ["쓰레기"]
         },
         giftReactions: {
-            love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
-            hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
-            default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
+            love: { text: "에 ! 저 주는 거예요 ? 너무 예쁘다 ~ {user} 저 이거 진짜 좋아해요 ! ^_^", emotion: "happy" },
+            hate: { text: "에..? 이건.. 너무해요 !", emotion: "serious" },
+            default: { text: "고마워요 ! 잘 간직할게요 ^_^ 우리 기분 좋은 추억이 하나 더 생겼네요 ~", emotion: "default" }
         },
-        locations: { sunny: "forest", rainy: "saloon" }
+        unknownReaction: { text: "에.. 죄송해요. 무슨 말씀이신지 잘 모르겠어요.. ^_^;", emotion: "shock" },
+        locations: { sunny: "forest", rainy: "saloon", blossom: "forest" },
+        // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
+        positions: {
+            forest: { top: "28%", left: "61%" }, // 회관에서는 오른쪽 위에
+            saloon: { top: "80%", left: "20%" }
+        }
     },
     jaehee: { 
         name: "재희",
@@ -68,16 +86,24 @@ const npcs = {
             shock: "assets/images/portraits/jaehee_shock.png"
         },
         gifts: {
-            love: ["별조각", "에너지 드링크"],
-            hate: ["쓰레기", "잉어"]
+            love: ["행운의 점심", "에너지 드링크"],
+            hate: ["쓰레기"]
         },
         giftReactions: {
-            love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
+            love: { text: "우와아!! 진짜 대박!! 저 이거 진짜 좋아하는데! 최고예요!!", emotion: "happy" },
             hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
-            default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
+            default: { text: "오..! 와! 대박! 뭔지 모르겠지만 그래도 {user}(이)가 준 거니까 일단 잘 챙겨둘게요! 허허", emotion: "default" }
         },
-        locations: { sunny: "square", rainy: "saloon" } 
+        unknownReaction: { text: "에.. 죄송해요. 무슨 말씀이신지 잘 모르겠어요.. ^_^;", emotion: "shock" },
+        locations: { sunny: "square", rainy: "saloon", blossom: "shop" },
+        // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
+        positions: {
+            shop: { top: "57%", left: "64%" }, 
+            saloon: { top: "80%", left: "80%" },
+            square: { top: "41%", left: "7%" }
+        }
     },
+                    
     ryo: { 
         name: "료", 
         sprite: "assets/images/sprites/ryo.png",
@@ -88,16 +114,23 @@ const npcs = {
             shock: "assets/images/portraits/ryo_shock.png"
         },
         gifts: {
-            love: ["별조각", "에너지 드링크"],
+            love: ["블롭피쉬", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
         },
         giftReactions: {
-            love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
-            hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
+            love: { text: "야하항~! 진짜 최고! 이거 완전 희귀한 건데! 고마워료!", emotion: "happy" },
+            hate: { text: "오, 센스 대박! 감사해료!", emotion: "serious" },
             default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
         },
-        locations: { sunny: "square", rainy: "saloon" } 
+        unknownReaction: { text: "에.. 죄송해요. 무슨 말씀이신지 잘 모르겠어요.. ^_^;", emotion: "shock" },
+        locations: { sunny: "square", rainy: "hall", blossom: "square" }, 
+        // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
+        positions: {
+            hall: { top: "82%", left: "49%" },
+            square: { top: "54%", left: "48%" }
+        }
     },
+    
     sakuya: { 
         name: "사쿠야",
         sprite: "assets/images/sprites/sakuya.png",
@@ -108,15 +141,22 @@ const npcs = {
             shock: "assets/images/portraits/sakuya_shock.png"
         },
         gifts: {
-            love: ["별조각", "에너지 드링크"],
+            love: ["핑크케이크"],
             hate: ["쓰레기", "잉어"]
         },
         giftReactions: {
-            love: { text: "이거 제가 찾던 건데.. 고마워요, 정말 잘 쓸게요.", emotion: "happy" },
-            hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
-            default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
+            love: { text: "고마워요. 특히 이 딸기... 향이 너무 달콤해서 기분이 좋아졌어요", emotion: "happy" },
+            hate: { text: "아... 진짜 죄송한데... 이건 다른 사람 주는 게 어때요?", emotion: "serious" },
+            default: { text: "에- 엄청 다정하네요. 이런 걸 다 챙겨주고. 고맙습니다.", emotion: "default" }
         },
-        locations: { sunny: "square", rainy: "saloon" } 
+        unknownReaction: { text: "에.. 죄송해요. 무슨 말씀이신지 잘 모르겠어요.. ^_^;", emotion: "shock" },
+        locations: { sunny: "square", rainy: "saloon", blossom: "forest" }, 
+        // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
+        positions: {
+            forest: { top: "85%", left: "50%" },
+            saloon: { top: "75%", left: "41%" },
+            square: { top: "25%", left: "43%" }
+        }
     }
 };
 
@@ -125,24 +165,70 @@ const dailyScripts = {
     // 1일차 대사 (배열로 변경)
     1: {
         riku: [
-            { text: "누나 안냥 ! 새로 이사 왓어여??", emotion: "happy" },
-            { text: "리쿠는 리쿠에여 잘 부타캐여 히히", emotion: "happy" }
+            { text: "누나 안녕 ! 새로 이사 왓어여??", emotion: "happy" },
             { 
-                text: "누나는 무슨 색이 제일 조아여?", 
-                emotion: "shy",
-                type: "keyword", // ★ 여기가 핵심! 키워드 입력 타입 지정
-                answers: {
-                    // 키워드 : { 반응 대사 데이터 }
-                    "노랑": { text: "와! 저도 노란색 제일 좋아하는데! 통했네요!", emotion: "happy", score: 10 },
-                    "노란": { text: "와! 저도 노란색 제일 좋아하는데! 통했네요!", emotion: "happy", score: 10 },
-                    // 그 외 답변일 때
-                    "default": { text: "아~ 그 색을 좋아하는구낭", emotion: "default", score: 0 }
-                }
+                text: "저는 리쿠고 상점 알바생이에여 히히 리쿠 봣으니 누나는 운이 좋당!", 
+                emotion: "happy",
+                choices: [
+                    { label: "리쿠 귀엽네", score: 10, reply: "에? 진짜용?? ㅎㅎㅎㅎㅎ" },
+                    { label: "자주 놀러올게요!", score: 5, reply: "넹! 누나는 특별히 사과 하나 더 줄게용" }
+                ]
+            },
         ],
+        
+        sion: [
+            { text: "위시듀밸리에 환영해요! 저는 시온이라고 합니다. 도움이 필요하면 언제든 말씀하세요. 저는 보통 마을회관에 있어요~", emotion: "happy" }
+        ],
+        
         yushi: [
             { text: "에.. 새로 오신 농장주님이시군요 ?", emotion: "default" },
-            { text: "만나서 반가워요 ! 모르는 게 있으면 물어보세요.", emotion: "happy" }
+            { text: "만나서 반가워요 !", emotion: "happy" },
+            { 
+                text: "숲이 참 조용하고 좋지요 ? ^_^", 
+                emotion: "happy",
+                choices: [
+                    { label: "여기서 뭐하고 계세요?", score: 5, reply: "아무것도 하지 않아요 ! 사람이 없는 곳이 마음이 편해서요 ^_^" },
+                    { label: "밤에 별 보면 예쁠 것 같아요", score: 10, reply: "맞아요 ! 종종 밤에 와서 하늘을 보는데 정말 예뻐요 ^_^ 다음에 같이 봐요 ~" }
+                ]
+            },
+        ],
+
+                jaehee: [
+            { text: "안녕하세요!! 저는 재희라고 해요!", emotion: "default" },
+            { 
+                text: "인상이 정말 좋으시네요! ㅎㅎ", 
+                emotion: "happy",
+                choices: [
+                    { label: "노래 한 곡 부탁해요", score: 10, reply: "아무것도 하지 않아요 ! 사람이 없는 곳이 마음이 편해서요 ^_^" },
+                    { label: "반가워요 재희님", score: 5, reply: "맞아요 ! 종종 밤에 와서 하늘을 보는데 정말 예뻐요 ^_^ 다음에 같이 봐요 ~" }
+                ]
+            },
+        ],
+
+        ryo: [
+            { text: "오, 안녕하세요! 저는 료입니다!", emotion: "default" },
+            { 
+                text: "마을에 신기한 거 찾으면 저한테 제일 먼저 보여주셔야 해요! 제가 분석해드릴게요!", 
+                emotion: "happy",
+                choices: [
+                    { label: "같이 찾으러 갈래?", score: 10, reply: "아무것도 하지 않아요 ! 사람이 없는 곳이 마음이 편해서요 ^_^" },
+                    { label: "료는 똑똑하구나", score: 5, reply: "맞아요 ! 종종 밤에 와서 하늘을 보는데 정말 예뻐요 ^_^ 다음에 같이 봐요 ~" }
+                ]
+            },
+        ],
+
+        sakuya: [
+            { text: "에- 안녕하세요. 갓 구운 빵 드셔보실래요?", emotion: "default" },
+            { 
+                text: "아 저는 사쿠야예요. 스타주점 안에 있는 빵집에서 일하고 있어요. 빵 사러 마니 와주세요.", 
+                emotion: "happy",
+                choices: [
+                    { label: "고마워! 잘 먹을게", score: 5, reply: "아무것도 하지 않아요 ! 사람이 없는 곳이 마음이 편해서요 ^_^" },
+                    { label: "사쿠빵쨩ㅎㅎ", score: 10, reply: "맞아요 ! 종종 밤에 와서 하늘을 보는데 정말 예뻐요 ^_^ 다음에 같이 봐요 ~" }
+                ]
+            },
         ]
+        
     },
     // 4일차 대사 (한 줄이어도 배열로 감싸는 것을 추천)
     4: {
@@ -151,13 +237,17 @@ const dailyScripts = {
             { text: "일 생각은 잠시 잊어도 돼요 !", emotion: "happy" }
         ]
     },
+    
     // ★ 호감도 50 이상일 때 나오는 특수 대사
     "highAffinity": {
         riku: [
             { text: "누나 보니까 리쿠 넘 기부니 조타 !", emotion: "happy" },
             { text: "오늘두 리쿠랑 마니 놀아조야 대여 히히", emotion: "happy" }
         ],
-        // 다른 캐릭터 예시 (필요하면 추가)
+        yushi: [
+            { text: "농장주님 ! 오늘따라 더 멋져 보이네요 ! ..에 ! 물론 진심이지요 ^_^", emotion: "happy" },
+            { text: "가끔은 도시 생활이 그립기도 하지만.. {uesr} 님이 있으니 여기가 더 좋아요. 에.. 방금은 비밀이에요 !", emotion: "happy" }
+        ],
         sion: [
             { text: "농장주님을 보면 마음이 편안해져요.", emotion: "happy" },
             { text: "차 한 잔 더 하시겠어요?", emotion: "default" }
@@ -165,13 +255,12 @@ const dailyScripts = {
     }
 };
 
-
 const randomDialogues = {
     riku: {
         맑음: [
             // 일반 대화
-            { text: "누나 ! 오늘 날씨 짱 조타 그져??", emotion: "happy" },
-            { text: "광장에 비둘기 징짜 마나여.", emotion: "happy" },
+            { text: "오늘 날씨 짱 조타 그져??", emotion: "happy" },
+            { text: "오하욘 ! 리쿠 보러 왓어여?? 히히", emotion: "happy" },
             
             // ★ 선택지형 대화 (추가됨)
             { 
@@ -181,6 +270,16 @@ const randomDialogues = {
                     { label: "노란색?", score: 10, reply: "딩동댕! 병아리 가타서 조아해여!" },
                     { label: "검은색?", score: -5, reply: "우으.. 칙칙해서 시러여.." }
                 ]
+            },
+            { 
+                text: "누나는 무슨 색이 제일 조아여?", 
+                emotion: "shy",
+                type: "keyword", // ★ 여기가 핵심! 키워드 입력 타입 지정
+                answers: {
+                    "노랑": { text: "와! 저도 노란색 제일 좋아하는데! 통했네요!", emotion: "happy", score: 10 },
+                    "노란": { text: "와! 저도 노란색 제일 좋아하는데! 통했네요!", emotion: "happy", score: 10 },
+                    "default": { text: "아~ 그 색을 좋아하는구낭", emotion: "default", score: 0 }
+                }
             }
         ],
         비: [{ text: "비 오는 거 시러여..", emotion: "sad" }],
@@ -188,7 +287,8 @@ const randomDialogues = {
     },
     sion: {
         맑음: [
-            { text: "안녕하세요, 농장주님. 산책 나오셨나요?", emotion: "happy" },
+            { text: "안녕하세요. 산책 나오셨어요?", emotion: "happy" },
+            { text: "농장 일 하다가 도움 필요하면 언제든 말씀해주세요!", emotion: "happy" },
             
             // ★ 선택지형 대화 (추가됨)
             { 
@@ -204,11 +304,27 @@ const randomDialogues = {
         벚꽃: [{ text: "꽃잎이 떨어지는 속도가 초속 5센티미터래요.", emotion: "serious" }]
     },
     
-    // 나머지 주민들도 위와 같은 형식(choices)으로 추가하면 랜덤으로 뜹니다!
-    yushi: { 맑음: [{text:"날씨가 좋네요.", emotion:"default"}], 비: [], 벚꽃: [] },
-    jaehee: { 맑음: [{text:"허허 날씨 좋군요!", emotion:"happy"}], 비: [], 벚꽃: [] },
-    ryo: { 맑음: [{text:"야하~ 날씨 대박!", emotion:"happy"}], 비: [], 벚꽃: [] },
-    sakuya: { 맑음: [{text:"빵 굽기 좋은 날씨네요.", emotion:"default"}], 비: [], 벚꽃: [] }
+    yushi: { 맑음:
+        [
+            {text: "농장주님 ! 오늘도 열심히 일하고 오시는 길인가요 ? 대단해요 !", emotion:"default"},
+            {text: "저는 가끔 숲속에서 춤을 추곤 해요. 누군가 볼까 봐 조금 부끄럽지만요 ^_^", emotion: "happy" },
+            {text: "위시듀밸리의 밤하늘은 별이 참 잘 보여서 좋지요 ? 꼭 저를 비춰주는 것 같아요 !", emotion: "happy" },
+        ],
+
+            비: [],
+            벚꽃: [] },
+    
+    jaehee: { 맑음: [{text:"허허 날씨 좋군요!", emotion:"happy"}],
+             비: [],
+             벚꽃: [] },
+    
+    ryo: { 맑음: [{text:"야하~ 날씨 대박!", emotion:"happy"}],
+          비: [],
+          벚꽃: [] },
+    
+    sakuya: { 맑음: [{text:"빵 굽기 좋은 날씨네요.", emotion:"default"}],
+             비: [],
+             벚꽃: [] }
 };
 
 const questLetters = {
@@ -321,4 +437,19 @@ const questScripts = {
     },
     // 나머지 멤버들도 같은 형식으로 추가 (jaehee, ryo, sakuya 등)
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
