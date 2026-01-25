@@ -159,7 +159,7 @@ const dailyScripts = {
     // 1일차 대사 (배열로 변경)
     1: {
         riku: [
-            { text: "누나 안녕 ! 새로 이사 왓어여??", emotion: "happy" }
+            { text: "누나 안녕 ! 새로 이사 왓어여??", emotion: "happy" },
             { 
                 text: "저는 리쿠고 상점 알바생이에여 히히 리쿠 봣으니 누나는 운이 좋당!", 
                 emotion: "happy",
@@ -176,7 +176,7 @@ const dailyScripts = {
         
         yushi: [
             { text: "에.. 새로 오신 농장주님이시군요 ?", emotion: "default" },
-            { text: "만나서 반가워요 !", emotion: "happy" }
+            { text: "만나서 반가워요 !", emotion: "happy" },
             { 
                 text: "숲이 참 조용하고 좋지요 ? ^_^", 
                 emotion: "happy",
@@ -431,6 +431,7 @@ const questScripts = {
     },
     // 나머지 멤버들도 같은 형식으로 추가 (jaehee, ryo, sakuya 등)
 };
+
 
 
 
