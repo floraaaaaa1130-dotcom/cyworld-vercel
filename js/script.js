@@ -298,6 +298,34 @@ const affinityDialogues = {
     // 유우시, 재희, 료, 사쿠야도 위와 똑같은 구조(low/mid/high -> 맑음/비/벚꽃)로 만드시면 됩니다.
 };
 
+// ★ 2. 호감도 달성 이벤트 (특정 점수 도달 시 1회 발동)
+const affinityEvents = {
+    sion: [
+        {
+            id: "sion_event_30", // 이벤트 고유 ID
+            threshold: 30,       // 발동 조건 호감도
+            bg: "assets/images/backgrounds/forest.png", // 이벤트 배경 (원하는 이미지 경로)
+            script: [
+                { text: "(시온이 숲속에서 혼자 무언가를 보고 있다.)", emotion: "default" },
+                { text: "아, 농장주님. 오셨군요.", emotion: "happy" },
+                { text: "사실 여기서만 보이는 희귀한 꽃을 찾고 있었어요.", emotion: "default" },
+                { text: "당신에게 보여주고 싶었거든요.", emotion: "happy" }
+            ]
+        }
+    ],
+    riku: [
+        {
+            id: "riku_event_50",
+            threshold: 50,
+            bg: "assets/images/backgrounds/shop.png",
+            script: [
+                { text: "누나! 이거 봐바여! 리쿠가 아꼈던 사탕인데 누나 줄게여!", emotion: "happy" },
+                { text: "(리쿠의 소중한 사탕을 받았다...)", emotion: "default" }
+            ]
+        }
+    ]
+};
+
 // 3. 장소 및 레시피 데이터
 const locations = {
     farm: { name: "농장", bg: "assets/images/backgrounds/farm.png", items: ["수선화", "흙", "딸기"] },
@@ -500,6 +528,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
