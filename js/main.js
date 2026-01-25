@@ -43,6 +43,8 @@ let selectedSlotIndex = null; // 인벤토리에서 선택된 슬롯 번호
 let selectedItems = []; // 조합을 위해 선택된 아이템들
 let isDeleteMode = false; // 아이템 삭제 모드 여부
 let currentPopupItem = null; // 현재 정보창에 띄운 아이템
+let currentEndingData = null;
+
 
 // --- 오디오 설정 (Audio) ---
 const sfx = {
@@ -75,7 +77,6 @@ function changeBgm(fileName) {
 // 페이지 로드 시 실행
 window.onload = () => {
     console.log("게임 로드 완료! 오프닝 대기 중...");
-    // 오프닝 화면이 HTML에 기본으로 보여지므로 별도 작업 필요 없음
 };
 
 // '시작하기' 버튼 -> 이름 입력창 표시
@@ -421,7 +422,9 @@ function openDialogue(npcKey) {
     const inputArea = document.getElementById('input-area');
     inputArea.classList.add('hidden'); 
     
-    document.getElementById('choice-area').classList.add('hidden'); // 선택지도 숨김
+    // 일반 대화에서는 입력창 숨기고 시작 (타자 끝난 후 표시)
+    document.getElementById('input-area').classList.add('hidden'); 
+    document.getElementById('choice-area').classList.add('hidden');
     
     // 버튼 기능 연결
     const giftBtn = document.getElementById('gift-btn');
@@ -435,10 +438,7 @@ function openDialogue(npcKey) {
     
     // CASE 1: 오늘 이미 대화를 한 경우 (행동 묘사)
     if (gameState.hasTalkedToday[npcKey]) {
-        // 행동 묘사 텍스트 가져오기
         const actionText = npcActions[npcKey] || "(멍을 때리고 있다...)";
-        
-        // 큐 설정
         dialogueQueue = [{ text: actionText, emotion: 'default' }];
         currentDialogueIndex = 0;
 
@@ -487,17 +487,17 @@ function openDialogue(npcKey) {
 // [수정] 다음 대사 출력 (NPC가 없을 때 안전장치 추가)
 function showNextLine(npcKey) {
     const data = dialogueQueue[currentDialogueIndex];
-    
-    // 초상화 변경 (NPC가 존재할 때만)
+    const portraitDiv = document.getElementById('dialogue-portrait');
     const portraitImg = document.getElementById('current-portrait');
-    if (npcKey && npcs[npcKey]) {
+   
+    // NPC가 있을 때
+        portraitDiv.style.display = 'block'; 
         const npc = npcs[npcKey];
         const emotion = data.emotion || 'default';
         portraitImg.src = npc.portraits[emotion] || npc.portraits['default'];
-        portraitImg.style.display = 'block';
     } else {
-        // NPC 정보가 없으면 초상화 숨김 (엔딩 나레이션 등)
-        portraitImg.style.display = 'none';
+        // NPC가 없을 때 (엔딩 등)
+        portraitDiv.style.display = 'none'; 
     }
 
     // 텍스트 출력
@@ -540,8 +540,8 @@ function finishTyping() {
         // 커서 표시
         document.getElementById('next-cursor').classList.remove('hidden');
         
-        // ★ 핵심: 텍스트 출력이 끝났고, 입력창을 보여줘야 하는 상태라면 지금 보여줌!
-        if (shouldShowInput) {
+        // ★ [핵심 수정] 엔딩 중이면 입력창을 절대 띄우지 않음
+        if (shouldShowInput && !gameState.isEnding) {
             document.getElementById('input-area').classList.remove('hidden');
         }
     }
@@ -791,9 +791,6 @@ function checkEnding() {
     playEndingSequence(endingData, targetNpc);
 }
 
-// 전역 변수 추가 (엔딩 데이터 임시 저장용)
-let currentEndingData = null;
-
 // [수정] 엔딩 연출 시작 (대화창 모드)
 function playEndingSequence(data, npcKey) {
     if (!data) return;
@@ -824,15 +821,13 @@ function playEndingSequence(data, npcKey) {
     document.getElementById('input-area').classList.add('hidden');
     document.getElementById('choice-area').classList.add('hidden');
     
-    const lines = data.text.split('\n'); 
+    const lines = data.text.split('\n').filter(line => line.trim() !== "");
     
     dialogueQueue = lines.map(line => {
         return { text: line, emotion: 'happy' }; 
     });
 
     currentDialogueIndex = 0;
-    
-    // 안전하게 첫 대사 출력 (showNextLine 사용)
     showNextLine(lastInteractedNPC);
 }
 
@@ -848,10 +843,10 @@ function showFinalPopup() {
     if (currentEndingData.image) img.src = currentEndingData.image; 
     text.innerText = ""; 
 
+    // 대화창 끄고 팝업 열기
     document.getElementById('dialogue-overlay').classList.add('hidden');
-    
     overlay.classList.remove('hidden');
-    // CSS 트랜지션을 위해 약간 지연 후 visible 클래스 추가
+    
     setTimeout(() => {
         overlay.classList.add('visible');
     }, 50);
