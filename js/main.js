@@ -17,7 +17,7 @@ let gameState = {
     playerName: "농장주", // 플레이어 이름
     isEnding: false, // 엔딩 진행 중인지 여부
     // ★ [추가] 퀘스트 상태 저장 (target: 누구, item: 뭘 원하는지)
-    activeQuest: null
+    activeQuest: null,
     seenEvents: [],       // 이미 본 이벤트 ID 저장
     isEventPlaying: false, // 현재 이벤트 진행 중인가?
     originalLoc: null     // 이벤트 끝나고 돌아갈 원래 배경
@@ -1081,6 +1081,7 @@ function endEvent() {
         if (fadeOverlay) fadeOverlay.classList.remove('visible');
     }, 1000);
 }
+
 
 
 
