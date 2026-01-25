@@ -146,6 +146,14 @@ function renderLocation() {
     const loc = locations[gameState.currentLocation];
     const view = document.getElementById('location-view');
     view.style.backgroundImage = `url(${loc.bg})`;
+   
+    view.classList.remove('weather-rain', 'weather-blossom'); // 기존 효과 제거
+    
+    if (gameState.weather === '비') {
+        view.classList.add('weather-rain');
+    } else if (gameState.weather === '벚꽃') {
+        view.classList.add('weather-blossom');
+    }
 
    // 1. 아이템(채집물) 그리기 - [수정됨: 랜덤 3개만]
     const itemLayer = document.getElementById('item-layer');
@@ -568,11 +576,24 @@ function checkKeywordAnswer(currentData) {
     const inputVal = document.getElementById('keyword-input').value.trim();
     if (!inputVal) return; 
 
-    let reaction = currentData.answers.default; 
+    let reaction = null;
+
+    // 1. 키워드 매칭 확인
     for (let key in currentData.answers) {
         if (key !== "default" && inputVal.includes(key)) {
             reaction = currentData.answers[key];
             break;
+        }
+    }
+
+    // 2. 매칭된 게 없으면? -> 멤버별 전용 모르쇠 대사 가져오기
+    if (!reaction) {
+        const npc = npcs[lastInteractedNPC];
+        if (npc && npc.unknownReaction) {
+            reaction = npc.unknownReaction;
+        } else {
+            // 혹시 데이터가 없으면 기본 대사
+            reaction = { text: "무슨 말인지 잘 모르겠어요.", emotion: "default" };
         }
     }
 
@@ -883,3 +904,4 @@ function closeAlert() {
     document.getElementById('alert-modal').classList.add('hidden');
     playSfx('click');
 }
+
