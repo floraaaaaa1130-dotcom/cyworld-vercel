@@ -49,6 +49,15 @@
             <button onclick="goToSleep()">잠자기</button>
         </div>
 
+        <div id="letter-modal" class="hidden" style="z-index: 2000;">
+    <div class="modal-content letter-paper">
+        <h2>📬 편지가 도착했습니다!</h2>
+        <p id="letter-text" style="white-space: pre-wrap; margin: 20px 0; font-family: 'Handwriting', serif;">
+            </p>
+        <button onclick="closeLetter()">확인</button>
+    </div>
+</div>
+
         <div id="inventory-modal" class="hidden">
             <h3>🎒 큰 가방 & 조합</h3>
             <div class="inventory-grid-wrapper">
@@ -150,4 +159,5 @@
     <script src="js/main.js"></script>
 </body>
 </html>
+
 
