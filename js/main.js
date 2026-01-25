@@ -103,11 +103,14 @@ function startGame() {
     gameState.playerName = name;
     playSfx('success');
     
-    document.getElementById('intro-screen').classList.add('hidden');
-    updateUI(); 
-    move('farm'); 
+    // ▼▼▼ [수정된 부분] ▼▼▼
+    // 1. 이름 입력창만 숨김
+    document.getElementById('name-input-area').classList.add('hidden');
+    
+    // 2. 사진 설정 화면을 보여줌
+    document.getElementById('portrait-setup').style.display = 'block'; 
+    // ▲▲▲ [수정 끝] ▲▲▲
 }
-
 function openModal(id) {
     document.getElementById(id).classList.remove('hidden');
     playSfx('click');
@@ -906,4 +909,15 @@ function closeAlert() {
     playSfx('click');
 }
 
+// [신규] 사진 설정 후 -> 진짜 게임 시작 함수
+function enterGame() {
+    playSfx('success');
+    
+    // 전체 오프닝 화면 숨기기
+    document.getElementById('intro-screen').classList.add('hidden');
+    
+    // 게임 시작
+    updateUI(); 
+    move('farm'); 
+}
 
