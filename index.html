@@ -5,6 +5,8 @@
     <title>WISH VALLEY</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 </head>
 <body>
     <div id="game-container">
@@ -146,6 +148,51 @@
                     <button class="cancel-btn" onclick="hideNameInput()">그냥 도시에서 살기</button>
                 </div>
             </div>
+            <div id="portrait-setup" style="display:none; text-align: center;">
+    <h3>멤버들의 사진을 골라주세요!</h3>
+    <p>(선택하지 않으면 기본 초상화로 진행됩니다)</p>
+    
+    <div class="upload-container">
+                <div class="member-upload">
+            <label for="upload-sion">시온</label>
+            <input type="file" id="upload-sion" accept="image/*">
+            <img id="preview-sion" src="assets/images/portraits/sion_default.png" width="100" height="100" style="border: 2px solid white;">
+        </div>
+
+                <div class="member-upload">
+            <label for="upload-sion">리쿠</label>
+            <input type="file" id="upload-riku" accept="image/*">
+            <img id="preview-sion" src="assets/images/portraits/sion_default.png" width="100" height="100" style="border: 2px solid white;">
+        </div>
+
+                <div class="member-upload">
+            <label for="upload-sion">유우시</label>
+            <input type="file" id="upload-yushi" accept="image/*">
+            <img id="preview-sion" src="assets/images/portraits/sion_default.png" width="100" height="100" style="border: 2px solid white;">
+        </div>
+        
+        <div class="member-upload">
+            <label for="upload-riku">재희</label>
+            <input type="file" id="upload-jaehee" accept="image/*">
+            <img id="preview-riku" src="assets/images/portraits/riku_default.png" width="100" height="100" style="border: 2px solid white;">
+        </div>
+
+        <div class="member-upload">
+            <label for="upload-yushi">료</label>
+            <input type="file" id="upload-ryo" accept="image/*">
+            <img id="preview-yushi" src="assets/images/portraits/yushi_default.png" width="100" height="100" style="border: 2px solid white;">
+        </div>
+
+        <div class="member-upload">
+            <label for="upload-sion">사쿠야</label>
+            <input type="file" id="upload-sakuya" accept="image/*">
+            <img id="preview-sion" src="assets/images/portraits/sion_default.png" width="100" height="100" style="border: 2px solid white;">
+        </div>
+        
+        </div>
+
+    <button id="confirm-portraits-btn">이대로 시작하기</button>
+</div>
         </div>
 
         <div id="manual-modal" class="modal hidden">
@@ -169,8 +216,21 @@
 
     </div> <script src="js/script.js"></script>
     <script src="js/main.js"></script>
+
+    <div id="crop-modal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center;">
+    <div style="background: #fff; padding: 20px; border-radius: 10px; width: 90%; max-width: 500px; text-align: center;">
+        <h3>사진 영역 선택</h3>
+        <div style="max-height: 400px; margin-bottom: 20px;">
+            <img id="image-to-crop" style="max-width: 100%; display: block;">
+        </div>
+        <button id="btn-crop" style="padding: 10px 20px; cursor: pointer;">자르기 & 저장</button>
+        <button id="btn-cancel" style="padding: 10px 20px; cursor: pointer; background: #ccc;">취소</button>
+    </div>
+</div>
+    
 </body>
 </html>
+
 
 
 
