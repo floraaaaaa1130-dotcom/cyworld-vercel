@@ -9,6 +9,13 @@ let gameState = {
     playerName: "농장주" // (이름 입력 기능을 넣으셨다면 이것도 유지하세요)
 };
 
+// --- 전역 변수 추가 ---
+let dialogueQueue = []; // 대사 목록을 저장할 큐
+let currentDialogueIndex = 0; // 현재 대사 순서
+let isTyping = false; // 타자 치는 중인지 확인
+let typingInterval = null; // 타자 효과 인터벌
+let currentFullText = ""; // 현재 출력 중인 전체 텍스트 (스킵용)
+
 // --- 오디오 설정 ---
 const sfx = {
     click: new Audio('assets/sounds/sfx/click.mp3'),
@@ -237,95 +244,74 @@ function giveGift(npcKey) {
 
 // js/main.js - openDialogue 함수 전체 교체
 
+// [교체] 대화창 열기 함수 (기존 openDialogue를 지우고 이 코드로 대체하세요)
 function openDialogue(npcKey) {
+    lastInteractedNPC = npcKey; // 현재 대화 중인 NPC 저장
+
     const overlay = document.getElementById('dialogue-overlay');
     overlay.classList.remove('hidden');
     
-    // UI 초기화: 입력창 보이기, 닫기 버튼 숨기기 (필요하다면 HTML에 닫기 버튼 추가 필요)
-    document.getElementById('input-area').classList.remove('hidden');
-
-    let dialogueObj = null;
-
-    // 1순위: 오늘 날짜의 고정 이벤트 확인
-    if (dailyScripts[gameState.day] && dailyScripts[gameState.day][npcKey]) {
-        dialogueObj = dailyScripts[gameState.day][npcKey];
-    }
-
-    // 2순위: 호감도 이벤트 (예: 50점 이상)
-    if (!dialogueObj && gameState.affinities[npcKey] >= 50 && dailyScripts["highAffinity"] && dailyScripts["highAffinity"][npcKey]) {
-        dialogueObj = dailyScripts["highAffinity"][npcKey];
-    }
-
-    // 3순위: 날씨별 랜덤 대사 (가장 중요! 평소엔 이게 뜹니다)
-    if (!dialogueObj) {
-        const currentWeather = gameState.weather; // '맑음', '비', '벚꽃'
-        
-        // randomDialogues가 정의되어 있는지 확인 (script.js에 있어야 함)
-        if (typeof randomDialogues !== 'undefined' && randomDialogues[npcKey] && randomDialogues[npcKey][currentWeather]) {
-            const list = randomDialogues[npcKey][currentWeather];
-            dialogueObj = list[Math.floor(Math.random() * list.length)];
-        }
-    }
-
-    // 4순위: 그래도 없으면 기본 인사 (안전장치)
-    if (!dialogueObj) {
-        dialogueObj = { text: "안녕하세요. (할 말이 없는 것 같다)", emotion: "default" };
-    }
-
-    // 화면에 대사 표시
-    displayDialogue(npcKey, dialogueObj);
-
-    // --- 버튼 이벤트 연결 ---
-
-    // 1. 선물하기
+    // UI 초기화: 입력창과 선택지 숨김
+    document.getElementById('input-area').classList.add('hidden');
+    document.getElementById('choice-area').classList.add('hidden');
+    
+    // --- 버튼 기능 연결 (기존 기능 유지) ---
+    // 1. 선물하기 버튼 재연결
     const giftBtn = document.getElementById('gift-btn');
-    // 선물 버튼이 없을 경우를 대비해 체크
     if(giftBtn) giftBtn.onclick = () => giveGift(npcKey);
 
-    // 2. 키워드 보내기 (수정됨: 전송 -> 답변 확인 -> 닫기)
+    // 2. 키워드 보내기 버튼 재연결
     const sendBtn = document.getElementById('send-btn');
-    sendBtn.onclick = () => {
+    if(sendBtn) sendBtn.onclick = () => {
         const input = document.getElementById('keyword-input').value;
         const keywordData = npcKeywords[npcKey];
 
         if (keywordData && keywordData[input]) {
-            // 키워드 정답! -> 호감도 오르고 답변 출력
+            // 정답 시: 호감도 상승 + 답변 대사 큐에 넣고 출력
             gameState.affinities[npcKey] += 10;
-            displayDialogue(npcKey, keywordData[input]);
+            // 배열 형태가 아닐 수 있으므로 배열로 감싸줌
+            dialogueQueue = Array.isArray(keywordData[input]) ? keywordData[input] : [keywordData[input]];
         } else {
-            // 키워드 모름 -> 모른다는 반응 출력
-            displayDialogue(npcKey, { text: "음.. 그게 무슨 말인지 잘 모르겠어요.", emotion: "shock" });
+            // 오답 시
+            dialogueQueue = [{ text: "음.. 그게 무슨 말인지 잘 모르겠어요.", emotion: "shock" }];
         }
         
-        // ★ 대화 종료 처리 ★
-        // 답변을 보여준 뒤, 입력창을 비우고 1.5초 뒤에 대화창을 자동으로 닫거나
-        // 사용자가 화면을 클릭하면 닫히게 유도
+        // 입력창 비우고 답변 시작
         document.getElementById('keyword-input').value = "";
-        
-        // 팁: 답변을 읽어야 하므로 바로 닫지 않고, '보내기' 버튼을 '닫기'로 바꾸거나
-        // 여기서는 간단하게 alert 대신 1초 뒤 자동 닫힘 혹은 화면 클릭 유도를 추천
-        // 지금은 "답변이 출력되었습니다. 클릭해서 닫으세요" 상태로 둠.
+        currentDialogueIndex = 0;
+        document.getElementById('input-area').classList.add('hidden'); // 답변 보는 동안 입력창 숨김
+        showNextLine(npcKey);
     };
-}
 
-// (중요) 대화창 바깥이나 대화창을 클릭하면 닫히게 하는 기능 추가
-document.getElementById('dialogue-overlay').onclick = (e) => {
-    // 입력창(input)이나 버튼을 클릭했을 때는 닫히면 안 됨
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
-    
-    // 그 외 영역 클릭 시 대화창 닫기
-    document.getElementById('dialogue-overlay').classList.add('hidden');
-};
-// --- 인벤토리 및 조합 ---
-let selectedItems = [];
-function collectItem(name) {
-    // ▼▼▼ 숫자를 12에서 8로 변경해주세요! ▼▼▼
-    if (gameState.inventory.length >= 8) { 
-        alert("가방이 꽉 찼어요!"); 
-        return; 
+    // --- 대사 데이터 가져오기 ---
+    let scriptData = null;
+
+    // 1순위: 날짜별 고정 대사
+    if (dailyScripts[gameState.day] && dailyScripts[gameState.day][npcKey]) {
+        scriptData = dailyScripts[gameState.day][npcKey];
     }
-    gameState.inventory.push(name);
-    updateUI();
+    // 2순위: 랜덤 대사
+    else if (randomDialogues[npcKey]) {
+        const weather = gameState.weather;
+        const list = randomDialogues[npcKey][weather];
+        if(list) scriptData = list[Math.floor(Math.random() * list.length)];
+    }
+
+    // 데이터가 없으면 기본 인사
+    if (!scriptData) {
+        scriptData = [{ text: "안녕하세요.", emotion: "default" }];
+    }
+
+    // 데이터가 배열이 아니면 배열로 변환 (여러 줄 대사 지원을 위해)
+    if (!Array.isArray(scriptData)) {
+        scriptData = [scriptData];
+    }
+
+    // 큐 초기화 및 대화 시작
+    dialogueQueue = scriptData;
+    currentDialogueIndex = 0;
+    
+    showNextLine(npcKey);
 }
 
 function toggleInventory() {
@@ -484,10 +470,32 @@ function startNextDay() {
     updateUI(); move('farm');
 }
 
+// [교체] 엔딩 체크 및 연출 함수 (기존 checkEnding을 지우고 대체)
 function checkEnding() {
+    gameState.isEnding = true; // 엔딩 모드 시작
+    document.getElementById('night-overlay').classList.add('hidden'); // 밤 화면 끄기
+    document.getElementById('dialogue-overlay').classList.add('hidden'); // 대화창 끄기
+
+    // 호감도 정렬
     const sorted = Object.entries(gameState.affinities).sort((a, b) => b[1] - a[1]);
-    if (sorted[0][1] >= 90) alert(`${npcs[sorted[0][0]].name} 엔딩!`);
-    else alert("우정 엔딩!");
+    const topNpcKey = sorted[0][0];
+    const topScore = sorted[0][1];
+    
+    // 양다리 체크: 80점 이상인 사람이 2명 이상일 때
+    const highAffinityCount = sorted.filter(item => item[1] >= 80).length;
+
+    let endingData = null;
+
+    // script.js에 endingScripts 데이터가 있어야 작동합니다.
+    if (highAffinityCount >= 2 && endingScripts.cheater) {
+        endingData = endingScripts.cheater;
+    } else if (topScore >= 80 && endingScripts[topNpcKey]) {
+        endingData = endingScripts[topNpcKey];
+    } else {
+        endingData = endingScripts.normal;
+    }
+
+    playEndingSequence(endingData);
 }
 
 
@@ -604,12 +612,176 @@ function closeModal(id) {
     playSfx('click');
 }
 
+// 1. 다음 대사 출력 함수
+function showNextLine(npcKey) {
+    const npc = npcs[npcKey];
+    const data = dialogueQueue[currentDialogueIndex];
+    
+    // 초상화 변경
+    const portraitImg = document.getElementById('current-portrait');
+    const emotion = data.emotion || 'default';
+    portraitImg.src = npc.portraits[emotion] || npc.portraits['default'];
+
+    // 텍스트 출력 (타자 효과 시작)
+    const textZone = document.getElementById('dialogue-text');
+    let textContent = data.text.replace(/{user}/g, gameState.playerName);
+    typeWriter(textContent, textZone);
+}
+
+// 2. 타자 효과 함수
+function typeWriter(text, element, speed = 50) {
+    let i = 0;
+    element.innerHTML = ""; // 이전 텍스트 초기화
+    isTyping = true;
+    currentFullText = text; // 스킵을 위해 저장
+    document.getElementById('next-cursor').classList.add('hidden'); // 커서 숨김
+
+    // 기존 타이머가 있다면 제거
+    if (typingInterval) clearInterval(typingInterval);
+
+    typingInterval = setInterval(() => {
+        element.innerHTML += text.charAt(i);
+        i++;
+        if (i >= text.length) {
+            finishTyping();
+        }
+    }, speed);
+}
+
+// 3. 타자 효과 즉시 종료 (클릭 시 스킵)
+function finishTyping() {
+    clearInterval(typingInterval);
+    isTyping = false;
+    const textZone = document.getElementById('dialogue-text');
+    textZone.innerHTML = currentFullText; // 전체 텍스트 즉시 표시
+    
+    // 다음 대사가 있거나 선택지가 있으면 커서/선택지 처리
+    const currentData = dialogueQueue[currentDialogueIndex];
+    
+    if (currentData.choices) {
+        renderChoices(currentData.choices); // 선택지 표시
+    } else {
+        // 다음 대사가 남았거나, 대화가 끝났으면 커서(▼ 또는 ■) 표시
+        document.getElementById('next-cursor').classList.remove('hidden');
+        if (currentDialogueIndex >= dialogueQueue.length - 1) {
+             // 대화 끝날 때 모양 변경 (선택 사항)
+             // document.getElementById('next-cursor').innerText = "■"; 
+        }
+    }
+}
+
+// 4. 선택지 렌더링 함수
+function renderChoices(choices) {
+    const choiceArea = document.getElementById('choice-area');
+    choiceArea.innerHTML = "";
+    choiceArea.classList.remove('hidden');
+
+    choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.className = "choice-btn";
+        btn.innerText = choice.label;
+        btn.style.marginRight = "10px";
+        
+        btn.onclick = (e) => {
+            e.stopPropagation(); // 배경 클릭 방지
+            
+            // 점수 반영
+            if (choice.score) gameState.affinities[lastInteractedNPC] += choice.score;
+            
+            // 답변 대사로 이어가기 (새로운 큐 생성)
+            const replyObj = { 
+                text: choice.reply, 
+                emotion: choice.score > 0 ? "happy" : "shock" 
+            };
+            dialogueQueue = [replyObj]; // 큐를 답변으로 교체
+            currentDialogueIndex = 0;
+            
+            choiceArea.classList.add('hidden'); // 선택지 숨김
+            showNextLine(lastInteractedNPC);
+        };
+        choiceArea.appendChild(btn);
+    });
+}
+
+// 5. 대화창 클릭 이벤트 (다음 대사 넘기기)
+document.getElementById('dialogue-overlay').onclick = (e) => {
+    // 버튼이나 입력창 클릭은 무시
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
+
+    // A. 타이핑 중이면 -> 즉시 전체 텍스트 보여주기 (스킵)
+    if (isTyping) {
+        finishTyping();
+        return;
+    }
+
+    // B. 대사가 남아있으면 -> 다음 대사로
+    if (currentDialogueIndex < dialogueQueue.length - 1) {
+        currentDialogueIndex++;
+        showNextLine(lastInteractedNPC); 
+        return;
+    }
+
+    // C. 선택지가 떠 있으면 -> 클릭으로 닫지 못하게 함
+    const currentData = dialogueQueue[currentDialogueIndex];
+    if (currentData && currentData.choices) return;
+
+    // D. 대화 종료: 입력창 보여주고 커서 숨기기 (엔딩 중이 아닐 때만)
+    if (!gameState.isEnding) {
+        document.getElementById('next-cursor').classList.add('hidden');
+        
+        // 입력창(선물/대화)을 보여줌
+        document.getElementById('input-area').classList.remove('hidden');
+        
+        // 텍스트를 비워줌 (깔끔하게)
+        document.getElementById('dialogue-text').innerText = ""; 
+        
+        // 만약 대화창을 아예 닫고 싶다면 아래 주석을 해제하세요.
+        // document.getElementById('dialogue-overlay').classList.add('hidden');
+    }
+};
+
+// 6. 엔딩 연출 함수
+function playEndingSequence(data) {
+    if (!data) return; // 데이터 없으면 중단
+
+    const overlay = document.getElementById('ending-overlay');
+    const title = document.getElementById('ending-title');
+    const img = document.getElementById('ending-image');
+    const text = document.getElementById('ending-text');
+    const btn = document.getElementById('restart-btn');
+
+    // 데이터 세팅
+    title.innerText = data.title;
+    if (data.image) img.src = data.image;
+    text.innerText = ""; 
+
+    // 화면 보여주기 (페이드 인)
+    overlay.classList.remove('hidden');
+    setTimeout(() => { overlay.classList.add('visible'); }, 100);
+
+    // 2초 뒤 텍스트 타자 효과 시작
+    setTimeout(() => {
+        let i = 0;
+        const fullText = data.text;
+        const endingTyping = setInterval(() => {
+            text.innerText += fullText.charAt(i);
+            i++;
+            if (i >= fullText.length) {
+                clearInterval(endingTyping);
+                // 텍스트 끝나면 '처음으로' 버튼 표시
+                setTimeout(() => { btn.classList.remove('hidden'); }, 1000);
+            }
+        }, 100); // 엔딩은 조금 천천히 (100ms)
+    }, 2000);
+}
+
 window.onload = () => {
     // 게임을 바로 시작하지 않고, 오프닝 화면만 보여줍니다.
     // 기존의 updateUI(); move('farm'); 코드는 지우거나 주석 처리하세요.
     
     console.log("게임 로드 완료! 오프닝 대기 중...");
 };
+
 
 
 
