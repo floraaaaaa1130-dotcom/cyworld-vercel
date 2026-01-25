@@ -1,513 +1,1197 @@
-/* 기본 설정 & 변수 */
+/* 기본 설정 */
+
 :root {
-    --pastel-pink: #FFD1DC;
-    --pastel-green: #E2F0CB;   /* 버튼 기본 배경 */
-    --deep-pink: #FFB7C5;      /* 핑크 포인트/그림자 */
-    --deep-green: #A5D6A7;     /* 연두 포인트/그림자 */
-    --text-color: #5D4037;     /* 갈색 텍스트 */
-    --white: #FFFFFF;
-    --shadow-color: rgba(0, 0, 0, 0.15);
+
+--pastel-pink: #FFD1DC;
+
+--pastel-green: #E2F0CB;
+
+--deep-pink: #FFB7C5;
+
+--border-color: #A5D6A7; /* 연두색 포인트 */
+
+--text-color: #5D4037;
+
 }
+
+
 
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #fce4ec;
-    font-family: 'SUIT', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    cursor: url('../assets/images/ui/star_cursor.png'), auto;
+
+margin: 0;
+
+padding: 0;
+
+background-color: #fce4ec;
+
+font-family: 'SUIT', sans-serif;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+height: 100vh;
+
+overflow: hidden;
+
+/* 연핑크 별 모양 마우스 포인터 (이미지 준비 필요) */
+
+cursor: url('../assets/images/ui/star_cursor.png'), auto;
+
 }
 
-/* 픽셀 아트 느낌의 이중 테두리 박스 믹스인 효과 */
+
+
 #game-container {
-    width: 800px;
-    height: 600px;
-    background-color: var(--white);
-    
-    /* 픽셀 테두리 효과: 안쪽 흰색, 바깥쪽 핑크 */
-    border: 4px solid var(--white);
-    outline: 6px solid var(--pastel-pink);
-    box-shadow: 0 0 0 10px var(--deep-pink), 0 10px 20px rgba(0,0,0,0.2);
-    
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    margin: 20px; /* outline 공간 확보 */
+
+width: 800px;
+
+height: 600px;
+
+background-color: white;
+
+border: 8px solid var(--border-color);
+
+position: relative;
+
+display: flex;
+
+flex-direction: column;
+
 }
+
+
 
 /* 상태바 */
+
 #status-bar {
-    background-color: var(--pastel-pink);
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    color: var(--text-color);
-    font-size: 18px;
-    
-    /* 하단 경계선 입체감 */
-    border-bottom: 4px solid var(--deep-pink);
+
+background-color: var(--pastel-pink);
+
+padding: 10px;
+
+display: flex;
+
+justify-content: space-between;
+
+font-weight: bold;
+
+color: var(--text-color);
+
+border-bottom: 4px solid var(--border-color);
+
 }
 
-#date-display, #energy-display {
-    text-shadow: 1px 1px 0px var(--white);
-}
+
 
 /* 게임 뷰 */
+
 #location-view {
-    flex-grow: 1;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    image-rendering: pixelated; /* 도트 이미지 선명하게 */
+
+flex-grow: 1;
+
+background-size: cover;
+
+background-position: center;
+
+position: relative;
+
+image-rendering: pixelated; /* 픽셀 아트 선명하게 */
+
 }
+
+
 
 /* 컨트롤 패널 */
+
 #control-panel {
-    height: 160px;
-    background-color: #fff0f5; /* 아주 연한 핑크 배경 */
-    display: flex;
-    padding: 15px;
-    gap: 20px;
-    border-top: 4px solid var(--deep-pink);
-    align-items: center;
+
+height: 150px;
+
+background-color: var(--pastel-green);
+
+display: flex;
+
+padding: 10px;
+
+gap: 20px;
+
+border-top: 4px solid var(--border-color);
+
 }
+
+
 
 #move-buttons {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+
+display: grid;
+
+grid-template-columns: repeat(2, 1fr);
+
+gap: 5px;
+
 }
 
-/* --- [핵심 디자인] 픽셀 아트 스타일 버튼 --- */
+
+
 button {
-    font-family: 'SUIT', sans-serif;
-    font-weight: bold;
-    color: var(--text-color);
-    cursor: pointer;
-    position: relative;
-    padding: 10px 15px;
-    font-size: 14px;
-    
-    /* 입체적인 픽셀 버튼 스타일 */
-    background-color: var(--pastel-pink);
-    border-top: 3px solid #fff;       /* 빛 받는 부분 */
-    border-left: 3px solid #fff;
-    border-right: 3px solid var(--deep-pink); /* 그림자 */
-    border-bottom: 3px solid var(--deep-pink);
-    
-    /* 둥근 모서리 제거 (픽셀 느낌) */
-    border-radius: 0; 
-    box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-    transition: all 0.1s;
+
+background-color: var(--pastel-pink);
+
+border: 3px solid white;
+
+padding: 8px;
+
+cursor: pointer;
+
+font-weight: bold;
+
+color: var(--text-color);
+
+box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+
 }
 
-button:active {
-    /* 눌리는 효과 */
-    border-top: 3px solid var(--deep-pink);
-    border-left: 3px solid var(--deep-pink);
-    border-right: 3px solid #fff;
-    border-bottom: 3px solid #fff;
-    transform: translate(2px, 2px);
-    box-shadow: none;
-}
+
 
 button:hover {
-    background-color: #ffc1ce; /* 살짝 진해짐 */
+
+background-color: var(--deep-pink);
+
 }
 
-/* 선택지 버튼 커스텀 */
+
+
+/* css/style.css 추가 */
+
 .choice-btn {
-    background-color: var(--pastel-green) !important;
-    border-right: 3px solid var(--deep-green) !important;
-    border-bottom: 3px solid var(--deep-green) !important;
-    width: 100%;
-    margin-bottom: 5px;
-    text-align: left;
+
+background-color: var(--pastel-green);
+
+color: var(--text-color);
+
+border: 2px solid white;
+
+padding: 10px 20px;
+
+border-radius: 15px;
+
+cursor: pointer;
+
+font-family: 'SUIT', sans-serif;
+
+font-weight: bold;
+
+transition: transform 0.1s;
+
 }
+
+
 
 .choice-btn:hover {
-    background-color: #d1e7b6 !important;
-    transform: scale(1.02);
+
+background-color: var(--deep-pink);
+
+color: white;
+
+transform: scale(1.05);
+
 }
 
-/* NPC 및 아이템 레이어 */
+
+
 .npc-sprite {
-    width: 64px;
-    height: 64px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    z-index: 10;
-    
-    /* 캐릭터에 살짝 테두리 효과 (선택사항) */
-    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.1));
-    transition: transform 0.2s;
+
+width: 64px; /* 캐릭터 크기 */
+
+height: 64px;
+
+background-size: contain; /* 이미지가 박스 안에 쏙 들어오게 */
+
+background-repeat: no-repeat;
+
+background-position: center;
+
+position: absolute;
+
+top: 50%; /* 임시 위치 (나중에 좌표 데이터로 제어 필요) */
+
+left: 50%;
+
+transform: translate(-50%, -50%);
+
+cursor: pointer;
+
+z-index: 10; /* 배경보다 위에 뜨도록 */
+
 }
 
-.npc-sprite:hover {
-    transform: translate(-50%, -55%); /* 호버 시 살짝 위로 */
-}
 
-/* 인벤토리 컨테이너 */
-#inventory-container {
-    background-color: var(--pastel-green);
-    padding: 10px;
-    border: 3px solid var(--deep-green);
-    /* 픽셀 모서리 흉내 */
-    box-shadow: inset 3px 3px 0 rgba(255,255,255,0.5);
-}
 
-#inventory-container p {
-    margin: 0 0 5px 0;
-    font-weight: bold;
-    color: var(--text-color);
-    text-shadow: 1px 1px 0 rgba(255,255,255,0.8);
-}
+/* 인벤토리 */
 
 #inventory-slots {
-    display: flex;
-    gap: 6px;
+
+display: flex;
+
+gap: 8px;
+
+margin-top: 5px;
+
 }
 
-/* 인벤토리 슬롯 (움푹 들어간 느낌) */
+
+
 .slot {
-    width: 48px;
-    height: 48px;
-    background-color: rgba(255,255,255,0.6);
-    
-    /* Inset 효과: 안으로 들어간 느낌 */
-    border-top: 3px solid var(--deep-green);
-    border-left: 3px solid var(--deep-green);
-    border-right: 3px solid #fff;
-    border-bottom: 3px solid #fff;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+
+width: 50px;
+
+height: 50px;
+
+background-color: white;
+
+border: 3px solid var(--deep-pink);
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
 }
 
-.slot:hover {
-    background-color: rgba(255,255,255,0.9);
-}
+
 
 .slot img {
-    width: 36px;
-    height: 36px;
-    image-rendering: pixelated;
-    filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.2));
+
+width: 40px;
+
+height: 40px;
+
 }
 
-/* --- 대화창 UI (레퍼런스 참고: 핑크 테두리 + 흰 배경) --- */
+
+
+/* 대화창 UI */
+
 #dialogue-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.2); /* 배경 흐림 최소화 */
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    padding-bottom: 30px;
-    z-index: 100;
+
+position: absolute;
+
+top: 0; left: 0; width: 100%; height: 100%;
+
+background: rgba(0,0,0,0.3);
+
+display: flex;
+
+justify-content: center;
+
+align-items: flex-end;
+
+padding-bottom: 20px;
+
 }
+
+
 
 #dialogue-box {
-    width: 85%;
-    height: 180px;
-    background-color: #fff0f5; /* 아주 연한 핑크 */
-    
-    /* 대화창 테두리 디자인 */
-    border: 4px solid var(--deep-pink); /* 진한 핑크 외곽 */
-    outline: 4px solid var(--white);    /* 흰색 중간 */
-    box-shadow: 0 0 0 8px var(--pastel-pink), 0 10px 20px rgba(0,0,0,0.2); /* 연분홍 최외곽 */
-    
-    padding: 20px;
-    position: relative;
-    display: flex;
-    flex-direction: row-reverse; /* 초상화 오른쪽 배치를 위해 */
-    align-items: center;
-    gap: 20px;
+
+width: 90%;
+
+background-color: #fff9fa;
+
+border: 6px solid var(--pastel-pink);
+
+padding: 20px;
+
+position: relative;
+
+box-shadow: 0 0 0 4px var(--border-color);
+
 }
+
+
 
 #dialogue-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+
+display: flex;
+
+min-height: 120px;
+
 }
+
+
 
 #dialogue-text {
-    flex: 1;
-    font-size: 18px;
-    line-height: 1.6;
-    color: var(--text-color);
-    background: #fff;
-    padding: 15px;
-    border: 2px solid var(--pastel-pink); /* 텍스트 영역 테두리 */
-    overflow-y: auto;
+
+flex: 1;
+
+font-size: 18px;
+
+line-height: 1.5;
+
+color: var(--text-color);
+
 }
+
+
 
 #dialogue-portrait {
-    width: 140px;
-    height: 140px;
-    background-color: #fff;
-    border: 4px solid var(--pastel-green); /* 초상화 테두리는 연두색 포인트 */
-    position: relative;
-    flex-shrink: 0;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+
+width: 150px;
+
+height: 150px;
+
+border: 4px solid var(--pastel-green);
+
+background-color: white;
+
+margin-left: 20px;
+
 }
+
+
 
 #dialogue-portrait img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    image-rendering: pixelated;
+
+width: 100%;
+
+height: 100%;
+
+object-fit: contain;
+
 }
 
-/* 다음 대사 커서 */
-#next-cursor {
-    position: absolute;
-    bottom: 25px;
-    right: 30px; /* 텍스트 박스 내부 */
-    font-size: 24px;
-    color: var(--deep-pink);
-    animation: blink 1s infinite;
-    cursor: pointer;
+
+
+.npc-sprite {
+
+width: 64px; /* 추천 너비 */
+
+height: 64px; /* 추천 높이 */
+
+background-size: contain;
+
+background-repeat: no-repeat;
+
+position: absolute;
+
+cursor: pointer;
+
+/* 위치는 js에서 제어하므로 일단 중앙 쯤에 뜨게 테스트 */
+
+top: 50%;
+
+left: 50%;
+
+transform: translate(-50%, -50%);
+
 }
 
-/* 입력 영역 및 버튼 */
-#input-area {
-    margin-top: 10px;
-    display: flex;
-    gap: 8px;
-    width: 100%;
-}
 
-#keyword-input {
-    flex: 1;
-    padding: 8px;
-    border: 2px solid var(--pastel-pink);
-    font-family: 'SUIT', sans-serif;
-    outline: none;
-    background: #fff;
-}
 
-#keyword-input:focus {
-    border-color: var(--deep-pink);
-}
+/* 별 모양 인벤토리 버튼 */
 
-/* 인벤토리 아이콘 */
 #inventory-icon {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    z-index: 150;
-    transition: transform 0.2s;
-    filter: drop-shadow(2px 2px 0 rgba(255,255,255,0.8));
+
+position: absolute;
+
+top: 20px;
+
+right: 20px;
+
+width: 50px;
+
+height: 50px;
+
+cursor: pointer;
+
+z-index: 100;
+
+transition: transform 0.2s;
+
 }
+
+
+
 #inventory-icon:hover { transform: scale(1.1) rotate(15deg); }
 
-/* --- 모달 공통 (인벤토리, 정보창 등) --- */
-.modal-content, #inventory-modal, .info-content {
-    background-color: #fff;
-    border: 4px solid var(--deep-pink);
-    outline: 4px solid var(--pastel-pink);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    padding: 20px;
-    text-align: center;
+
+
+/* 인벤토리 & 조합 창 */
+
+#inventory-modal {
+
+position: absolute;
+
+top: 50%; left: 50%;
+
+transform: translate(-50%, -50%);
+
+width: 400px;
+
+background-color: #fff9fa;
+
+border: 6px solid var(--pastel-pink);
+
+box-shadow: 0 0 0 4px var(--border-color), 0 10px 20px rgba(0,0,0,0.2);
+
+padding: 20px;
+
+z-index: 200;
+
 }
 
-/* 인벤토리 모달 */
-#inventory-modal {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 420px;
-    z-index: 200;
-}
+
 
 .inventory-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin: 20px 0;
-    background: #fff0f5;
-    padding: 15px;
-    border: 2px inset var(--pastel-pink);
+
+display: grid;
+
+grid-template-columns: repeat(4, 1fr);
+
+gap: 10px;
+
+margin-bottom: 20px;
+
 }
+
+
 
 .item-slot {
-    width: 60px;
-    height: 60px;
-    background: #fff;
-    /* Inset 효과 */
-    border-top: 3px solid #ccc;
-    border-left: 3px solid #ccc;
-    border-right: 3px solid #fff;
-    border-bottom: 3px solid #fff;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 11px;
+
+width: 60px;
+
+height: 60px;
+
+border: 3px solid var(--pastel-green);
+
+background: white;
+
+cursor: pointer;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+font-size: 12px;
+
 }
 
-/* 선택된 슬롯 */
-.item-slot.selected { 
-    background-color: var(--pastel-pink);
-    border: 3px solid var(--deep-pink); /* 선택되면 아웃라인으로 변경 */
+
+
+.item-slot.selected { border-color: var(--deep-pink); background: var(--pastel-pink); }
+
+
+
+#combine-btn {
+
+width: 100%;
+
+padding: 10px;
+
+background-color: var(--pastel-green);
+
+border: none;
+
+font-weight: bold;
+
+color: var(--text-color);
+
+cursor: pointer;
+
 }
 
-/* 아이템 삭제 모드 (흔들림) */
+
+
+/* 입력 영역 */
+
+#input-area {
+
+margin-top: 15px;
+
+display: flex;
+
+gap: 10px;
+
+}
+
+
+
+#keyword-input {
+
+flex: 1;
+
+padding: 10px;
+
+border: 2px solid var(--pastel-pink);
+
+}
+
+
+
+.hidden { display: none !important; }
+
+
+
+.collectible-item {
+
+width: 40px;
+
+height: 40px;
+
+background-color: #FFD700; /* 임시: 황금색 (나중에 아이템 이미지로 교체 가능) */
+
+border: 2px solid white;
+
+border-radius: 50%; /* 동그라미 모양 */
+
+position: absolute; /* 위치를 랜덤으로 잡기 위해 필수 */
+
+cursor: pointer;
+
+box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); /* 반짝이는 효과 */
+
+z-index: 5; /* 배경보다 위에 뜨도록 */
+
+animation: bounce 1.5s infinite; /* 둥둥 떠다니는 애니메이션 */
+
+}
+
+
+
+/* 둥둥 떠다니는 효과 */
+
+@keyframes bounce {
+
+0%, 100% { transform: translateY(0); }
+
+50% { transform: translateY(-10px); }
+
+}
+
+
+
+/* 아이템 정보 팝업 스타일 */
+
+#item-info-modal {
+
+position: absolute;
+
+top: 0; left: 0;
+
+width: 100%; height: 100%;
+
+background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은 배경 */
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+z-index: 300; /* 인벤토리보다 위에 뜨게 */
+
+}
+
+
+
+.info-content {
+
+background-color: #fff9fa;
+
+border: 6px solid var(--pastel-pink);
+
+border-radius: 15px;
+
+padding: 20px;
+
+width: 300px;
+
+text-align: center;
+
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+
+}
+
+
+
+#info-img-wrapper {
+
+margin: 15px auto;
+
+width: 80px;
+
+height: 80px;
+
+background: white;
+
+border: 3px solid var(--pastel-green);
+
+border-radius: 50%;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+}
+
+
+
+#info-image {
+
+width: 60px;
+
+height: 60px;
+
+}
+
+
+
+#info-desc {
+
+color: var(--text-color);
+
+margin-bottom: 20px;
+
+line-height: 1.5;
+
+}
+
+
+
+.popup-buttons {
+
+display: flex;
+
+justify-content: center;
+
+gap: 10px;
+
+}
+
+
+
+/* css/style.css 맨 아래에 추가 */
+
+
+
+/* 쓰레기통 버튼 스타일 */
+
+#delete-toggle-btn {
+
+position: absolute;
+
+bottom: 15px;
+
+right: 15px;
+
+font-size: 24px;
+
+cursor: pointer;
+
+background-color: white;
+
+border: 2px solid var(--border-color);
+
+border-radius: 50%;
+
+width: 40px;
+
+height: 40px;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+transition: transform 0.2s, background-color 0.2s;
+
+}
+
+
+
+#delete-toggle-btn:hover {
+
+transform: scale(1.1);
+
+background-color: #ffcccc; /* 살짝 붉은색 */
+
+}
+
+
+
+/* 삭제 모드일 때 버튼 활성화 상태 */
+
+#delete-toggle-btn.active {
+
+background-color: red;
+
+color: white;
+
+border-color: darkred;
+
+}
+
+
+
+/* 삭제 모드일 때 아이템 슬롯 효과 (붉은 테두리 + 흔들림) */
+
 .inventory-grid.delete-mode .item-slot {
-    border-color: #ff6b6b !important;
-    animation: shake 0.4s infinite;
+
+border-color: red !important;
+
+animation: shake 0.5s infinite;
+
 }
+
+
+
+/* 흔들리는 애니메이션 */
 
 @keyframes shake {
-    0% { transform: rotate(0deg); }
-    25% { transform: rotate(3deg); }
-    75% { transform: rotate(-3deg); }
-    100% { transform: rotate(0deg); }
+
+0% { transform: rotate(0deg); }
+
+25% { transform: rotate(2deg); }
+
+75% { transform: rotate(-2deg); }
+
+100% { transform: rotate(0deg); }
+
 }
 
-/* --- 오프닝 화면 --- */
+
+
+/* --- 오프닝 화면 스타일 --- */
+
 #intro-screen {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-image: url('../assets/images/backgrounds/farm.png');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    background-color: rgba(255, 230, 240, 0.4); /* 핑크빛 오버레이 */
-    backdrop-filter: blur(3px);
+
+position: absolute;
+
+top: 0; left: 0;
+
+width: 100%; height: 100%;
+
+background-image: url('../assets/images/backgrounds/farm.png'); /* 배경: 농장 */
+
+background-size: cover;
+
+background-position: center;
+
+display: flex;
+
+flex-direction: column;
+
+justify-content: center;
+
+align-items: center;
+
+z-index: 1000; /* 제일 위에 뜨도록 */
+
+background-color: rgba(255, 255, 255, 0.3); /* 배경 살짝 밝게 */
+
+backdrop-filter: blur(2px); /* 배경 살짝 흐리게 */
+
 }
+
+
+
+/* 로고 애니메이션 (위로 떠오르기) */
+
+.logo-area {
+
+text-align: center;
+
+margin-bottom: 50px;
+
+animation: floatUp 2s ease-out forwards;
+
+opacity: 0; /* 처음엔 안 보임 */
+
+transform: translateY(50px);
+
+}
+
+
+
+@keyframes floatUp {
+
+0% { opacity: 0; transform: translateY(50px); }
+
+100% { opacity: 1; transform: translateY(0); }
+
+}
+
+
 
 .game-title {
-    font-size: 72px;
-    color: var(--white);
-    /* 굵은 외곽선 텍스트 효과 */
-    text-shadow: 
-        4px 4px 0 var(--deep-pink),
-        -2px -2px 0 var(--deep-pink),
-        2px -2px 0 var(--deep-pink),
-        -2px 2px 0 var(--deep-pink),
-        4px 4px 0 var(--text-color);
-    margin: 0;
-    letter-spacing: 2px;
+
+font-size: 60px;
+
+color: var(--deep-pink);
+
+text-shadow: 4px 4px 0px white, 6px 6px 0px var(--border-color);
+
+margin: 0;
+
 }
+
+
 
 .game-subtitle {
-    font-size: 20px;
-    color: var(--text-color);
-    background: rgba(255,255,255,0.8);
-    padding: 5px 15px;
-    border-radius: 20px;
-    margin-top: 15px;
-    border: 2px solid var(--deep-pink);
+
+font-size: 24px;
+
+color: var(--text-color);
+
+font-weight: bold;
+
+margin-top: 10px;
+
 }
 
-/* 메뉴 버튼 */
+
+
+/* 메뉴 버튼 스타일 */
+
 .menu-btn {
-    width: 220px;
-    margin: 12px auto;
-    font-size: 18px;
-    background-color: #fff;
-    /* 버튼 3D 효과 */
-    border-bottom: 5px solid var(--deep-pink) !important;
-    border-right: 5px solid var(--deep-pink) !important;
-    border-top: 2px solid var(--pastel-pink) !important;
-    border-left: 2px solid var(--pastel-pink) !important;
-    color: var(--text-color);
-    transition: transform 0.1s;
+
+display: block;
+
+width: 200px;
+
+margin: 10px auto;
+
+font-size: 18px;
+
+padding: 12px;
+
+background-color: white;
+
+border: 4px solid var(--pastel-pink);
+
+border-radius: 20px;
+
+color: var(--text-color);
+
+transition: all 0.2s;
+
 }
+
+
 
 .menu-btn:hover {
-    transform: translateY(2px); /* 눌리는 느낌 */
-    border-bottom: 3px solid var(--deep-pink) !important;
+
+background-color: var(--pastel-pink);
+
+color: white;
+
+transform: scale(1.1);
+
 }
+
+
+
+.cancel-btn {
+
+background: none;
+
+border: none;
+
+color: gray;
+
+text-decoration: underline;
+
+cursor: pointer;
+
+margin-top: 10px;
+
+}
+
+
 
 /* 이름 입력 영역 */
+
 #name-input-area {
-    background-color: #fff;
-    padding: 40px;
-    /* 픽셀 테두리 */
-    border: 4px solid var(--pastel-green);
-    outline: 4px solid var(--deep-green);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    text-align: center;
-    position: absolute;
-    width: 300px;
+
+background-color: rgba(255, 255, 255, 0.9);
+
+padding: 30px;
+
+border-radius: 20px;
+
+border: 4px solid var(--border-color);
+
+text-align: center;
+
+position: absolute; /* 메뉴 위에 덮어씌우기 */
+
 }
+
+
 
 #player-name-input {
-    font-size: 20px;
-    padding: 10px;
-    width: 180px;
-    text-align: center;
-    border: 3px solid var(--pastel-pink);
-    background: #fff9fa;
-    margin: 20px 0;
-    font-family: 'SUIT', sans-serif;
-    color: var(--text-color);
+
+font-size: 20px;
+
+padding: 10px;
+
+width: 150px;
+
+text-align: center;
+
+border: 2px solid var(--pastel-pink);
+
+border-radius: 10px;
+
+margin: 15px 0;
+
+font-family: 'SUIT', sans-serif;
+
 }
 
-/* --- 엔딩 화면 --- */
-#ending-overlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: #2d2d2d; /* 너무 쌩 리얼 블랙보다는 짙은 회색 */
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    opacity: 0;
-    transition: opacity 2s ease-in;
-    pointer-events: none;
+
+
+/* 공통 모달 스타일 (설명서, 크레딧) */
+
+.modal {
+
+position: absolute;
+
+top: 0; left: 0;
+
+width: 100%; height: 100%;
+
+background: rgba(0, 0, 0, 0.5);
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+z-index: 1100;
+
 }
+
+
+
+.modal-content {
+
+background: #fff9fa;
+
+padding: 30px;
+
+border: 6px solid var(--pastel-pink);
+
+border-radius: 15px;
+
+width: 300px;
+
+text-align: center;
+
+box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+
+}
+
+
+
+.modal.hidden, #intro-screen.hidden {
+
+display: none !important;
+
+}
+
+
+
+/* 게임 시작 전에는 게임 UI(상태바, 인벤토리, 대화창)를 숨김 */
+
+#status-bar, #inventory, #text-box {
+
+display: none;
+
+}
+
+
+
+/* 게임이 시작되면(body에 .game-running 클래스가 붙으면) 다시 보여줌 */
+
+body.game-running #status-bar,
+
+body.game-running #inventory,
+
+body.game-running #text-box {
+
+display: flex; /* 원래 display 속성에 맞춰주세요 (flex 또는 block) */
+
+}
+
+
+
+/* css/style.css 맨 아래 수정 */
+
+
+
+#ending-overlay {
+
+position: absolute;
+
+top: 0; left: 0;
+
+width: 100%; height: 100%;
+
+background-color: black;
+
+color: white;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+z-index: 2000;
+
+opacity: 0; /* 투명하지만 존재함 */
+
+transition: opacity 2s ease-in;
+
+/* [핵심 수정] 평소에는 클릭이 통과되도록 설정 */
+
+pointer-events: none;
+
+}
+
+
 
 #ending-overlay.visible {
-    opacity: 1;
-    pointer-events: auto;
+
+opacity: 1;
+
+/* [핵심 수정] 엔딩이 보일 때만 클릭을 막음 (버튼 클릭 등을 위해) */
+
+pointer-events: auto;
+
 }
+
+
+
+.ending-content {
+
+text-align: center;
+
+max-width: 600px;
+
+}
+
+
+
+#ending-title {
+
+font-size: 40px;
+
+color: var(--pastel-pink);
+
+margin-bottom: 30px;
+
+text-shadow: 0 0 10px #fff;
+
+}
+
+
 
 #ending-image-wrapper img {
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    border: 8px solid var(--white);
-    outline: 8px solid var(--pastel-pink); /* 2중 테두리 */
-    box-shadow: 0 0 30px var(--deep-pink);
-    margin-bottom: 30px;
+
+width: 200px;
+
+height: 200px;
+
+border-radius: 50%;
+
+border: 5px solid white;
+
+box-shadow: 0 0 20px var(--pastel-pink);
+
+margin-bottom: 20px;
+
 }
+
+
+
+#ending-text {
+
+font-size: 20px;
+
+line-height: 1.8;
+
+white-space: pre-line; /* 줄바꿈 적용 */
+
+}
+
+
 
 #restart-btn {
-    margin-top: 40px;
-    padding: 15px 40px;
-    font-size: 20px;
-    background-color: var(--deep-pink);
-    color: white;
-    border-color: #ff9eb2; /* 약간 더 밝은 테두리 */
+
+margin-top: 30px;
+
+padding: 15px 30px;
+
+font-size: 18px;
+
+background-color: var(--deep-pink);
+
+color: white;
+
+border: none;
+
+border-radius: 10px;
+
+cursor: pointer;
+
 }
 
-/* 유틸리티 */
+
+
+/* --- 대화창 커서 (▼) 깜빡임 애니메이션 --- */
+
+#next-cursor {
+
+position: absolute;
+
+bottom: 20px;
+
+right: 200px; /* 초상화 왼쪽 쯤 */
+
+font-size: 20px;
+
+color: var(--deep-pink);
+
+animation: blink 1s infinite;
+
+cursor: pointer;
+
+}
+
+
+
+@keyframes blink {
+
+0%, 100% { opacity: 1; transform: translateY(0); }
+
+50% { opacity: 0; transform: translateY(5px); }
+
+}
+
+
+
+/* 타자 효과 중에는 커서 숨김 */
+
 .hidden { display: none !important; }
