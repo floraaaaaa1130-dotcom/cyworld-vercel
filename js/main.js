@@ -13,6 +13,7 @@ let gameState = {
     inventory: [], 
     affinities: { sion: 0, riku: 0, yushi: 0, jaehee: 0, ryo: 0, sakuya: 0 },
     hasGiftedToday: {}, // 오늘 선물 줬는지 체크 (NPC별)
+    hasTalkedToday: {}, // 오늘 대화했는지 체크 (NPC별)
     playerName: "농장주", // 플레이어 이름
     isEnding: false // 엔딩 진행 중인지 여부
 };
@@ -851,6 +852,7 @@ function showFinalPopup() {
     // 버튼 표시
     btn.classList.remove('hidden');
 }
+
 
 
 
