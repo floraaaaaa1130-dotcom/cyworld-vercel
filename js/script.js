@@ -13,7 +13,7 @@ const npcs = {
             hate: { text: "마음은 고맙지만... 이건 좀 처치하기 곤란하네요.", emotion: "default" },
             default: { text: "오, 선물인가요? 고맙습니다.", emotion: "default" }
         },
-        unknownReaction: { text: "음? 그게 무슨 말인가요? 제가 모르는 분야군요.", emotion: "default" },
+        unknownReaction: { text: "음... 무슨 말씀이신지 잘 모르겠네요.", emotion: "default" },
         locations: { sunny: "hall", rainy: "hall", blossom: "forest" },
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
@@ -155,7 +155,8 @@ const dailyScripts = {
                 emotion: "happy",
                 choices: [
                     { label: "마을을 위해 열심히 일하겠습니다! 잘 부탁드려요.", score: 5, reply: "오... 열정이 대단하시네요. 저도 도울 수 있는 건 도울게요." },
-                    { label: "네, 어쩌다보니...(ㅎㅎ) 잘 부탁드려요.", score: 0, reply: "필요한 게 있으면 말씀하세요." }
+                    { label: "네 어쩌다보니...(ㅎㅎ) 잘 부탁드려요!", score: 0, reply: "네, 필요한 거 있으시면 말씀해주세요." },
+                    { label: "혹시... 소랑 대화 가능하세요?", score: 5, reply: "...네? 소를 키우기는 하는데 대화는... 음... 시도는 해볼게요." }
                 ]
             },
         ],
@@ -218,34 +219,55 @@ const dailyScripts = {
         ]
     },
     
-    // ★ 호감도 50 이상일 때 나오는 특수 대사
-    "highAffinity": {
-        riku: [
-            { text: "누나 보니까 리쿠 넘 기부니 조타 !", emotion: "happy" },
-            { text: "오늘두 리쿠랑 마니 놀아조야 대여 히히", emotion: "happy" }
-        ],
-        yushi: [
-            { text: "농장주님 ! 오늘따라 더 멋져 보이네요 ! ..에 ! 물론 진심이지요 ^_^", emotion: "happy" },
-            { text: "가끔은 도시 생활이 그립기도 하지만.. {uesr} 님이 있으니 여기가 더 좋아요. 에.. 방금은 비밀이에요 !", emotion: "happy" }
-        ],
-        sion: [
-            { text: "농장주님을 보면 마음이 편안해져요.", emotion: "happy" },
-            { text: "차 한 잔 더 하시겠어요?", emotion: "default" }
-        ]
-    }
-};
 
 // ★ 기존 randomDialogues 삭제!
 const affinityDialogues = {
     sion: {
-        low: { // 0~29점
+        very_low: {
             "맑음": [
-                { text: "아직은 좀 어색하네요.", emotion: "default" },
-                { text: "마을 회관 일은 항상 바쁩니다.", emotion: "default" }
+                { text: "...", emotion: "default" },
+                { text: "(가볍게 목례만 한다.)", emotion: "default" }
             ],
             "비": [
-                { text: "비가 오네요. 우산은 챙기셨나요?", emotion: "default" }
+                { text: "비가 오네요.", emotion: "default" }
             ],
+            "벚꽃": [
+                { text: "산책 나오셨어요?", emotion: "default" }
+                { text: "저는 할 일이 좀 남아서요. 먼저 가보세요.", emotion: "default" }
+            ]
+        },
+        low: {
+            "맑음": [
+                [
+                { text: "새로운 환경이라 낯설지 않으세요? 저도 처음엔 적응하는 데 시간이 좀 걸렸거든요.", emotion: "happy" },
+                { text: "그래도 잘 지내시는 것 같아 다행이네요.", emotion: "default" }
+                ],
+                { 
+                text: "혹시 마을회관 이용 수칙은 다 읽어보셨나요? 꼼꼼히 확인해주시는 게 좋아요.", 
+                emotion: "happy",
+                choices: [
+                    { label: "헉, 있는 줄 몰랐어요. 지금 읽어볼게요!", score: 0, reply: "네. 궁금한 부분 있으면 알려드릴게요." },
+                    { label: "네! 누가 쓴 건지 아주 완벽하던데요?", score: 5, reply: "아... 알아봐 주시니 감사하네요. 열심히 썼거든요." }
+                ]
+            },
+                { 
+                text: "농장 일은 처음이라 부족한 게 많을 텐데, 혹시 지금 가장 필요한 게 뭐예요?", 
+                emotion: "shy",
+                type: "keyword", // ★ 여기가 핵심! 키워드 입력 타입 지정
+                answers: {
+                    "선배님": { text: "ㅋㅋ저도 전문가는 아니지만... 팁 정도는 알려드릴 수 있어요.", emotion: "happy", score: 10 },
+                    "도움": { text: "ㅋㅋ저도 전문가는 아니지만... 팁 정도는 알려드릴 수 있어요.", emotion: "happy", score: 10 },
+                    "가르침": { text: "ㅋㅋ저도 전문가는 아니지만... 팁 정도는 알려드릴 수 있어요.", emotion: "happy", score: 10 },
+                }
+            }
+                
+            ],
+            
+            "비": [
+                { text: "비가 오니 마을이 조용하네요. 빗소리 들으면서 업무 보는 것도 좋아요.", emotion: "default" },
+                { text: "우산 쓰고 다니세요. 감기 걸리면 본인만 손해니까요.", emotion: "default" },
+            ],
+            
             "벚꽃": [
                 { text: "꽃가루 알레르기 같은 건 없으시죠?", emotion: "default" }
             ]
@@ -536,6 +558,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
