@@ -717,11 +717,12 @@ document.getElementById('dialogue-overlay').onclick = (e) => {
         return;
     }
 
-// 엔딩이면 팝업 띄우고 함수 종료 (더 이상 아래 코드를 실행 안 함)
-if (gameState.isEnding) {
-    showFinalPopup();
-    return; // ★ 여기서 탈출!
-}
+// 대사가 끝났으면 창 닫
+    if (gameState.isEnding) {
+        showFinalPopup();
+    } else {
+        document.getElementById('dialogue-overlay').classList.add('hidden');
+    }
 
     // 5. [핵심 수정] 일반 대화 종료 처리
     const inputArea = document.getElementById('input-area');
@@ -968,6 +969,7 @@ function showFinalPopup() {
     
     btn.classList.remove('hidden');
 }
+
 
 
 
