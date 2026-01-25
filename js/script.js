@@ -141,10 +141,10 @@ const npcs = {
         },
         giftReactions: {
             love: { text: "고마워요. 특히 이 딸기... 향이 너무 달콤해서 기분이 좋아졌어요", emotion: "happy" },
-            hate: { text: ""아... 진짜 죄송한데... 이건 다른 사람 주는 게 어때요?", emotion: "serious" },
+            hate: { text: "아... 진짜 죄송한데... 이건 다른 사람 주는 게 어때요?", emotion: "serious" },
             default: { text: "에- 엄청 다정하네요. 이런 걸 다 챙겨주고. 고맙습니다.", emotion: "default" }
         },
-        locations: { sunny: "square", rainy: "saloon", blssom: "forest" }, 
+        locations: { sunny: "square", rainy: "saloon", blossom: "forest" }, 
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
             forest: { top: "62%", left: "48%" },
@@ -303,9 +303,8 @@ const randomDialogues = {
             {text: "농장주님 ! 오늘도 열심히 일하고 오시는 길인가요 ? 대단해요 !", emotion:"default"},
             {text: "저는 가끔 숲속에서 춤을 추곤 해요. 누군가 볼까 봐 조금 부끄럽지만요 ^_^", emotion: "happy" },
             {text: "위시듀밸리의 밤하늘은 별이 참 잘 보여서 좋지요 ? 꼭 저를 비춰주는 것 같아요 !", emotion: "happy" },
-        ]
+        ],
 
-    
             비: [],
             벚꽃: [] },
     
@@ -432,6 +431,7 @@ const questScripts = {
     },
     // 나머지 멤버들도 같은 형식으로 추가 (jaehee, ryo, sakuya 등)
 };
+
 
 
 
