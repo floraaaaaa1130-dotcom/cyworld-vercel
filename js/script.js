@@ -45,8 +45,8 @@ const npcs = {
         locations: { sunny: "shop", rainy: "saloon", blossom: "shop" },
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
-            shop: { top: "60%", left: "24%" },
-            saloon: { top: "80%", left: "14%" }
+            shop: { top: "70%", left: "24%" },
+            saloon: { top: "80%", left: "16%" }
         }
     },
     yushi: {
@@ -121,7 +121,7 @@ const npcs = {
         locations: { sunny: "square", rainy: "hall", blossom: "square" }, 
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
-            hall: { top: "66%", left: "49%" },
+            hall: { top: "82%", left: "49%" },
             square: { top: "54%", left: "48%" }
         }
     },
@@ -147,8 +147,8 @@ const npcs = {
         locations: { sunny: "square", rainy: "saloon", blossom: "forest" }, 
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
-            forest: { top: "67%", left: "50%" },
-            saloon: { top: "75%", left: "45%" },
+            forest: { top: "85%", left: "50%" },
+            saloon: { top: "75%", left: "41%" },
             square: { top: "25%", left: "43%" }
         }
     }
@@ -431,6 +431,7 @@ const questScripts = {
     },
     // 나머지 멤버들도 같은 형식으로 추가 (jaehee, ryo, sakuya 등)
 };
+
 
 
 
