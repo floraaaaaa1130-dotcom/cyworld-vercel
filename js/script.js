@@ -149,7 +149,15 @@ const dailyScripts = {
         ],
         
         sion: [
-            { text: "위시듀밸리에 환영해요! 저는 시온이라고 합니다. 도움이 필요하면 언제든 말씀하세요. 저는 보통 마을회관에 있어요~", emotion: "happy" }
+            { text: "아, 안녕하세요. 오늘 귀농하신다는 분 맞으시죠?" },
+            { 
+                text: "저는 마을회관 관리를 맡고 있는 오시온입니다.", 
+                emotion: "happy",
+                choices: [
+                    { label: "마을을 위해 열심히 일하겠습니다! 잘 부탁드려요.", score: 5, reply: "오... 열정이 대단하시네요. 저도 도울 수 있는 건 도울게요." },
+                    { label: "네, 어쩌다보니...(ㅎㅎ) 잘 부탁드려요.", score: 0, reply: "필요한 게 있으면 말씀하세요." }
+                ]
+            },
         ],
         
         yushi: [
@@ -528,6 +536,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
