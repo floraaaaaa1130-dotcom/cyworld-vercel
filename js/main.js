@@ -542,7 +542,7 @@ function openDialogue(npcKey) {
     }
 
     // (5) 랜덤 뽑기
-    onst randomPick = pool[Math.floor(Math.random() * pool.length)];
+    const randomPick = pool[Math.floor(Math.random() * pool.length)];
 
     if (Array.isArray(randomPick)) {
         // 뽑힌 게 배열이면(여러 줄이면) -> 그대로 대기열에 넣음
@@ -1088,6 +1088,7 @@ function endEvent() {
         if (fadeOverlay) fadeOverlay.classList.remove('visible');
     }, 1000);
 }
+
 
 
 
