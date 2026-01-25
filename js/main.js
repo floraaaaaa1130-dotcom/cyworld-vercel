@@ -465,8 +465,9 @@ function showNextLine(npcKey) {
     if (npcs[npcKey]) { 
         portraitDiv.style.display = 'block'; 
         const npc = npcs[npcKey];
-        const emotion = data.emotion || 'default';
-        portraitImg.src = npc.portraits[emotion] || npc.portraits['default'];
+        // const emotion = data.emotion || 'default';
+        // portraitImg.src = npc.portraits[emotion] || npc.portraits['default'];
+       portraitImg.src = npc.portrait;
     } else {
         portraitDiv.style.display = 'none'; 
     }
@@ -904,4 +905,5 @@ function closeAlert() {
     document.getElementById('alert-modal').classList.add('hidden');
     playSfx('click');
 }
+
 
