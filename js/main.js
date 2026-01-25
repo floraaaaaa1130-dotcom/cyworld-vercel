@@ -542,8 +542,15 @@ function openDialogue(npcKey) {
     }
 
     // (5) 랜덤 뽑기
-    const randomPick = pool[Math.floor(Math.random() * pool.length)];
-    dialogueQueue = Array.isArray(randomPick) ? randomPick : [randomPick];
+    onst randomPick = pool[Math.floor(Math.random() * pool.length)];
+
+    if (Array.isArray(randomPick)) {
+        // 뽑힌 게 배열이면(여러 줄이면) -> 그대로 대기열에 넣음
+        dialogueQueue = randomPick;
+    } else {
+        // 뽑힌 게 객체면(한 줄이면) -> 배열로 감싸서 넣음
+        dialogueQueue = [randomPick];
+    }
 
     currentDialogueIndex = 0;
     showNextLine(npcKey);
@@ -1081,6 +1088,7 @@ function endEvent() {
         if (fadeOverlay) fadeOverlay.classList.remove('visible');
     }, 1000);
 }
+
 
 
 
