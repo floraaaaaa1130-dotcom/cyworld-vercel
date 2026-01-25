@@ -122,17 +122,38 @@ const npcs = {
 
 // 2. 대본 및 키워드 데이터
 const dailyScripts = {
+    // 1일차 대사 (배열로 변경)
     1: {
-        riku: { text: "누나 안냥 ! 새로 이사 왓어여?? 리쿠는 리쿠에여 잘 부타캐여 히히", emotion: "happy" },
-        yushi: { text: "에.. 새로 오신 농장주님이시군요 ? 만나서 반가워요 !", emotion: "default" }
+        riku: [
+            { text: "누나 안냥 ! 새로 이사 왓어여??", emotion: "happy" },
+            { text: "리쿠는 리쿠에여 잘 부타캐여 히히", emotion: "happy" }
+        ],
+        yushi: [
+            { text: "에.. 새로 오신 농장주님이시군요 ?", emotion: "default" },
+            { text: "만나서 반가워요 ! 모르는 게 있으면 물어보세요.", emotion: "happy" }
+        ]
     },
+    // 4일차 대사 (한 줄이어도 배열로 감싸는 것을 추천)
     4: {
-        sion: { text: "축제라 그런지 다들 즐거워 보여서 좋네요. 일 생각은 잠시 잊어도 돼요 !", emotion: "happy" }
+        sion: [
+            { text: "축제라 그런지 다들 즐거워 보여서 좋네요.", emotion: "happy" },
+            { text: "일 생각은 잠시 잊어도 돼요 !", emotion: "happy" }
+        ]
     },
+    // ★ 호감도 50 이상일 때 나오는 특수 대사
     "highAffinity": {
-        riku: { text: "누나 보니까 리쿠 넘 기부니 조타 ! 오늘두 리쿠랑 마니 놀아조야 대여 히히", emotion: "happy" }
+        riku: [
+            { text: "누나 보니까 리쿠 넘 기부니 조타 !", emotion: "happy" },
+            { text: "오늘두 리쿠랑 마니 놀아조야 대여 히히", emotion: "happy" }
+        ],
+        // 다른 캐릭터 예시 (필요하면 추가)
+        sion: [
+            { text: "농장주님을 보면 마음이 편안해져요.", emotion: "happy" },
+            { text: "차 한 잔 더 하시겠어요?", emotion: "default" }
+        ]
     }
 };
+
 
 const randomDialogues = {
     riku: {
@@ -234,5 +255,49 @@ const itemData = {
     "에너지 드링크": { img: "assets/images/items/energytonic.png", desc: "피로가 싹 가신다" } //ㅎㅇ
 };
 
-
+// --- 5. 엔딩 스크립트 데이터 (순애 6명 + 양다리 1명) ---
+const endingScripts = {
+    sion: {
+        title: "시온과의 따뜻한 티타임",
+        image: "assets/images/portraits/sion_happy.png",
+        text: "농장주님 덕분에 마을이 훨씬 더 활기차진 것 같아요.\n\n앞으로도 저와 함께 차 한 잔의 여유를 즐겨주시겠어요?\n당신과 함께라면 매일이 행복할 것 같습니다."
+    },
+    riku: {
+        title: "리쿠의 영원한 단짝",
+        image: "assets/images/portraits/riku_happy.png",
+        text: "누나누나!! 이제 어디 가면 안 대여 알겟져?\n\n리쿠는 누나랑 평생~ 같이 놀 거야!\n약속 도장 꾹!! 헤헤, 사랑해여!!"
+    },
+    yushi: {
+        title: "수줍은 고백",
+        image: "assets/images/portraits/yushi_happy.png",
+        text: "에.. 사실 처음 뵀을 때부터 농장주님이 신경 쓰였어요.\n\n제가 표현은 서툴지만.. 제 마음은 진심이에요.\n저의 곁에 있어 주시겠어요?"
+    },
+    jaehee: {
+        title: "든든한 파트너",
+        image: "assets/images/portraits/jaehee_happy.png",
+        text: "허허, 농장주님만큼 저랑 잘 맞는 사람은 처음 봤습니다.\n\n우리 둘이 힘을 합치면 못 할 게 없겠죠.\n앞으로도 잘 부탁합니다, 나의 파트너."
+    },
+    ryo: {
+        title: "최고의 콤비",
+        image: "assets/images/portraits/ryo_happy.png",
+        text: "야하~ 역시 누나가 최고야!\n\n나랑 같이 있으면 심심할 틈 없을걸?\n내가 매일매일 웃게 해 줄게! 진짜루!"
+    },
+    sakuya: {
+        title: "달콤한 빵 냄새",
+        image: "assets/images/portraits/sakuya_happy.png",
+        text: "갓 구운 빵 냄새보다 농장주님이 더 좋은걸요?\n\n매일 아침 맛있는 빵과 함께 당신을 기다릴게요.\n저랑.. 사귀어 주실래요?"
+    },
+    // 양다리 엔딩 (호감도 높은 사람이 2명 이상일 때)
+    cheater: {
+        title: "위시 밸리의 카사노바",
+        image: "assets/images/ui/star_icon.png", // 또는 경고 이미지
+        text: "시온: 농장주님.. 저한테만 잘해주신 게 아니었나요?\n리쿠: 누나 미워!! 리쿠만 좋아한다구 해짜나!!\n\n모두의 마음을 얻으려다 결국 신뢰를 잃고 말았습니다...\n(Bad Ending?)"
+    },
+    // 노말 엔딩 (호감도 부족)
+    normal: {
+        title: "평화로운 귀농 생활",
+        image: "assets/images/backgrounds/farm.png",
+        text: "7일간의 체험이 끝났습니다.\n특별한 인연은 만들지 못했지만, 훌륭한 농장주가 되었습니다.\n\n- The End -"
+    }
+};
 
