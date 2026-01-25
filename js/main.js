@@ -16,6 +16,8 @@ let gameState = {
     hasTalkedToday: {}, // 오늘 대화했는지 체크 (NPC별)
     playerName: "농장주", // 플레이어 이름
     isEnding: false // 엔딩 진행 중인지 여부
+   // ★ [추가] 퀘스트 상태 저장 (target: 누구, item: 뭘 원하는지)
+   activeQuest: null
 };
 
 // ★ [추가] 입력창을 나중에 띄울지 판단하는 변수
@@ -638,6 +640,33 @@ function giveGift(npcKey) {
 
     const item = gameState.inventory[selectedSlotIndex];
     const npc = npcs[npcKey];
+
+   // ★★★ [추가] 퀘스트 아이템 체크 로직 시작 ★★★
+    if (gameState.activeQuest && 
+        gameState.activeQuest.target === npcKey && 
+        gameState.activeQuest.item === item) {
+        
+        // 1. 퀘스트 성공 처리 (호감도 대폭 상승)
+        gameState.affinities[npcKey] += 50; // 50점 보너스!
+        gameState.hasGiftedToday[npcKey] = true;
+        
+        // 2. 아이템 소모
+        gameState.inventory.splice(selectedSlotIndex, 1);
+        selectedSlotIndex = null;
+        shouldShowInput = false;
+
+        // 3. 퀘스트 성공 대사 출력
+        const successDialogue = questScripts[npcKey].success;
+        displayDialogue(npcKey, successDialogue);
+        
+        // 4. 퀘스트 종료 (초기화)
+        gameState.activeQuest = null;
+        
+        updateUI();
+        playSfx('success');
+        return; // 여기서 함수 종료 (일반 선물 로직 실행 안 함)
+    }
+    // ★★★ [추가] 퀘스트 아이템 체크 로직 끝 ★★★
     
     let points = 5;
     let response = npc.giftReactions?.default || { text: "고마워요.", emotion: "default" };
@@ -801,8 +830,47 @@ function startNextDay() {
     document.getElementById('night-overlay').classList.add('hidden');
     updateUI(); 
     move('farm'); // 집(농장)에서 시작
+
+   // ★★★ [추가] 5일차 아침 퀘스트 발생 로직 ★★★
+    if (gameState.day === 5) {
+        triggerDay5Quest();
+    }
 }
 
+// [신규] 5일차 퀘스트 트리거 함수
+function triggerDay5Quest() {
+    // 1. 호감도 내림차순 정렬
+    const sorted = Object.entries(gameState.affinities).sort((a, b) => b[1] - a[1]);
+    
+    // 2. 2위 찾기 (없으면 1위라도 선택, 그것도 없으면 패스)
+    let targetEntry = sorted[1] ? sorted[1] : sorted[0];
+    
+    if (!targetEntry) return; // 혹시라도 데이터가 없으면 종료
+
+    const targetNpcKey = targetEntry[0];
+    const questData = questScripts[targetNpcKey];
+
+    if (questData) {
+        // 3. 퀘스트 상태 저장
+        gameState.activeQuest = {
+            target: targetNpcKey,
+            item: questData.item
+        };
+
+        // 4. 편지 팝업 띄우기
+        const modal = document.getElementById('letter-modal');
+        const text = document.getElementById('letter-text');
+        
+        text.innerText = questData.letter;
+        modal.classList.remove('hidden');
+        playSfx('success'); // 알림음 (있으면)
+    }
+}
+
+// 편지 닫기 함수
+function closeLetter() {
+    document.getElementById('letter-modal').classList.add('hidden');
+}
 
 /* ==========================================================================
    7. 엔딩 시스템 (Ending)
@@ -902,6 +970,7 @@ function showFinalPopup() {
     
     btn.classList.remove('hidden');
 }
+
 
 
 
