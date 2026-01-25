@@ -285,7 +285,7 @@ button:active { transform: translateY(1px); box-shadow: none; }
 }
 .logo-area { margin-bottom: 30px; animation: floatUp 2s ease-out forwards; opacity: 0; transform: translateY(30px); }
 @keyframes floatUp { to { opacity: 1; transform: translateY(0); } }
-.game-logo-img { max-width: 500px; height: auto; filter: drop-shadow(3px 3px 0 white); }
+.game-logo-img { max-width: 500px; height: auto; }
 
 #menu-area { display: flex; flex-direction: column; gap: 10px; align-items: center; }
 .menu-btn {
@@ -298,14 +298,14 @@ button:active { transform: translateY(1px); box-shadow: none; }
 /* 이름 입력창 */
 #name-input-area {
     background-color: rgba(255, 255, 255, 0.95);
-    padding: 25px; border: 3px solid var(--border-pink);
+    padding: 25px; border: 2px solid var(--border-pink);
     border-radius: 15px; display: flex; flex-direction: column;
     align-items: center; gap: 15px; width: 300px;
 }
 #player-name-input {
     width: 200px; padding: 10px;
-    font-family: 'MyGameFont'; font-size: 18px; text-align: center;
-    border: 2px solid var(--border-pink); background-color: #fff0f5; outline: none;
+    font-family: 'MyGameFont'; font-size: 12px; text-align: center;
+    border: 1px solid var(--border-pink); background-color: #fff0f5; outline: none;
 }
 .button-row { display: flex; gap: 10px; width: 100%; justify-content: center; }
 .confirm-btn { width: 120px; padding: 10px; background-color: var(--pastel-pink); color: white; border: none; }
@@ -532,4 +532,5 @@ button:active { transform: translateY(1px); box-shadow: none; }
     background-color: rgba(255, 192, 203, 0.15); /* 연한 핑크색 틴트 */
     background-image: url('../assets/effects/blossom.gif');
 }
+
 
