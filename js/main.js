@@ -96,6 +96,16 @@ const npcLayer = document.getElementById('npc-layer');
     }
 }
 
+// 이 함수가 main.js에 꼭 있어야 합니다!
+function collectItem(name) {
+    if (gameState.inventory.length >= 8) { 
+        alert("가방이 꽉 찼어요!"); 
+        return; 
+    }
+    gameState.inventory.push(name);
+    updateUI();
+}
+
 // js/main.js - createItemElement 함수 수정
 
 function createItemElement(itemName) {
@@ -781,6 +791,7 @@ window.onload = () => {
     
     console.log("게임 로드 완료! 오프닝 대기 중...");
 };
+
 
 
 
