@@ -101,6 +101,8 @@ function startGame() {
     const input = document.getElementById('player-name-input');
     const name = input.value.trim();
 
+   changeBgm("wishbgm.mp3");
+
     if (name.length === 0) {
         alert("이름을 입력해주세요!");
         return;
@@ -1089,6 +1091,7 @@ function endEvent() {
         if (fadeOverlay) fadeOverlay.classList.remove('visible');
     }, 1000);
 }
+
 
 
 
