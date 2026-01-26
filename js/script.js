@@ -210,6 +210,7 @@ const dailyScripts = {
             },
         ] 
     },
+    };
 
 // ★ 기존 randomDialogues 삭제!
 const affinityDialogues = {
@@ -882,6 +883,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
