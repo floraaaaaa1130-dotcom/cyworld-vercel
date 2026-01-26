@@ -125,24 +125,20 @@ function startGame() {
     updateSetupUI();
 }
 
+// [신규] 다음 멤버로 넘어가는 함수
 function nextMemberStep() {
-    // 🔴 크롭 중이면 단계 이동 막기
-    // (script.js에서 currentCropper를 window에 등록해야 이 체크가 정확히 작동합니다. 
-    // 일단 undefined 에러가 나지 않도록 체크 방식을 수정하거나 script.js를 함께 수정해야 합니다.)
-    if (window.currentCropper) {
-        alert("사진 자르기를 완료해주세요!");
-        return;
+    playSfx('click');
+
+    // 현재 인덱스 증가
+    currentSetupIndex++;
+
+    // 모든 멤버 설정이 끝났으면 게임 시작
+    if (currentSetupIndex >= setupOrder.length) {
+        enterGame();
+    } else {
+        // 아니면 다음 멤버 보여주기
+        updateSetupUI();
     }
-
-    currentSetupIndex++; // 변수명 수정 (currentMemberIndex -> currentSetupIndex)
-
-    if (currentSetupIndex >= setupOrder.length) { // 변수명 수정 (members -> setupOrder)
-        // 마지막 멤버까지 설정이 끝나면 게임 진입
-        enterGame(); 
-        return;
-    }
-
-    updateSetupUI(); // 함수명 수정 (updateMemberUI -> updateSetupUI)
 }
 
 // [신규] 현재 순서에 맞는 멤버만 화면에 보여주는 함수
@@ -1093,10 +1089,6 @@ function endEvent() {
         if (fadeOverlay) fadeOverlay.classList.remove('visible');
     }, 1000);
 }
-
-
-
-
 
 
 
