@@ -263,7 +263,7 @@ const affinityDialogues = {
                     }
                 },
                 {
-                    text: "꽃가루 알레르기 같은 건 없으시죠?"
+                    text: "꽃가루 알레르기 같은 건 없으시죠?",
                     emotion: "default",
                     choices: [
                         { label: "완전 튼튼해요!", score: 0, reply: "다행이네요. 건강한 게 최고죠." },
@@ -884,6 +884,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
