@@ -525,6 +525,7 @@ let currentMemberId = null;
 
 // HTML이 모두 로드된 후 실행
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("스크립트 로드됨: 이벤트 연결 시작");
     
     // 모달 관련 요소 가져오기 (index.html에 이 ID들이 있어야 함)
     const modal = document.getElementById('crop-modal');
@@ -532,31 +533,44 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnCrop = document.getElementById('btn-crop');
     const btnCancel = document.getElementById('btn-cancel');
 
+    // 모달 요소가 잘 찾아지는지 확인
+    if (!modal) console.error("오류: crop-modal을 찾을 수 없습니다.");
+    if (!imageToCrop) console.error("오류: image-to-crop을 찾을 수 없습니다.");
+
     // NPC 목록을 순회하며 이벤트 연결
     const members = Object.keys(npcs); // ['sion', 'riku', 'yushi', ...]
 
     members.forEach(member => {
-        const input = document.getElementById(`upload-${member}`);
+        const inputId = `upload-${member}`;
+        const input = document.getElementById(inputId);
         
         if (input) {
+            console.log(`이벤트 연결됨: ${inputId}`);
             input.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = function(event) {
-                        // 1. 현재 어떤 멤버를 수정 중인지 저장
                         currentMemberId = member; 
                         
-                        // 2. 모달에 이미지 띄우기
+                        // 이미지 소스 설정
                         imageToCrop.src = event.target.result;
+                        
+                        // ★ 모달 표시 (flex로 설정해야 보임)
                         if(modal) modal.style.display = 'flex';
 
-                        // 3. 기존 크로퍼 초기화
+                        // 기존 크로퍼 제거
                         if (currentCropper) {
                             currentCropper.destroy();
                         }
 
-                        // 4. 새 크로퍼 생성 (1:1 비율 강제)
+                        // ★ Cropper 생성 (이미지가 로드된 후 실행되도록 약간의 지연을 줄 수도 있음)
+                        // Cropper 라이브러리가 로드되었는지 확인
+                        if (typeof Cropper === 'undefined') {
+                            alert("오류: Cropper.js 라이브러리가 로드되지 않았습니다.");
+                            return;
+                        }
+
                         currentCropper = new Cropper(imageToCrop, {
                             aspectRatio: 1, 
                             viewMode: 1,
@@ -566,9 +580,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     };
                     reader.readAsDataURL(file);
                 }
-                // 같은 파일 다시 선택 가능하게 초기화
                 e.target.value = ''; 
             });
+        } else {
+            console.warn(`경고: ${inputId} 요소를 찾을 수 없습니다.`);
         }
     });
 
@@ -612,6 +627,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
