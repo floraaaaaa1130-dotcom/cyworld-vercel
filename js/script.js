@@ -3,21 +3,17 @@ const npcs = {
     sion: {
         name: "시온",
         sprite: "assets/images/sprites/sion.png",
-        portraits: {
-            default: "assets/images/portraits/sion_default.png",
-            happy: "assets/images/portraits/sion_happy.png",
-            shock: "assets/images/portraits/sion_serious.png"
-        },
+        portrait: "assets/images/portraits/sion_default.png",
         gifts: {
             love: ["커피", "에너지 드링크", "설탕", "회"],
             hate: ["블롭피쉬"]
         },
         giftReactions: {
-            love: { text: "와... 고마워요. 마침 집중력이 떨어지던 참이었는데, 덕분에 힘이 나네요!", emotion: "happy" },
-            hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
-            default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
+            love: { text: "와... 이거 제가 제일 좋아하는 건데. 어떻게 아셨어요? 진짜 감동이다. 고마워요.", emotion: "default" },
+            hate: { text: "마음은 고맙지만... 이건 좀 처치하기 곤란하네요.", emotion: "default" },
+            default: { text: "오, 선물인가요? 고맙습니다.", emotion: "default" }
         },
-        unknownReaction: { text: "음? 그게 무슨 말인가요? 제가 모르는 분야군요.", emotion: "default" },
+        unknownReaction: { text: "음... 무슨 말씀이신지 잘 모르겠네요.", emotion: "default" },
         locations: { sunny: "hall", rainy: "hall", blossom: "forest" },
         // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
@@ -28,12 +24,7 @@ const npcs = {
     riku: {
         name: "리쿠",
         sprite: "assets/images/sprites/riku.png",
-        portraits: {
-            default: "assets/images/portraits/riku_default.png",
-            happy: "assets/images/portraits/riku_happy.png",
-            sad: "assets/images/portraits/riku_sad.png",
-            shock: "assets/images/portraits/riku_shock.png"
-        },
+        portrait: "assets/images/portraits/riku_default.png",
         unknownReaction: { text: "엥? 그게 뭐예여? 먹는 거예여?", emotion: "shock" },
         gifts: {
             love: ["도토리", "초코케이크", "아이스크림"],
@@ -54,11 +45,7 @@ const npcs = {
     yushi: {
         name: "유우시",
         sprite: "assets/images/sprites/yushi.png",
-        portraits: {
-            default: "assets/images/portraits/yushi_default.png",
-            happy: "assets/images/portraits/yushi_happy.png",
-            shock: "assets/images/portraits/yushi_shock.png"
-        },
+        portrait: "assets/images/portraits/yushi_default.png",
         gifts: { // gifts 속성 추가 (코드 일관성을 위해 임의 추가함, 필요시 수정)
              love: ["스타푸르트", "블루 재즈"],
              hate: ["쓰레기"]
@@ -79,12 +66,7 @@ const npcs = {
     jaehee: { 
         name: "재희",
         sprite: "assets/images/sprites/jaehee.png",
-        portraits: { 
-            default: "assets/images/portraits/jaehee_default.png",
-            happy: "assets/images/portraits/jaehee_happy.png", // 임시 이미지 경로 주의
-            sad: "assets/images/portraits/jaehee_sad.png",
-            shock: "assets/images/portraits/jaehee_shock.png"
-        },
+        portrait: "assets/images/portraits/jaehee_default.png",
         gifts: {
             love: ["행운의 점심", "에너지 드링크"],
             hate: ["쓰레기"]
@@ -107,12 +89,7 @@ const npcs = {
     ryo: { 
         name: "료", 
         sprite: "assets/images/sprites/ryo.png",
-        portraits: { 
-            default: "assets/images/portraits/ryo_default.png",
-            happy: "assets/images/portraits/ryo_happy.png",
-            sad: "assets/images/portraits/ryo_sad.png",
-            shock: "assets/images/portraits/ryo_shock.png"
-        },
+        portrait: "assets/images/portraits/ryo_default.png",
         gifts: {
             love: ["블롭피쉬", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
@@ -134,12 +111,7 @@ const npcs = {
     sakuya: { 
         name: "사쿠야",
         sprite: "assets/images/sprites/sakuya.png",
-        portraits: { 
-            default: "assets/images/portraits/sakuya_default.png",
-            happy: "assets/images/portraits/sakuya_happy.png",
-            sad: "assets/images/portraits/sakuya_sad.png",
-            shock: "assets/images/portraits/sakuya_shock.png"
-        },
+        portrait: "assets/images/portraits/sakuya_default.png",
         gifts: {
             love: ["핑크케이크"],
             hate: ["쓰레기", "잉어"]
@@ -177,7 +149,16 @@ const dailyScripts = {
         ],
         
         sion: [
-            { text: "위시듀밸리에 환영해요! 저는 시온이라고 합니다. 도움이 필요하면 언제든 말씀하세요. 저는 보통 마을회관에 있어요~", emotion: "happy" }
+            { text: "아, 안녕하세요. 오늘 귀농하신다는 분 맞으시죠?" },
+            { 
+                text: "저는 마을회관 관리를 맡고 있는 오시온입니다.", 
+                emotion: "happy",
+                choices: [
+                    { label: "마을을 위해 열심히 일하겠습니다! 잘 부탁드려요.", score: 5, reply: "오... 열정이 대단하시네요. 저도 도울 수 있는 건 도울게요." },
+                    { label: "네 어쩌다보니...(ㅎㅎ) 잘 부탁드려요!", score: 0, reply: "네, 필요한 거 있으시면 말씀해주세요." },
+                    { label: "혹시... 소랑 대화 가능하세요?", score: 5, reply: "...네? 소를 키우기는 하는데 대화는... 음... 시도는 해볼게요." }
+                ]
+            },
         ],
         
         yushi: [
@@ -236,100 +217,192 @@ const dailyScripts = {
             { text: "축제라 그런지 다들 즐거워 보여서 좋네요.", emotion: "happy" },
             { text: "일 생각은 잠시 잊어도 돼요 !", emotion: "happy" }
         ]
-    },
+     }
+    };
     
-    // ★ 호감도 50 이상일 때 나오는 특수 대사
-    "highAffinity": {
-        riku: [
-            { text: "누나 보니까 리쿠 넘 기부니 조타 !", emotion: "happy" },
-            { text: "오늘두 리쿠랑 마니 놀아조야 대여 히히", emotion: "happy" }
-        ],
-        yushi: [
-            { text: "농장주님 ! 오늘따라 더 멋져 보이네요 ! ..에 ! 물론 진심이지요 ^_^", emotion: "happy" },
-            { text: "가끔은 도시 생활이 그립기도 하지만.. {uesr} 님이 있으니 여기가 더 좋아요. 에.. 방금은 비밀이에요 !", emotion: "happy" }
-        ],
-        sion: [
-            { text: "농장주님을 보면 마음이 편안해져요.", emotion: "happy" },
-            { text: "차 한 잔 더 하시겠어요?", emotion: "default" }
-        ]
-    }
-};
 
-const randomDialogues = {
-    riku: {
-        맑음: [
-            // 일반 대화
-            { text: "오늘 날씨 짱 조타 그져??", emotion: "happy" },
-            { text: "오하욘 ! 리쿠 보러 왓어여?? 히히", emotion: "happy" },
-            
-            // ★ 선택지형 대화 (추가됨)
-            { 
-                text: "누나누나! 리쿠가 제일 조아하는 색깔이 뭐게~요?", 
+// ★ 기존 randomDialogues 삭제!
+const affinityDialogues = {
+    sion: {
+        very_low: {
+            "맑음": [
+                [
+                { text: "...", emotion: "default" },
+                { text: "(가볍게 목례만 한다.)", emotion: "default" }
+                ]
+            ],
+            "비": [
+                { text: "비가 오네요.", emotion: "default" }
+            ],
+            "벚꽃": [
+                { text: "산책 나오셨어요?", emotion: "default" },
+                { text: "저는 할 일이 좀 남아서요. 먼저 가보세요.", emotion: "default" }
+            ]
+        },
+        low: {
+            "맑음": [
+                [
+                { text: "새로운 환경이라 낯설지 않으세요? 저도 처음엔 적응하는 데 시간이 좀 걸렸거든요.", emotion: "happy" },
+                { text: "그래도 잘 지내시는 것 같아 다행이네요.", emotion: "default" }
+                ],
+                { 
+                text: "혹시 마을회관 이용 수칙은 다 읽어보셨나요? 꼼꼼히 확인해주시는 게 좋아요.", 
                 emotion: "happy",
                 choices: [
-                    { label: "노란색?", score: 10, reply: "딩동댕! 병아리 가타서 조아해여!" },
-                    { label: "검은색?", score: -5, reply: "우으.. 칙칙해서 시러여.." }
+                    { label: "헉, 있는 줄 몰랐어요. 지금 읽어볼게요!", score: 0, reply: "네. 궁금한 부분 있으면 알려드릴게요." },
+                    { label: "네! 누가 쓴 건지 아주 완벽하던데요?", score: 5, reply: "아... 알아봐 주시니 감사하네요. 열심히 썼거든요." }
                 ]
             },
-            { 
-                text: "누나는 무슨 색이 제일 조아여?", 
+                { 
+                text: "농장 일은 처음이라 부족한 게 많을 텐데, 혹시 지금 가장 필요한 게 뭐예요?", 
                 emotion: "shy",
                 type: "keyword", // ★ 여기가 핵심! 키워드 입력 타입 지정
                 answers: {
-                    "노랑": { text: "와! 저도 노란색 제일 좋아하는데! 통했네요!", emotion: "happy", score: 10 },
-                    "노란": { text: "와! 저도 노란색 제일 좋아하는데! 통했네요!", emotion: "happy", score: 10 },
-                    "default": { text: "아~ 그 색을 좋아하는구낭", emotion: "default", score: 0 }
+                    "선배님": { text: "ㅋㅋ저도 전문가는 아니지만... 팁 정도는 알려드릴 수 있어요.", emotion: "happy", score: 10 },
+                    "도움": { text: "ㅋㅋ저도 전문가는 아니지만... 팁 정도는 알려드릴 수 있어요.", emotion: "happy", score: 10 },
+                    "가르침": { text: "ㅋㅋ저도 전문가는 아니지만... 팁 정도는 알려드릴 수 있어요.", emotion: "happy", score: 10 },
                 }
             }
-        ],
-        비: [{ text: "비 오는 거 시러여..", emotion: "sad" }],
-        벚꽃: [{ text: "와 핑크색 눈이 내리는 거 가타여 !!", emotion: "happy" }]
-    },
-    sion: {
-        맑음: [
-            { text: "안녕하세요. 산책 나오셨어요?", emotion: "happy" },
-            { text: "농장 일 하다가 도움 필요하면 언제든 말씀해주세요!", emotion: "happy" },
+                
+            ],
             
-            // ★ 선택지형 대화 (추가됨)
-            { 
-                text: "이런 날씨엔 어떤 차를 마시는 게 좋을까요?", 
-                emotion: "default",
+            "비": [
+                { text: "비가 오니 마을이 조용하네요. 빗소리 들으면서 업무 보는 것도 좋아요.", emotion: "default" },
+                { text: "우산 쓰고 다니세요. 감기 걸리면 본인만 손해니까요.", emotion: "default" },
+                { 
+                text: "비 오는 날은 습기 때문에 책 관리가 까다로워요. 제습기라도 하나 더 놔야 하나...", 
+                emotion: "happy",
                 choices: [
-                    { label: "따뜻한 홍차", score: 10, reply: "훌륭한 선택이군요. 향이 좋죠." },
-                    { label: "시원한 콜라", score: 0, reply: "흐음.. 가끔은 탄산도 나쁘지 않겠네요." }
+                    { label: "제가 좀 도와드릴까요?", score: 5, reply: "어... 괜찮으시겠어요? 감사합니다. 다음에 커피라도 한 잔 살게요." },
+                    { label: "에궁ㅠㅠ 수고가 많으시네요!", score: 0, reply: "뭘요. 제 일이니까 열심히 해야죠." }
+                ]
+            },
+                { 
+                text: "비가 계속 오니까 따뜻한 게 마시고 싶네요.", 
+                emotion: "happy",
+                choices: [
+                    { label: "저도요. 아메리카노 먹고 싶어요!", score: 5, reply: "오, 저도 아메리카노 생각하고 있었어요. 커피 좋아하시는구나." },
+                    { label: "저도요. 캐모마일차 먹고 싶어요!", score: 0, reply: "그렇구나. 상점에 차 종류가 꽤 많은데 보셨어요?" },
+                    { label: "저도요. 핫초코 먹고 싶어요!", score: 3, reply: "ㅋㅋ다음에 료랑 같이 회관 놀러오세요. 핫초코 타드릴게요." }
+                ]
+            },
+            ],
+            
+            "벚꽃": [
+                [
+                { text: "잠시 머리 좀 식히러 나왔어요. 회관에만 있으면 답답할 때가 있어서요.", emotion: "happy" },
+                { text: "벚꽃 비가 정말 예쁘죠?", emotion: "default" }
+                ],
+                { 
+                text: "(떨어지는 벚꽃잎을 잡으려다 놓친다) 아... 쉽지 않네요.", 
+                emotion: "happy",
+                choices: [
+                    { label: "무슨 소원 비시려고요?ㅎㅎ", score: 3, reply: "음... 더 나은 사람이 되게 해달라고요." },
+                    { label: "아 그거 그렇게 하는 거 아닌데", score: 0, reply: "네? 그럼 뭐 어떻게 해야하죠..." },
+                    { label: "(벚꽃잎을 하나 잡아 건넨다.)", score: 5, reply: "어... 저 주시는 거예요? 감사합니다. {user} 님도 같이 소원 빌어요." }
                 ]
             }
-        ],
-        비: [{ text: "빗소리가 참 좋네요.", emotion: "happy" }],
-        벚꽃: [{ text: "꽃잎이 떨어지는 속도가 초속 5센티미터래요.", emotion: "serious" }]
+            ]
+        },
+        
+        mid: { // 30~69점
+            "맑음": [
+                { text: "왔어요? 마침 심심했는데 잘됐다. 저랑 잠깐 농땡이... 아니, 휴식 좀 취할래요?", emotion: "happy" },
+                { 
+                text: "오늘따라 일이 손에 안 잡히네요. 자꾸 딴생각이 들어서.", 
+                emotion: "happy",
+                choices: [
+                    { label: "무슨 생각 하는데요?", score: 3, reply: "음... 그냥 맛있는 거 먹고 싶다는 생각? 퀸아망에 아아라던가." },
+                    { label: "어허. 집중력 부족.", score: 0, reply: "으... 팩트폭력 너무 아픈데요." },
+                    { label: "그런 날은 그냥 푹 쉬거나 노는 것도 방법이에요!", score: 5, reply: "오... 이도저도 아닌 것보단 그게 낫겠네요. 근데 저랑 놀아주실 거예요?" }
+                ]
+                },
+                { 
+                text: "저 방금 스타주점 다녀왔는데 뭐 샀게요?", 
+                emotion: "shy",
+                type: "keyword", // ★ 여기가 핵심! 키워드 입력 타입 지정
+                answers: {
+                    "아메리카노": { text: "ㅎㅎ맞아요. 한 모금 드실래요?", emotion: "happy", score: 5 },
+                    "아아": { text: "ㅎㅎ맞아요. 한 모금 드실래요?", emotion: "happy", score: 5 },
+                    "커피": { text: "ㅎㅎ맞아요. 한 모금 드실래요?", emotion: "happy", score: 5 },
+                }
+                }
+            ],
+            "비": [
+                { text: "비 오니까 파전에 막걸... 아니, 따뜻한 커피 한 잔 하고 싶네요 ㅎㅎ", emotion: "happy" },
+                { text: "...좀 전에 천둥칠 때 제 쪽 안 보셨죠? 못 봤다고 해주세요.", emotion: "happy" }
+            ],
+            "벚꽃": [
+                { text: "옛날엔 여기서 숨바꼭질하고 놀았는데. 저 꽤 잘 숨어요. 찾아볼래요?", emotion: "happy" },
+                { text: "어, 머리에 꽃잎 붙었다. ...가만히 있어봐요.", emotion: "happy" }
+            ]
+        },
+        high: { // 70점 이상
+            "맑음": [
+                { text: "오늘은 왜 이렇게 늦게 왔어요? 시계만 쳐다보고 있었잖아요. ...농담이에요ㅎㅎ", emotion: "happy" },
+                { text: "내일도 날씨 맑대요. 내일도... 회관 들러주실 거죠?", emotion: "love" }
+            ],
+            "비": [
+                { text: "비 오는 날 당신이 곁에 있어 따뜻하네요.", emotion: "love" }
+            ],
+            "벚꽃": [
+                { text: "이 아름다운 풍경보다 당신이 더 눈부셔요.", emotion: "love" }
+            ]
+        }
     },
     
-    yushi: { 맑음:
-        [
-            {text: "농장주님 ! 오늘도 열심히 일하고 오시는 길인가요 ? 대단해요 !", emotion:"default"},
-            {text: "저는 가끔 숲속에서 춤을 추곤 해요. 누군가 볼까 봐 조금 부끄럽지만요 ^_^", emotion: "happy" },
-            {text: "위시듀밸리의 밤하늘은 별이 참 잘 보여서 좋지요 ? 꼭 저를 비춰주는 것 같아요 !", emotion: "happy" },
-        ],
-
-            비: [],
-            벚꽃: [] },
-    
-    jaehee: { 맑음: [{text:"허허 날씨 좋군요!", emotion:"happy"}],
-             비: [],
-             벚꽃: [] },
-    
-    ryo: { 맑음: [{text:"야하~ 날씨 대박!", emotion:"happy"}],
-          비: [],
-          벚꽃: [] },
-    
-    sakuya: { 맑음: [{text:"빵 굽기 좋은 날씨네요.", emotion:"default"}],
-             비: [],
-             벚꽃: [] }
+    // 리쿠 예시 (나머지 멤버도 같은 구조로 추가)
+    riku: {
+        low: {
+            "맑음": [{ text: "안냐세여!", emotion: "default" }],
+            "비": [{ text: "비 시러여.. 축축해..", emotion: "sad" }],
+            "벚꽃": [{ text: "분홍색 눈이 내려여!", emotion: "happy" }]
+        },
+        mid: {
+            "맑음": [
+                [
+                    { text: "누나누나! 저기 봐바여!", emotion: "shock" },
+                    { text: "개미가 지나가여!!", emotion: "happy" }
+                ]
+            ],
+            "비": [{ text: "누나 우산 같이 써도 대여?", emotion: "shy" }],
+            "벚꽃": [{ text: "누나 머리에 꽃잎 붙어써여! 헤헤", emotion: "happy" }]
+        },
+        high: {
+            "맑음": [{ text: "누나! 리쿠가 세상에서 젤 조아해!!", emotion: "happy" }],
+            "비": [{ text: "비 와도 누나랑 있으면 죠아!", emotion: "happy" }],
+            "벚꽃": [{ text: "나랑 평생 꽃놀이 같이 가여 약속!", emotion: "happy" }]
+        }
+    }
+    // 유우시, 재희, 료, 사쿠야도 위와 똑같은 구조(low/mid/high -> 맑음/비/벚꽃)로 만드시면 됩니다.
 };
 
-const questLetters = {
-    riku: "누나.. 리쿠는 쪼금 서운해여.. ㅠㅠ 나 이거 진짜 필요한뎅..",
-    sion: "안녕하세요, 농장주님. 실은 제가 꼭 필요한 물건이 있는데.."
+// ★ 2. 호감도 달성 이벤트 (특정 점수 도달 시 1회 발동)
+const affinityEvents = {
+    sion: [
+        {
+            id: "sion_event_30", // 이벤트 고유 ID
+            threshold: 30,       // 발동 조건 호감도
+            bg: "assets/images/backgrounds/forest.png", // 이벤트 배경 (원하는 이미지 경로)
+            script: [
+                { text: "(시온이 숲속에서 혼자 무언가를 보고 있다.)", emotion: "default" },
+                { text: "아, 농장주님. 오셨군요.", emotion: "happy" },
+                { text: "사실 여기서만 보이는 희귀한 꽃을 찾고 있었어요.", emotion: "default" },
+                { text: "당신에게 보여주고 싶었거든요.", emotion: "happy" }
+            ]
+        }
+    ],
+    riku: [
+        {
+            id: "riku_event_50",
+            threshold: 50,
+            bg: "assets/images/backgrounds/shop.png",
+            script: [
+                { text: "누나! 이거 봐바여! 리쿠가 아꼈던 사탕인데 누나 줄게여!", emotion: "happy" },
+                { text: "(리쿠의 소중한 사탕을 받았다...)", emotion: "default" }
+            ]
+        }
+    ]
 };
 
 // 3. 장소 및 레시피 데이터
@@ -438,8 +511,102 @@ const questScripts = {
     // 나머지 멤버들도 같은 형식으로 추가 (jaehee, ryo, sakuya 등)
 };
 
+/* ==========================================================================
+   [추가] 이미지 업로드 및 Cropper.js 처리 로직
+   ========================================================================== */
 
+let currentCropper = null;
+let currentMemberId = null;
 
+// HTML이 모두 로드된 후 실행
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // 모달 관련 요소 가져오기 (index.html에 이 ID들이 있어야 함)
+    const modal = document.getElementById('crop-modal');
+    const imageToCrop = document.getElementById('image-to-crop');
+    const btnCrop = document.getElementById('btn-crop');
+    const btnCancel = document.getElementById('btn-cancel');
+
+    // NPC 목록을 순회하며 이벤트 연결
+    const members = Object.keys(npcs); // ['sion', 'riku', 'yushi', ...]
+
+    members.forEach(member => {
+        const input = document.getElementById(`upload-${member}`);
+        
+        if (input) {
+            input.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        // 1. 현재 어떤 멤버를 수정 중인지 저장
+                        currentMemberId = member; 
+                        
+                        // 2. 모달에 이미지 띄우기
+                        imageToCrop.src = event.target.result;
+                        if(modal) modal.style.display = 'flex';
+
+                        // 3. 기존 크로퍼 초기화
+                        if (currentCropper) {
+                            currentCropper.destroy();
+                        }
+
+                        // 4. 새 크로퍼 생성 (1:1 비율 강제)
+                        currentCropper = new Cropper(imageToCrop, {
+                            aspectRatio: 1, 
+                            viewMode: 1,
+                            minContainerWidth: 300,
+                            minContainerHeight: 300
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                }
+                // 같은 파일 다시 선택 가능하게 초기화
+                e.target.value = ''; 
+            });
+        }
+    });
+
+    // [자르기 & 저장 버튼 클릭 시]
+    if (btnCrop) {
+        btnCrop.addEventListener('click', function() {
+            if (currentCropper && currentMemberId) {
+                // 자른 이미지를 Base64 데이터로 변환
+                const croppedCanvas = currentCropper.getCroppedCanvas({
+                    width: 200, // 게임 내 표시될 크기
+                    height: 200
+                });
+                const croppedImage = croppedCanvas.toDataURL();
+
+                // 1) 미리보기 이미지 업데이트
+                const preview = document.getElementById(`preview-${currentMemberId}`);
+                if (preview) preview.src = croppedImage;
+
+                // 2) 게임 데이터(npcs) 업데이트 ★핵심★
+                if (npcs[currentMemberId]) {
+                    npcs[currentMemberId].portrait = croppedImage;
+                    console.log(`${currentMemberId}의 초상화가 변경되었습니다.`);
+                }
+
+                // 3) 정리
+                modal.style.display = 'none';
+                currentCropper.destroy();
+                currentCropper = null;
+            }
+        });
+    }
+
+    // [취소 버튼 클릭 시]
+    if (btnCancel) {
+        btnCancel.addEventListener('click', function() {
+            if(modal) modal.style.display = 'none';
+            if (currentCropper) {
+                currentCropper.destroy();
+                currentCropper = null;
+            }
+        });
+    }
+});
 
 
 

@@ -17,7 +17,10 @@ let gameState = {
     playerName: "농장주", // 플레이어 이름
     isEnding: false, // 엔딩 진행 중인지 여부
     // ★ [추가] 퀘스트 상태 저장 (target: 누구, item: 뭘 원하는지)
-    activeQuest: null
+    activeQuest: null,
+    seenEvents: [],       // 이미 본 이벤트 ID 저장
+    isEventPlaying: false, // 현재 이벤트 진행 중인가?
+    originalLoc: null     // 이벤트 끝나고 돌아갈 원래 배경
 };
 
 // ★ [추가] 입력창(선물 버튼 등)을 현재 대사와 함께 띄울지 판단하는 변수
@@ -91,6 +94,9 @@ function hideNameInput() {
     playSfx('click');
 }
 
+const setupOrder = ['sion', 'riku', 'yushi', 'jaehee', 'ryo', 'sakuya'];
+let currentSetupIndex = 0;
+
 function startGame() {
     const input = document.getElementById('player-name-input');
     const name = input.value.trim();
@@ -103,9 +109,61 @@ function startGame() {
     gameState.playerName = name;
     playSfx('success');
     
-    document.getElementById('intro-screen').classList.add('hidden');
-    updateUI(); 
-    move('farm'); 
+    // 1. 이름 입력창 숨기기
+    document.getElementById('name-input-area').classList.add('hidden');
+
+    // ★ [추가] 로고 이미지 숨기기 (공간 확보)
+    // (index.html에 있는 로고 이미지 태그를 찾아서 숨깁니다. ID가 없으면 img 태그를 찾습니다)
+    const logo = document.querySelector('img[src*="logo.png"]');
+    if (logo) logo.style.display = 'none';
+    
+    // 2. 사진 설정 화면 보여주기
+    document.getElementById('portrait-setup').style.display = 'block';
+    
+    // 3. 첫 번째 멤버(시온)부터 시작하도록 초기화
+    currentSetupIndex = 0;
+    updateSetupUI();
+}
+
+// [신규] 다음 멤버로 넘어가는 함수
+function nextMemberStep() {
+    playSfx('click');
+
+    // 현재 인덱스 증가
+    currentSetupIndex++;
+
+    // 모든 멤버 설정이 끝났으면 게임 시작
+    if (currentSetupIndex >= setupOrder.length) {
+        enterGame();
+    } else {
+        // 아니면 다음 멤버 보여주기
+        updateSetupUI();
+    }
+}
+
+// [신규] 현재 순서에 맞는 멤버만 화면에 보여주는 함수
+function updateSetupUI() {
+    // 1. 모든 단계 숨기기
+    setupOrder.forEach(member => {
+        document.getElementById(`step-${member}`).style.display = 'none';
+    });
+
+    // 2. 현재 멤버만 보여주기
+    const currentMember = setupOrder[currentSetupIndex];
+    document.getElementById(`step-${currentMember}`).style.display = 'block';
+
+    // 3. 타이틀 업데이트 (1/6 -> 2/6 ...)
+    document.getElementById('setup-title').innerText = `멤버 사진 설정 (${currentSetupIndex + 1}/${setupOrder.length})`;
+
+    // 4. 마지막 멤버(사쿠야)일 경우 버튼 텍스트 변경
+    const btn = document.getElementById('next-step-btn');
+    if (currentSetupIndex === setupOrder.length - 1) {
+        btn.innerText = "설정 완료 & 게임 시작!";
+        btn.style.backgroundColor = "#ff9999"; // 마지막 버튼은 색 다르게
+    } else {
+        btn.innerText = "다음 멤버 설정 >";
+        btn.style.backgroundColor = "var(--deep-green)";
+    }
 }
 
 function openModal(id) {
@@ -394,67 +452,109 @@ function toggleDeleteMode() {
 
 // [교체] 대화창 열기 함수 (로직 단순화)
 function openDialogue(npcKey) {
-    lastInteractedNPC = npcKey; 
+    lastInteractedNPC = npcKey;
     const overlay = document.getElementById('dialogue-overlay');
-    overlay.classList.remove('hidden');
 
-    // ★ 대화 시작 시 기본값: 입력창 띄우지 않음
+    // UI 및 버튼 초기화
     shouldShowInput = false;
-    
-    // UI 초기화: 일단 모두 숨김
-    const inputArea = document.getElementById('input-area');
-    inputArea.classList.add('hidden'); 
+    document.getElementById('input-area').classList.add('hidden');
     document.getElementById('choice-area').classList.add('hidden');
-    
-    // 버튼 기능 연결
+
     const giftBtn = document.getElementById('gift-btn');
     const sendBtn = document.getElementById('send-btn');
-    
     if(giftBtn) giftBtn.onclick = () => giveGift(npcKey);
     if(sendBtn) sendBtn.onclick = () => sendKeyword(npcKey);
 
-    // --- [대화 로직 분기] ---
-    
-    // CASE 1: 오늘 이미 대화를 한 경우 (행동 묘사 + 선물하기 버튼)
+    // ---------------------------------------------
+    // [CASE 1] 오늘 이미 대화를 한 경우
+    // ---------------------------------------------
     if (gameState.hasTalkedToday[npcKey]) {
+        overlay.classList.remove('hidden');
         const actionText = npcActions[npcKey] || "(멍을 때리고 있다...)";
         dialogueQueue = [{ text: actionText, emotion: 'default' }];
         currentDialogueIndex = 0;
 
-        // ★ 이미 대화했으니, 아직 선물 안 줬으면 '타자 끝나고 버튼 보여줘' 설정
+        // 선물 아직 안 줬으면 버튼 보이기 예약
         if (!gameState.hasGiftedToday[npcKey]) {
-            shouldShowInput = true; 
-        } else {
-            shouldShowInput = false;
+            shouldShowInput = true;
         }
-
         showNextLine(npcKey);
-    } 
-    // CASE 2: 오늘 첫 대화인 경우 (스토리 진행)
-    else {
-        gameState.hasTalkedToday[npcKey] = true;
+        return;
+    }
 
-        // ★ 첫 대화가 끝나고 나서는 선물 버튼 등이 안 떠야 하므로 false
-        // (단, 대사 중간에 '키워드 입력' 타입이 있다면 그건 finishTyping에서 처리됨)
-        shouldShowInput = false; 
+    // ---------------------------------------------
+    // [CASE 2] 오늘 첫 대화 (스토리 vs 이벤트 vs 랜덤)
+    // ---------------------------------------------
+    gameState.hasTalkedToday[npcKey] = true;
+    shouldShowInput = false;
 
-        // 대사 데이터 가져오기
-        let scriptData = null;
-        if (dailyScripts[gameState.day] && dailyScripts[gameState.day][npcKey]) {
-            scriptData = dailyScripts[gameState.day][npcKey];
-        } else if (randomDialogues[npcKey]) {
-            const weather = gameState.weather;
-            const list = randomDialogues[npcKey][weather];
-            if(list) scriptData = list[Math.floor(Math.random() * list.length)];
-        }
-
-        if (!scriptData) scriptData = [{ text: "안녕하세요.", emotion: "default" }];
+    // ★ [1순위] 날짜별 고정 스토리 (dailyScripts) 확인 - 이걸 꼭 넣어야 함!
+    if (dailyScripts[gameState.day] && dailyScripts[gameState.day][npcKey]) {
+        overlay.classList.remove('hidden');
+        let scriptData = dailyScripts[gameState.day][npcKey];
         if (!Array.isArray(scriptData)) scriptData = [scriptData];
-
+        
         dialogueQueue = scriptData;
         currentDialogueIndex = 0;
         showNextLine(npcKey);
+        return;
     }
+
+    // ★ [2순위] 호감도 이벤트 (affinityEvents) 확인
+    const currentAffinity = gameState.affinities[npcKey];
+    if (typeof affinityEvents !== 'undefined' && affinityEvents[npcKey]) {
+        const events = affinityEvents[npcKey];
+        // 조건: 호감도 달성 AND 아직 안 본 이벤트
+        const targetEvent = events.find(e => 
+            currentAffinity >= e.threshold && 
+            gameState.seenEvents && !gameState.seenEvents.includes(e.id)
+        );
+
+        if (targetEvent) {
+            // 이벤트 트리거 (overlay는 triggerEvent 함수 안에서 페이드 효과와 함께 켜짐)
+            triggerEvent(targetEvent);
+            return;
+        }
+    }
+
+    // ★ [3순위] 호감도별 랜덤 대사 (affinityDialogues)
+    overlay.classList.remove('hidden');
+
+    // (1) 호감도 단계 판단
+    let stage = 'very_low'; // 기본값 (0~10점 구간)
+
+    if (currentAffinity >= 70) stage = 'high';       // 70점 이상
+    else if (currentAffinity >= 30) stage = 'mid';   // 30~69점
+    else if (currentAffinity > 10) stage = 'low';    // 11~29점 (10점 초과)
+    // (2) 날씨 확인
+    const weather = gameState.weather;
+
+    // (3) 대사 풀 가져오기
+    let pool = [];
+    if (affinityDialogues[npcKey] && 
+        affinityDialogues[npcKey][stage] && 
+        affinityDialogues[npcKey][stage][weather]) {
+        pool = affinityDialogues[npcKey][stage][weather];
+    }
+
+    // (4) 데이터가 없으면 기본값
+    if (!pool || pool.length === 0) {
+        pool = [{ text: "안녕하세요.", emotion: "default" }];
+    }
+
+    // (5) 랜덤 뽑기
+    const randomPick = pool[Math.floor(Math.random() * pool.length)];
+
+    if (Array.isArray(randomPick)) {
+        // 뽑힌 게 배열이면(여러 줄이면) -> 그대로 대기열에 넣음
+        dialogueQueue = randomPick;
+    } else {
+        // 뽑힌 게 객체면(한 줄이면) -> 배열로 감싸서 넣음
+        dialogueQueue = [randomPick];
+    }
+
+    currentDialogueIndex = 0;
+    showNextLine(npcKey);
 }
 
 function showNextLine(npcKey) {
@@ -465,8 +565,9 @@ function showNextLine(npcKey) {
     if (npcs[npcKey]) { 
         portraitDiv.style.display = 'block'; 
         const npc = npcs[npcKey];
-        const emotion = data.emotion || 'default';
-        portraitImg.src = npc.portraits[emotion] || npc.portraits['default'];
+        // const emotion = data.emotion || 'default';
+        // portraitImg.src = npc.portraits[emotion] || npc.portraits['default'];
+       portraitImg.src = npc.portrait;
     } else {
         portraitDiv.style.display = 'none'; 
     }
@@ -665,20 +766,17 @@ function giveGift(npcKey) {
     playSfx('success');
 }
 
-// [수정] 대화창 클릭 처리 (로직 완전 단순화: 빈 화면 생성 방지)
+// [수정] 대화창 클릭 처리
 document.getElementById('dialogue-overlay').onclick = (e) => {
     // 버튼, 입력창 클릭은 무시
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
 
-    // 타자 치는 중이면 바로 완성
     if (isTyping) {
         finishTyping(); 
         return;
     }
 
     const currentData = dialogueQueue[currentDialogueIndex];
-
-    // 선택지나 키워드 입력 상태면 클릭으로 넘어가지 않음
     if (currentData.choices || currentData.type === "keyword") return;
 
     // 다음 대사가 있으면 진행
@@ -688,16 +786,19 @@ document.getElementById('dialogue-overlay').onclick = (e) => {
         return;
     }
 
-    // 엔딩이면 팝업
+    // --- [대화 종료 시점] ---
+
     if (gameState.isEnding) {
         showFinalPopup();
         return;
     }
 
-    // ★ [문제 해결 1 & 3] 대사가 끝났으면 무조건 창 닫기!
-    // 이전 코드처럼 '입력창 띄우기'를 여기서 하지 않음.
-    // (입력창은 finishTyping에서 이미 떠 있어야 함)
-    document.getElementById('dialogue-overlay').classList.add('hidden');
+    // ★ [수정됨] 이벤트 중이었다면 endEvent() 호출, 아니면 그냥 닫기
+    if (gameState.isEventPlaying) {
+        endEvent(); 
+    } else {
+        document.getElementById('dialogue-overlay').classList.add('hidden');
+    }
 };
 
 function displayDialogue(npcKey, dialogueObj) {
@@ -904,4 +1005,95 @@ function closeAlert() {
     document.getElementById('alert-modal').classList.add('hidden');
     playSfx('click');
 }
+
+// [신규] 사진 설정 후 -> 진짜 게임 시작 함수
+function enterGame() {
+    playSfx('success');
+    
+    // 전체 오프닝 화면 숨기기
+    document.getElementById('intro-screen').classList.add('hidden');
+    
+    // 게임 시작
+    updateUI(); 
+    move('farm'); 
+}
+
+/* ==========================================================================
+   [추가] 이벤트 시스템 함수
+   ========================================================================== */
+
+function triggerEvent(eventData) {
+    gameState.isEventPlaying = true;
+    if (!gameState.seenEvents) gameState.seenEvents = []; // 안전장치
+    gameState.seenEvents.push(eventData.id); // 이벤트 본 것으로 처리
+    
+    // 원래 배경 저장 (현재 위치 기준)
+    if (locations[gameState.currentLocation]) {
+        gameState.originalLoc = locations[gameState.currentLocation].bg;
+    }
+
+    const fadeOverlay = document.getElementById('fade-overlay'); // index.html에 추가했는지 확인 필요
+    const view = document.getElementById('location-view');
+
+    // 1. 페이드 아웃 (화면 검게)
+    if (fadeOverlay) fadeOverlay.classList.add('visible');
+
+    // 2. 1초 뒤 배경 바꾸고 대화 시작
+    setTimeout(() => {
+        // 배경 변경
+        view.style.backgroundImage = `url(${eventData.bg})`;
+        
+        // NPC 등 레이어 숨기기 (깔끔한 연출 위해)
+        document.getElementById('npc-layer').style.display = 'none';
+        document.getElementById('item-layer').style.display = 'none';
+
+        // 페이드 인 (다시 밝게)
+        if (fadeOverlay) fadeOverlay.classList.remove('visible');
+
+        // 대화창 열기
+        document.getElementById('dialogue-overlay').classList.remove('hidden');
+        
+        // 대사 큐 교체
+        dialogueQueue = eventData.script;
+        currentDialogueIndex = 0;
+        
+        // 입력창 숨기기 (이벤트 중에는 선물/키워드 금지)
+        document.getElementById('input-area').classList.add('hidden');
+        
+        showNextLine(lastInteractedNPC);
+
+    }, 1000); 
+}
+
+function endEvent() {
+    const fadeOverlay = document.getElementById('fade-overlay');
+    const view = document.getElementById('location-view');
+
+    // 대화창 닫기
+    document.getElementById('dialogue-overlay').classList.add('hidden');
+
+    // 1. 다시 페이드 아웃
+    if (fadeOverlay) fadeOverlay.classList.add('visible');
+
+    setTimeout(() => {
+        // 2. 원래 배경 및 NPC 복구
+        if (gameState.originalLoc) {
+            view.style.backgroundImage = `url(${gameState.originalLoc})`;
+        }
+        document.getElementById('npc-layer').style.display = 'block';
+        document.getElementById('item-layer').style.display = 'block';
+        
+        gameState.isEventPlaying = false; // 이벤트 상태 해제
+
+        // 3. 페이드 인
+        if (fadeOverlay) fadeOverlay.classList.remove('visible');
+    }, 1000);
+}
+
+
+
+
+
+
+
 

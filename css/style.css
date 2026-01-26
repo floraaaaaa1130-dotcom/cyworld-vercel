@@ -27,7 +27,7 @@
 body {
     margin: 0; padding: 0;
     background-color: #fce4ec;
-    font-family: 'DungGeunMo', 'SUIT', sans-serif;
+    font-family: 'MyGameFont', sans-serif;
     display: flex; justify-content: center; align-items: center;
     height: 100vh; overflow: hidden;
     cursor: url('../assets/images/ui/star_cursor.png'), auto;
@@ -56,7 +56,7 @@ body {
     background-color: var(--pastel-pink);
     padding: 10px 20px;
     display: flex; justify-content: space-between;
-    font-size: 16px; color: var(--text-color);
+    font-size: 14px; color: var(--text-color);
     border-bottom: var(--pixel-size) solid var(--border-pink);
 }
 #energy-display span { color: #e91e63; letter-spacing: 2px; }
@@ -83,12 +83,12 @@ body {
 }
 
 button {
-    font-family: 'DungGeunMo', sans-serif;
+    font-family: 'MyGameFont', sans-serif;
     font-size: 14px; color: var(--text-color);
     background-color: white;
-    border: var(--pixel-size) solid var(--border-pink);
+    border: 3px solid var(--pastel-pink);
     padding: 8px 5px; cursor: pointer;
-    box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.1);
     transition: all 0.1s;
 }
 button:hover { background-color: #fff0f5; transform: translateY(-1px); }
@@ -103,8 +103,8 @@ button:active { transform: translateY(1px); box-shadow: none; }
     border: var(--pixel-size) solid var(--border-green);
     border-radius: 4px;
 }
-#inventory-container p { margin: 0 0 4px 0; font-size: 12px; font-weight: bold; color: #2E7D32; }
-#inventory-slots { display: flex; gap: 5px; }
+#inventory-container p { margin: 0 0 10px 0; font-size: 13px; font-weight: bold; color: #2E7D32; }
+#inventory-slots { display: flex; gap: 7px; }
 
 .slot {
     width: 38px; height: 38px;
@@ -161,12 +161,19 @@ button:active { transform: translateY(1px); box-shadow: none; }
 }
 
 .inventory-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 10px; padding: 15px;
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); /* 가로 4칸 균등 분할 */
+    gap: 10px; 
+    padding: 15px;
     background-color: #fff0f5;
     border: 2px solid var(--pastel-pink);
-    border-radius: 5px; margin-bottom: 15px;
-    min-height: 100px; justify-content: center;
+    border-radius: 5px; 
+    margin-bottom: 15px;
+    min-height: 100px; 
+    
+    /* [수정] 이 두 줄을 추가하면 슬롯이 각 칸의 가운데로 옵니다! */
+    justify-items: center; /* 가로 중앙 정렬 */
+    align-items: center;   /* 세로 중앙 정렬 */
 }
 
 .item-slot {
@@ -234,14 +241,22 @@ button:active { transform: translateY(1px); box-shadow: none; }
     padding-bottom: 20px; z-index: 100;
 }
 
+/* [수정] 대화 박스: 높이 제한을 풀거나 flex 설정을 단순화 */
 #dialogue-box {
-    width: 720px; background-color: white;
+    width: 720px; 
+    background-color: white;
     border: 3px solid var(--border-pink);
-    padding: 15px; box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
-    display: flex; flex-direction: column;
+    padding: 15px; 
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+    /* flex-direction: column;  <-- 이 줄은 이제 굳이 없어도 되지만 둬도 상관없습니다. */
 }
 
-#dialogue-content { display: flex; align-items: flex-start; min-height: 120px; }
+/* [수정] 대화 컨텐츠 영역: 내부 요소 정렬 방식 변경 */
+#dialogue-content { 
+    display: flex; 
+    align-items: flex-start; /* 위쪽 정렬 (초상화와 텍스트 높이 맞춤) */
+    min-height: 120px; 
+}
 
 #dialogue-portrait {
     width: 110px; height: 110px;
@@ -250,21 +265,57 @@ button:active { transform: translateY(1px); box-shadow: none; }
     margin-right: 15px; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
 }
-#dialogue-portrait img { width: 90%; height: 90%; object-fit: contain; }
+#dialogue-portrait img { width: 100%; height: 100%; object-fit: contain; }
 
-#text-wrapper { flex-grow: 1; position: relative; height: 100%; }
-#dialogue-text { font-size: 18px; line-height: 1.6; color: var(--text-color); padding: 5px; }
+/* [수정] 텍스트 래퍼: 내부 요소들을 세로로 배치 */
+#text-wrapper { 
+    flex-grow: 1; 
+    position: relative; 
+    /* display: flex;        <-- 삭제 또는 주석 처리 */
+    /* flex-direction: column; <-- 삭제 또는 주석 처리 */
+    /* justify-content: space-between; <-- 삭제 또는 주석 처리 */
+}
 
+/* [수정] 대화 텍스트: 인라인(Inline)으로 바꿔서 커서가 옆에 붙게 함 */
+#dialogue-text { 
+    display: inline;       /* 중요! block -> inline 변경 */
+    font-size: 18px; 
+    line-height: 1.6; 
+    color: var(--text-color); 
+    padding: 5px; 
+    /* margin-bottom 제거 (inline에서는 위아래 마진이 안 먹힘) */
+}
+
+/* [수정] 커서: 절대 위치(absolute)를 풀고 글자 옆에 붙임 */
 #next-cursor {
-    position: absolute; bottom: 0; right: 0;
-    color: var(--deep-pink); font-size: 14px;
+    position: static;      /* 고정 위치 해제 */
+    display: inline-block; /* 글자처럼 취급 */
+    margin-left: 5px;      /* 텍스트와의 간격 */
+    vertical-align: baseline; /* 텍스트 줄 맞춤 */
+    
+    /* 기존 스타일 유지 */
+    color: var(--deep-pink); 
+    font-size: 14px;
     animation: blink 1s infinite;
 }
 
-#input-area { margin-top: 10px; display: flex; gap: 8px; }
+/* [추가] 선택지와 입력창: 텍스트 바로 뒤가 아니라 '다음 줄'에 나오도록 */
+#choice-area, #input-area {
+    margin-top: 15px;      /* 텍스트와의 간격 */
+    display: block;        /* 줄바꿈 강제 */
+}
+
+/* [수정] 입력창 영역: 상단 여백 제거 (text-wrapper 흐름에 맡김) */
+#input-area { 
+    margin-top: 5px; /* 필요하면 조절 */
+    display: flex; 
+    gap: 8px; 
+    /* width: 100%; <-- 필요하면 추가 */
+}
+
 #keyword-input {
     flex: 1; padding: 8px;
-    font-family: 'DungGeunMo'; font-size: 16px;
+    font-family: 'MyGameFont'; font-size: 16px;
     border: var(--pixel-size) solid var(--border-pink); outline: none;
 }
 .choice-btn {
@@ -285,7 +336,7 @@ button:active { transform: translateY(1px); box-shadow: none; }
 }
 .logo-area { margin-bottom: 30px; animation: floatUp 2s ease-out forwards; opacity: 0; transform: translateY(30px); }
 @keyframes floatUp { to { opacity: 1; transform: translateY(0); } }
-.game-logo-img { max-width: 500px; height: auto; filter: drop-shadow(3px 3px 0 white); }
+.game-logo-img { max-width: 500px; height: auto; }
 
 #menu-area { display: flex; flex-direction: column; gap: 10px; align-items: center; }
 .menu-btn {
@@ -298,14 +349,14 @@ button:active { transform: translateY(1px); box-shadow: none; }
 /* 이름 입력창 */
 #name-input-area {
     background-color: rgba(255, 255, 255, 0.95);
-    padding: 25px; border: 3px solid var(--border-pink);
+    padding: 25px; border: 2px solid var(--border-pink);
     border-radius: 15px; display: flex; flex-direction: column;
     align-items: center; gap: 15px; width: 300px;
 }
 #player-name-input {
     width: 200px; padding: 10px;
-    font-family: 'DungGeunMo'; font-size: 18px; text-align: center;
-    border: 2px solid var(--border-pink); background-color: #fff0f5; outline: none;
+    font-family: 'MyGameFont'; font-size: 12px; text-align: center;
+    border: 1px solid var(--border-pink); background-color: #fff0f5; outline: none;
 }
 .button-row { display: flex; gap: 10px; width: 100%; justify-content: center; }
 .confirm-btn { width: 120px; padding: 10px; background-color: var(--pastel-pink); color: white; border: none; }
@@ -488,7 +539,7 @@ button:active { transform: translateY(1px); box-shadow: none; }
     padding: 10px 20px;
     border-radius: 8px;
     cursor: pointer;
-    font-family: 'DungGeunMo';
+    font-family: 'MyGameFont';
     font-size: 16px;
     box-shadow: 0 4px 0 var(--border-pink); /* 버튼 입체감 */
     transition: transform 0.1s;
@@ -523,14 +574,41 @@ button:active { transform: translateY(1px); box-shadow: none; }
 /* 1. 비 오는 날: 어두운 배경 + 비 GIF */
 #location-view.weather-rain::after {
     background-color: rgba(0, 0, 0, 0.3); /* 검은색 30% 투명도 (화면 어둡게) */
-    background-image: url('../assets/images/effects/rain.gif');
-    opacity: 0.8; /* 너무 진하면 조절하세요 */
+    background-image: url('../assets/effects/rain.gif');
+    opacity: 0.7; /* 너무 진하면 조절하세요 */
 }
 
 /* 2. 벚꽃 날리는 날: 분홍빛 배경 + 벚꽃 GIF */
 #location-view.weather-blossom::after {
     background-color: rgba(255, 192, 203, 0.15); /* 연한 핑크색 틴트 */
-    background-image: url('../assets/images/effects/blossom.gif');
-    /* mix-blend-mode: screen; */ /* 벚꽃 GIF 배경이 검정이면 이 주석을 푸세요 */
+    background-image: url('../assets/effects/blossom.gif');
 }
+
+/* js/style.css 파일 맨 아래에 추가 */
+
+/* 페이드 아웃/인 효과를 위한 오버레이 */
+#fade-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none; /* 평소에는 클릭 방해 안 함 */
+    transition: opacity 1s ease; /* 1초 동안 부드럽게 변함 */
+}
+
+/* 화면을 가릴 때 붙일 클래스 */
+#fade-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+
+
+
+
+
 

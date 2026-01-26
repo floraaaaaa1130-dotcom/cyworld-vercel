@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>WISH VALLEY</title>
+    
+    <meta charset="UTF-8">
+    <title>WISH VALLEY</title>
+    
+    <link rel="preload" href="assets/fonts/letter_font.ttf" as="font" type="font/ttf" crossorigin>
+    
     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 </head>
 <body>
+
+        
+    <div id="fade-overlay"></div> <div id="game-container">
+        
     <div id="game-container">
         <div id="status-bar">
             <div id="date-display">Day 1 - 맑음</div>
@@ -52,7 +64,8 @@
         <div id="letter-modal" class="hidden" style="z-index: 2000;">
     <div class="modal-content letter-paper">
         <h2>📬 편지가 도착했습니다!</h2>
-        <p id="letter-text" style="white-space: pre-wrap; margin: 20px 0; font-family: 'Handwriting', serif;">
+        <p id="letter-text" style="white-space: pre-wrap; margin: 20px 0;">
+</p>
             </p>
         <button onclick="closeLetter()">확인</button>
     </div>
@@ -79,23 +92,27 @@
 
         <div id="dialogue-overlay" class="hidden">
             <div id="dialogue-box">
-                <div id="dialogue-content">
-                    <div id="dialogue-portrait">
-                        <img id="current-portrait" src="" alt="portrait">
-                    </div>
-                    <div id="text-wrapper">
-                        <div id="dialogue-text"></div>
-                        <div id="next-cursor" class="hidden">▼</div>
-                    </div>
-                </div>
-                <div id="choice-area" class="hidden"></div>
-                <div id="input-area">
-                    <input type="text" id="keyword-input" placeholder="대화 키워드 입력...">
-                    <button id="send-btn">말하기</button>
-                    <button id="gift-btn" style="background-color: var(--pastel-green);">선물</button>
-                </div>
-            </div>
+    <div id="dialogue-content">
+        <div id="dialogue-portrait">
+            <img id="current-portrait" src="" alt="portrait">
         </div>
+        
+        <div id="text-wrapper">
+            <div id="dialogue-text"></div>
+
+            <span id="next-cursor" class="hidden">▼</span>
+            
+            <div id="choice-area" class="hidden"></div>
+            <div id="input-area" class="hidden"> 
+                <input type="text" id="keyword-input" placeholder="대화 키워드 입력...">
+                <button id="send-btn">말하기</button>
+                <button id="gift-btn" style="background-color: var(--pastel-green);">선물</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
 
         <div id="item-info-modal" class="hidden">
             <div class="info-content">
@@ -138,34 +155,122 @@
                 <p class="input-label">당신의 이름은 무엇인가요?</p>
                 <input type="text" id="player-name-input" placeholder="이름 (최대 6글자)" maxlength="6">
                 <div class="button-row">
-                    <button class="confirm-btn" onclick="startGame()">모험 떠나기</button>
-                    <button class="cancel-btn" onclick="hideNameInput()">취소</button>
+                    <button class="confirm-btn" onclick="startGame()">귀농하기</button>
+                    <button class="cancel-btn" onclick="hideNameInput()">포기하기</button>
                 </div>
             </div>
+            <div id="portrait-setup" style="display:none; text-align: center; padding-top: 50px;">
+    <h3 id="setup-title" style="color: white; text-shadow: 2px 2px 2px #000;">초상화 설정 (1/6)</h3>
+    
+    <p style="color: white; font-size: 16px; margin-bottom: 20px; text-shadow: 1px 1px 2px #000;">
+        사진을 업로드하면 적용되고, 넘어가면 기본 이미지가 사용됩니다.
+    </p>
+
+    <div id="step-sion" class="setup-step">
+        <h2 style="color: white; text-shadow: 2px 2px 2px #000;">시온</h2>
+        <img id="preview-sion" src="assets/images/portraits/sion_default.png" 
+             style="width: 150px; height: 150px; border: 4px solid white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); object-fit: cover;">
+        <br><br>
+        <input type="file" id="upload-sion" accept="image/*">
+    </div>
+
+    <div id="step-riku" class="setup-step" style="display:none;">
+        <h2 style="color: white; text-shadow: 2px 2px 2px #000;">리쿠</h2>
+        <img id="preview-riku" src="assets/images/portraits/riku_default.png" 
+             style="width: 150px; height: 150px; border: 4px solid white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); object-fit: cover;">
+        <br><br>
+        <input type="file" id="upload-riku" accept="image/*">
+    </div>
+
+    <div id="step-yushi" class="setup-step" style="display:none;">
+        <h2 style="color: white; text-shadow: 2px 2px 2px #000;">유우시</h2>
+        <img id="preview-yushi" src="assets/images/portraits/yushi_default.png" 
+             style="width: 150px; height: 150px; border: 4px solid white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); object-fit: cover;">
+        <br><br>
+        <input type="file" id="upload-yushi" accept="image/*">
+    </div>
+
+    <div id="step-jaehee" class="setup-step" style="display:none;">
+        <h2 style="color: white; text-shadow: 2px 2px 2px #000;">재희</h2>
+        <img id="preview-jaehee" src="assets/images/portraits/jaehee_default.png" 
+             style="width: 150px; height: 150px; border: 4px solid white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); object-fit: cover;">
+        <br><br>
+        <input type="file" id="upload-jaehee" accept="image/*">
+    </div>
+
+    <div id="step-ryo" class="setup-step" style="display:none;">
+        <h2 style="color: white; text-shadow: 2px 2px 2px #000;">료</h2>
+        <img id="preview-ryo" src="assets/images/portraits/ryo_default.png" 
+             style="width: 150px; height: 150px; border: 4px solid white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); object-fit: cover;">
+        <br><br>
+        <input type="file" id="upload-ryo" accept="image/*">
+    </div>
+
+    <div id="step-sakuya" class="setup-step" style="display:none;">
+        <h2 style="color: white; text-shadow: 2px 2px 2px #000;">사쿠야</h2>
+        <img id="preview-sakuya" src="assets/images/portraits/sakuya_default.png" 
+             style="width: 150px; height: 150px; border: 4px solid white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); object-fit: cover;">
+        <br><br>
+        <input type="file" id="upload-sakuya" accept="image/*">
+    </div>
+
+    <br><br>
+    <button id="next-step-btn" onclick="nextMemberStep()" 
+            style="padding: 15px 40px; font-size: 18px; background: var(--deep-green); color: white; border: none; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+        다음 멤버 설정 >
+    </button>
+</div>
+            
         </div>
 
         <div id="manual-modal" class="modal hidden">
             <div class="modal-content">
-                <h2>📖 설명서</h2>
-                <p>1. 마을을 탐험하며 아이템을 수집하세요.</p>
-                <p>2. 주민들에게 선물을 주세요.</p>
-                <p>3. 7일 뒤 엔딩이 나옵니다.</p>
+                <h2>How To Play</h2>
+                <p>1. 마을을 돌아다니며 아이템을 수집하거나 조합하세요.</p>
+                <p>2. 주민들과 대화하고 선물을 통해 호감도를 올려보세요.</p>
+                <p>3. 7일 뒤 누적된 호감도에 따라 엔딩이 달라집니다.</p>
                 <button class="close-btn" onclick="closeModal('manual-modal')">닫기</button>
             </div>
         </div>
         <div id="credit-modal" class="modal hidden">
             <div class="modal-content">
-                <h2>✨ 크레딧</h2>
-                <p>기획 & 아트: 이윤지</p>
-                <p>개발: Gemini</p>
+                <h2>Credit</h2>
+                <p>기획/제작: insta @tteo.ditor X @3hstellah3</p>
+                <p>캐릭터 이미지: NCT WISH / SM Entertaiment</p>
+                <p>아이템: Stardewvalley</p>
                 <button class="close-btn" onclick="closeModal('credit-modal')">닫기</button>
             </div>
         </div>
 
     </div> <script src="js/script.js"></script>
     <script src="js/main.js"></script>
+
+    <div id="crop-modal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center;">
+    <div style="background: #fff; padding: 20px; border-radius: 10px; width: 90%; max-width: 500px; text-align: center;">
+        <h3>사진 영역 선택</h3>
+        <div style="max-height: 400px; margin-bottom: 20px;">
+            <img id="image-to-crop" style="max-width: 100%; display: block;">
+        </div>
+        <button id="btn-crop" style="padding: 10px 20px; cursor: pointer;">자르기 & 저장</button>
+        <button id="btn-cancel" style="padding: 10px 20px; cursor: pointer; background: #ccc;">취소</button>
+    </div>
+</div>
+    
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
