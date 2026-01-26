@@ -447,7 +447,6 @@ const affinityDialogues = {
                     ]
                 }
             ],
-            ],
             "비": [
                 {
                     text: "(작게 하품을 한다) 으... 어제 늦게 잤더니 좀 졸리네요.", // 선택지
@@ -883,6 +882,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
