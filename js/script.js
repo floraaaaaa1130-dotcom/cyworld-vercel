@@ -249,9 +249,10 @@ const affinityDialogues = {
             ],
             
             "벚꽃": [
+                [
                 { text: "산책 나오셨어요?", emotion: "default" },
                 { text: "숲은 조용해서 좋아요. 생각 정리하기 딱이거든요.", emotion: "default" },
-                { text: "저는 할 일이 좀 남아서요. 먼저 가보세요.", emotion: "default" },
+                ],
                 {
                     text: "저 나무 이름이 뭔지 아세요? 제가 제일 좋아하는 나무인데.",
                     emotion: "default",
@@ -311,7 +312,7 @@ const affinityDialogues = {
                 answers: {
                     "선배님": { text: "ㅋㅋ저도 전문가는 아니지만... 팁 정도는 알려드릴 수 있어요.", emotion: "happy", score: 10 },
                     "도움": { text: "ㅋㅋ저도 전문가는 아니지만... 팁 정도는 알려드릴 수 있어요.", emotion: "happy", score: 10 },
-                    "가르침": { text: "ㅋㅋ저도 전문가는 아니지만... 팁 정도는 알려드릴 수 있어요.", emotion: "happy", score: 10 },
+                    "가르침": { text: "ㅋㅋ저도 전문가는 아니지만... 팁 정도는 알려드릴 수 있어요.", emotion: "happy", score: 10 }
                 }
             }
                 
@@ -398,7 +399,7 @@ const affinityDialogues = {
                 answers: {
                     "아메리카노": { text: "ㅎㅎ맞아요. 한 모금 드실래요?", emotion: "happy", score: 5 },
                     "아아": { text: "ㅎㅎ맞아요. 한 모금 드실래요?", emotion: "happy", score: 5 },
-                    "커피": { text: "ㅎㅎ맞아요. 한 모금 드실래요?", emotion: "happy", score: 5 },
+                    "커피": { text: "ㅎㅎ맞아요. 한 모금 드실래요?", emotion: "happy", score: 5 }
                 }
                 }
             ],
@@ -590,7 +591,7 @@ const affinityDialogues = {
                         "그닥": { text: "에.. 너무 삭막한 거 아니에요 ? 낭만이 없으시네 !", emotion: "sad", score: 0 },
                         "별로": { text: "에.. 너무 삭막한 거 아니에요 ? 낭만이 없으시네 !", emotion: "sad", score: 0 },
                         "글쎄": { text: "에.. 너무 삭막한 거 아니에요 ? 낭만이 없으시네 !", emotion: "sad", score: 0 },
-                        "아니": { text: "에.. 너무 삭막한 거 아니에요 ? 낭만이 없으시네 !", emotion: "sad", score: 0 },
+                        "아니": { text: "에.. 너무 삭막한 거 아니에요 ? 낭만이 없으시네 !", emotion: "sad", score: 0 }
                     }
                 },
                {
@@ -627,97 +628,24 @@ const affinityDialogues = {
         
         mid: { // 30~69점
             "맑음": [
-                { text: "왔어요? 마침 심심했는데 잘됐다. 저랑 잠깐 농땡이... 아니, 휴식 좀 취할래요?", emotion: "happy" },
-                { 
-                text: "오늘따라 일이 손에 안 잡히네요. 자꾸 딴생각이 들어서.", 
-                emotion: "happy",
-                choices: [
-                    { label: "무슨 생각 하는데요?", score: 3, reply: "음... 그냥 맛있는 거 먹고 싶다는 생각? 퀸아망에 아아라던가." },
-                    { label: "어허. 집중력 부족.", score: 0, reply: "으... 팩트폭력 너무 아픈데요." },
-                    { label: "그런 날은 그냥 푹 쉬거나 노는 것도 방법이에요!", score: 5, reply: "오... 이도저도 아닌 것보단 그게 낫겠네요. 근데 저랑 놀아주실 거예요?" }
-                ]
-                },
-                { 
-                text: "저 방금 스타주점 다녀왔는데 뭐 샀게요?", 
-                emotion: "shy",
-                type: "keyword", // ★ 여기가 핵심! 키워드 입력 타입 지정
-                answers: {
-                    "아메리카노": { text: "ㅎㅎ맞아요. 한 모금 드실래요?", emotion: "happy", score: 5 },
-                    "아아": { text: "ㅎㅎ맞아요. 한 모금 드실래요?", emotion: "happy", score: 5 },
-                    "커피": { text: "ㅎㅎ맞아요. 한 모금 드실래요?", emotion: "happy", score: 5 },
-                }
-                }
-            ],
+
+                    ],
             "비": [
-                { text: "비 오니까 파전에 막걸... 아니, 따뜻한 커피 한 잔 하고 싶네요 ㅎㅎ", emotion: "happy" },
-                { text: "...좀 전에 천둥칠 때 제 쪽 안 보셨죠? 못 봤다고 해주세요.", emotion: "happy" }
-            ],
+                
+                    ],
             "벚꽃": [
-                { text: "옛날엔 여기서 숨바꼭질하고 놀았는데. 저 꽤 잘 숨어요. 찾아볼래요?", emotion: "happy" },
-                { text: "어, 머리에 꽃잎 붙었다. ...가만히 있어봐요.", emotion: "happy" },
-                {
-                    text: "여기 서 있어 봐요. 배경이 예뻐서 사진 찍어 드릴게요.", // 선택지
-                    emotion: "default",
-                    choices: [
-                        { label: "김치~ (브이 한다)", score: 0, reply: "ㅋㅋ자연스럽게 잘 나왔네요. 보내드릴게요." },
-                        { label: "시온 씨도 같이 찍어요!", score: 5, reply: "네? 저요? 아... 전 사진 잘 안 찍는데... 그래도 오늘은 벚꽃이 유난히 예쁘니까 한 장 남겨야겠네요." }
+            
                     ]
-                },
-            ]
         },
+        
         high: { // 70점 이상
             "맑음": [
-                { text: "오셨어요? 안 오면 섭섭할 뻔했는데.", emotion: "love" },
-                { text: "내일도 날씨 맑대요. 내일도... 회관 들러주실 거죠?", emotion: "love" },
-                {
-                    text: "저기 근데... 호칭을 어떻게 하면 좋을까요? 농장주님은 너무 딱딱해서. 그냥 이름이 좋을까요?", // 키워드
-                    emotion: "shy",
-                    type: "keyword",
-                    answers: {
-                        "누나": { text: "누... 누나요? 음... 노력은 해볼게요. 어... {user} 누...나.", emotion: "shy", score: 10 },
-                        "자기": { text: ".......네? 잘못 말씀하신 거죠? 꿈인가... (어째서인지 귀끝이 붉다)", emotion: "shy", score: 3 },
-                        "여보": { text: ".......네? 잘못 말씀하신 거죠? 꿈인가... (어째서인지 귀끝이 붉다)", emotion: "shy", score: 3 },
-                        "허니": { text: ".......네? 잘못 말씀하신 거죠? 꿈인가... (어째서인지 귀끝이 붉다)", emotion: "shy", score: 3 },
-                        "애기": { text: ".......네? 잘못 말씀하신 거죠? 꿈인가... (어째서인지 귀끝이 붉다)", emotion: "shy", score: 3 },
-                        "공주": { text: "ㅋㅋㅋ 불러드릴 수는 있는데 감당 가능하세요? {user} 공주님?", emotion: "shy", score: 7 },
-                        "이름": { text: "역시 이름이 제일 무난하죠. 그럼 {user} 님이라고 부를게요.", emotion: "happy", score: 0 }
-                    }
-                },
-                {
-                    text: "오늘 일찍 퇴근할 것 같은데... 혹시 저녁에 뭐 하세요?", // 선택지
-                    emotion: "happy",
-                    choices: [
-                        { label: "시온 씨랑 놀아야죠!", score: 5, reply: "ㅎㅎ그럴래요? 맛있는 거 먹으러 가요." },
-                        { label: "고민 중이에요", score: 0, reply: "고민 중이면... 저랑 저녁 드실래요?" },
-                        { label: "졸려서 푸데푸데 잘 거예용", score: 3, reply: "? 네? 푸데푸데... 가 뭔지 모르겠지만...ㅋㅋ 어감이 귀엽네요. 그럼 푹 주무세요." }
-                    ]
-                }
-            ],
+
             ],
             "비": [
-                {
-                    text: "(작게 하품을 한다) 으... 어제 늦게 잤더니 좀 졸리네요.", // 선택지
-                    emotion: "default",
-                    choices: [
-                        { label: "제 어깨 빌려드릴까요?", score: 3, reply: "어... 진심이에요? 저 진짜 기대요? 무거울 텐데ㅋㅋ" },
-                        { label: "(얼굴 앞에 박수를 짝 치며) 정신 차리십쇼 관리자님!", score: 0, reply: "아 ㅋㅋㅋ 깜짝이야. 덕분에 잠 확 깼네요. 고마워요." }
-                    ]
-                }
+                
             ],
             "벚꽃": [
-                {
-                    text: "나중에 은퇴하면 어디서 살고 싶어요?"
-                    emotion: "happy",
-                    type: "keyword",
-                    answers: {
-                        "시골": { text: "저돈데. 한적한 곳에서 좋아하는 사람들이랑... 생각만 해도 좋네요.", emotion: "happy", score: 5 },
-                        "바다": { text: "저도요! 사실 고향이 바닷가 마을이거든요. ...다음에 {uesr} 님도 초대하고 싶어요.", emotion: "happy", score: 5 },
-                        "바닷가": { text: "저도요! 사실 고향이 바닷가 마을이거든요. ...다음에 {uesr} 님도 초대하고 싶어요.", emotion: "happy", score: 5 },
-                        "도시": { text: "도시라... 편리하긴 하죠. 전 그래도 여기가 더 좋은 것 같아요.", emotion: "default", score: 3 },
-                        "너랑": { text: "...! 그런 멘트는 어디서 배우시는 거예요...", emotion: "love", score: 15 },
-                        "시온": { text: "...! 그런 멘트는 어디서 배우시는 거예요...", emotion: "love", score: 15 }
-                    }
-                },
             ]
         }
     },    
@@ -956,6 +884,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
