@@ -526,14 +526,14 @@ let currentMemberId = null;
 // HTML이 모두 로드된 후 실행
 document.addEventListener('DOMContentLoaded', function() {
     
-    // 모달 관련 요소 가져오기
+    // 모달 관련 요소 가져오기 (index.html에 이 ID들이 있어야 함)
     const modal = document.getElementById('crop-modal');
     const imageToCrop = document.getElementById('image-to-crop');
     const btnCrop = document.getElementById('btn-crop');
     const btnCancel = document.getElementById('btn-cancel');
 
     // NPC 목록을 순회하며 이벤트 연결
-    const members = Object.keys(npcs); 
+    const members = Object.keys(npcs); // ['sion', 'riku', 'yushi', ...]
 
     members.forEach(member => {
         const input = document.getElementById(`upload-${member}`);
@@ -547,27 +547,22 @@ document.addEventListener('DOMContentLoaded', function() {
                         // 1. 현재 어떤 멤버를 수정 중인지 저장
                         currentMemberId = member; 
                         
-                        // 2. 모달 띄우기 (순서 중요: display가 none이면 크로퍼가 크기를 못 잡음)
+                        // 2. 모달에 이미지 띄우기
+                        imageToCrop.src = event.target.result;
                         if(modal) modal.style.display = 'flex';
 
-                        // 3. 이미지 소스 설정
-                        imageToCrop.src = event.target.result;
+                        // 3. 기존 크로퍼 초기화
+                        if (currentCropper) {
+                            currentCropper.destroy();
+                        }
 
-                        // ★ [수정 핵심] 이미지가 로드된 "직후"에 크로퍼를 붙여야 함
-                        imageToCrop.onload = function() {
-                            // 기존 크로퍼 초기화
-                            if (currentCropper) {
-                                currentCropper.destroy();
-                            }
-                            // 새 크로퍼 생성
-                            currentCropper = new Cropper(imageToCrop, {
-                                aspectRatio: 1, 
-                                viewMode: 1,
-                                minContainerWidth: 300,
-                                minContainerHeight: 300,
-                                autoCropArea: 1 // 이미지를 꽉 채우게 선택
-                            });
-                        };
+                        // 4. 새 크로퍼 생성 (1:1 비율 강제)
+                        currentCropper = new Cropper(imageToCrop, {
+                            aspectRatio: 1, 
+                            viewMode: 1,
+                            minContainerWidth: 300,
+                            minContainerHeight: 300
+                        });
                     };
                     reader.readAsDataURL(file);
                 }
@@ -617,8 +612,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
-
 
 
 
