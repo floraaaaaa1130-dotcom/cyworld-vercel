@@ -517,7 +517,7 @@ const questScripts = {
 };
 
 /* ==========================================================================
-   [추가] 이미지 업로드 및 Cropper.js 처리 로직
+   [수정] 이미지 업로드 및 Cropper.js 처리 로직
    ========================================================================== */
 
 let currentCropper = null;
@@ -543,40 +543,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
+                    
                     reader.onload = function(event) {
-                        // 1. 현재 어떤 멤버를 수정 중인지 저장
+                        // 1. 멤버 ID 저장 및 모달 띄우기
                         currentMemberId = member; 
-                        
-                        // 2. 모달 띄우기 (순서 중요: display가 none이면 크로퍼가 크기를 못 잡음)
                         if(modal) modal.style.display = 'flex';
 
-// 3. 이미지 소스 설정
-imageToCrop.src = event.target.result;
+                        // 2. 기존 크로퍼가 있다면 제거
+                        if (currentCropper) {
+                            currentCropper.destroy();
+                            currentCropper = null;
+                        }
 
-// 🔥 이미지 로드 보장 방식으로 변경
-imageToCrop.addEventListener(
-    'load',
-    function handleLoad() {
-        // 기존 크로퍼 초기화
-        if (currentCropper) {
-            currentCropper.destroy();
-            currentCropper = null;
-        }
+                        // 3. ★핵심 수정★: 이미지 로드 '후'에 실행될 함수를 먼저 정의합니다.
+                        // (src를 넣기 전에 감시자를 먼저 붙여야 놓치지 않습니다!)
+                        imageToCrop.onload = function() {
+                            currentCropper = new Cropper(imageToCrop, {
+                                aspectRatio: 1,
+                                viewMode: 1,
+                                minContainerWidth: 300,
+                                minContainerHeight: 300,
+                                autoCropArea: 1
+                            });
+                            // 실행 후엔 이벤트 리스너 비워주기 (중복 실행 방지)
+                            imageToCrop.onload = null;
+                        };
 
-        // 새 크로퍼 생성
-        currentCropper = new Cropper(imageToCrop, {
-            aspectRatio: 1,
-            viewMode: 1,
-            minContainerWidth: 300,
-            minContainerHeight: 300,
-            autoCropArea: 1
-        });
-
-        // ★ 한 번만 실행되게 제거
-        imageToCrop.removeEventListener('load', handleLoad);
-    },
-    { once: true }
-);
+                        // 4. 이제 이미지 데이터를 넣어줍니다. (위의 onload 함수가 작동함)
+                        imageToCrop.src = event.target.result;
+                    };
                     
                     reader.readAsDataURL(file);
                 }
@@ -601,7 +596,7 @@ imageToCrop.addEventListener(
                 const preview = document.getElementById(`preview-${currentMemberId}`);
                 if (preview) preview.src = croppedImage;
 
-                // 2) 게임 데이터(npcs) 업데이트 ★핵심★
+                // 2) 게임 데이터(npcs) 업데이트
                 if (npcs[currentMemberId]) {
                     npcs[currentMemberId].portrait = croppedImage;
                     console.log(`${currentMemberId}의 초상화가 변경되었습니다.`);
@@ -626,6 +621,7 @@ imageToCrop.addEventListener(
         });
     }
 });
+
 
 
 
