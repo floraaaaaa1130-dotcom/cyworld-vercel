@@ -125,7 +125,7 @@ function startGame() {
     updateSetupUI();
 }
 
-ffunction nextMemberStep() {
+function nextMemberStep() {
     // 🔴 크롭 중이면 단계 이동 막기
     // (script.js에서 currentCropper를 window에 등록해야 이 체크가 정확히 작동합니다. 
     // 일단 undefined 에러가 나지 않도록 체크 방식을 수정하거나 script.js를 함께 수정해야 합니다.)
@@ -1093,6 +1093,7 @@ function endEvent() {
         if (fadeOverlay) fadeOverlay.classList.remove('visible');
     }, 1000);
 }
+
 
 
 
