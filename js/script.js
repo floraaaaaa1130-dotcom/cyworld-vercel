@@ -557,21 +557,21 @@ const affinityDialogues = {
             "맑음": [
                 { text: "에 ! 신기해요. 마침 {user} 님이 와줬으면 좋겠다 생각하고 있었는데 ~", emotion: "happy" },
                 {
-                    text: "혹시 노래 듣는 거 좋아하세요 ?", // 키워드
+                    text: "무슨 노래 듣는 거 좋아하세요 ?", // 키워드
                     emotion: "shy",
                     type: "keyword",
                     answers: {
-                        "팝송": { text: "오 ~ 팝송 좋지요. 저도 자주 들어요 !", emotion: "happy", score: 5 },
-                        "발라드": { text: "감성적이시네요 ~ 비 오는 날 들으면 딱이겠어요 !", emotion: "default", score: 3 },
-                        "엑소": { text: "에..?! 엑소를 아세요 ? 저 완전 팬인데 ! 😙 최애가 누구세요 ?", emotion: "love", score: 10 }
+                        "팝송": { text: "오 ~ 팝송 좋지요. 저도 자주 들어요 !", emotion: "happy", score: 3 },
+                        "발라드": { text: "감성적이시네요 ~ 비 오는 날 들으면 딱이겠어요 !", emotion: "default", score: 0 },
+                        "엑소": { text: "에..?! 엑소를 아세요 ? 저 완전 팬인데 ! 😙 최애가 누구예요 ?", emotion: "love", score: 5 }
                     }
                 },
                 {
                     text: "배고프지 않으세요 ? 푸딩이 하나 있긴 한데..", // 선택지
                     emotion: "default",
                     choices: [
-                        { label: "유우시 먹어요~ 난 괜찮아.", score: 5, reply: "에.. 진짜요 ? 그럼 제가 다 먹을게요 ! 잘 먹겠습니다 ~^_^" },
-                        { label: "오! 먹을래요!", score: 3, reply: "아.. 근데 저도 먹어야 해서 ! 반만 드릴게요. 반만 !" }
+                        { label: "유우시 먹어요~ 난 괜찮아.", score: 3, reply: "에.. 진짜요 ? 그럼 제가 다 먹을게요 ! 잘 먹겠습니다 ~^_^" },
+                        { label: "오! 먹을래요!", score: 0, reply: "아.. 근데 저도 먹어야 해서 ! 반만 드릴게요. 반만 !" }
                     ]
                 }
             ],
@@ -627,24 +627,129 @@ const affinityDialogues = {
         
         mid: { // 30~69점
             "맑음": [
+                { text: "에.. 심심하다. {user} ! 저랑 놀아주세요. 네 ? 😙", emotion: "happy" },
+                {
+                    text: "우주에 간다면 뭘 하고 싶어요 ?", // 키워드 (4차원 질문)
+                    emotion: "default",
+                    type: "keyword",
+                    answers: {
+                        "수영": { text: "우주에서 수영이라니.. 낭만적이네요 ! 같이 헤엄칠까요 ? ^_^", emotion: "happy", score: 5 },
+                        "낮잠": { text: "무중력 상태로 둥둥 떠서 자는 거네요. 와.. 진짜 편하겠다 ! ", emotion: "default", score: 5 },
+                        "외계인": { text: "에.. {user}가 외계인 잡으러 다니면 저는 도망 다녀야겠네요 ~", emotion: "shy", score: 5 }
+                    }
+                },
+                {
+                    text: "(풀밭에 엎드려서 무언가를 열심히 찾고 있다)",
+                    emotion: "default",
+                    choices: [
+                        { label: "뭐 찾아요? 네잎클로버ㅇ", score: 5, reply: "딩동댕 ! 찾으면 {user}한테 선물로 주려고 했지요 ~" },
+                        { label: "개미 관찰해요?", score: 0, reply: "에.. 개미는 너무 작아서 안 보여요. 행운을 찾는 중 !" }
+                    ]
+                }
 
-                    ],
+            ],
+            
             "비": [
-                
+                { text: "비가 오는 날은 세상이 멈춘 것 같아요. 우리만 움직이는 느낌 ? ^_^", emotion: "default" },
+                {
+                    text: "이렇게 비 오는 날엔 따뜻한 게 마시고 싶어져요. {user}는 어떤 마실 것을 좋아해요 ?", // 키워드
+                    emotion: "happy",
+                    type: "keyword",
+                    answers: {
+                        "핫초코": { text: "달달한 거 좋아하시는구나. 저도 초코 진짜 좋아해요 ! ^_^", emotion: "love", score: 5 },
+                        "우유": { text: "따뜻한 우유.. 잠 잘 오겠네요. 아기 같아요 ~", emotion: "happy", score: 5 },
+                        "커피": { text: "에- 역시 {user](은)는 어른이네요. 시온이 형도 커피를 참 좋아하지요 ^_^", emotion: "sad", score: 5 }
+                    }
+                },
+                {
+                    text: "신발 젖는 거 싫은데.. {user}가 나를 업고 가주면 조켄네...", // 
+                    emotion: "shy",
+                    choices: [
+                        { label: "어휴, 업히세요! (등을 내민다)", score: 5, reply: "와 ! 진짜요 ? 농담이었는데 ! {user}는 정말 착하네요~^_^" },
+                        { label: "그건 좀 무리일 것 같은데요?", score: 0, reply: "치.. 너무해 ! 그치만 저도 농담이었어요 !" },
+                        { label: "(못 들은 척)", score: 0, reply: "{user}가 나를 업고 가주면 조켄네... {user}가 나를 업고 가주면 조켄네... {user}가 나를 업고 가주면 조켄네... (앵우시가 나타났다!)" }
+                    ]
+                }
                     ],
             "벚꽃": [
-            
+                { text: "벚꽃 잎이 눈처럼 내려요. 4월의 크리스마스 같지요 ? ^_^", emotion: "happy" }, 
+                {
+                    text: "꽃말 같은 거 믿으세요 ? 벚꽃의 꽃말이 뭔지 아시나요 ?", // 키워드
+                    emotion: "shy",
+                    type: "keyword",
+                    answers: {
+                        "미인": { text: "에.. {user} 이야기하는 거예요 ? ^_^ 농담 ~", emotion: "happy", score: 5 },
+                        "순결": { text: "오 ! 잘 아시네요. 역시 똑똑해 !", emotion: "default", score: 5 },
+                        "중간고사": { text: "에에 ! 그건 너무 현실적인데요.. 분위기 깼어 !", emotion: "shock", score: 0 }
+                    }
+                },
+                {
+                    text: "저기 나무 흔들면 꽃비 내릴 것 같은데.. 같이 흔들어 볼래요 ?",
+                    emotion: "happy",
+                    choices: [
+                        { label: "좋아! 하나, 둘, 셋!", score: 3, reply: "와아 ~ (꽃잎을 맞으며) 진짜 예쁘다 ! {user}도 예쁘.. 에.. 아무것도 아니에요." },
+                        { label: "나무가 아파해요..", score: 0, reply: "아.. 그렇구나. 제가 생각이 짧았네요 ㅠ_ㅠ 미안해 나무야.." }
                     ]
+                }
+            
+            ]
         },
         
         high: { // 70점 이상
             "맑음": [
+                { text: "어 ? {user} 왔다 ! 오늘따라 늦게 온 것 같아요. 기다렸는데..", emotion: "sad" }, // 일반
+                {
+                    text: "저기.. 다른 사람들이랑 노는 거 재밌어요 ?", // 키워드 (질투)
+                    emotion: "default",
+                    type: "keyword",
+                    answers: {
+                        "재밌어요": { text: "에.. 그렇구나. 저는 {user}랑 노는 게 제일 재밌는데..", emotion: "sad", score: 0 },
+                        "그저그래요": { text: "그럼 저랑 놀아요 ! 제가 더 재밌게 해줄 수 있어요 😙", emotion: "happy", score: 5 },
+                        "아니요": { text: "역시 그렇죠 ? 다행이에요~ ^_^", emotion: "happy", score: 5 }
+                    }
+                },
+                {
+                    text: "나른하네요.. {user} 어깨 좀 빌려도 돼요 ?", // 선택지
+                    emotion: "shy",
+                    choices: [
+                        { label: "당연하지! (어깨를 내어준다)", score: 10, reply: "(기대며) 아.. 편하다. 냄새도 좋고.. 잠올 것 같아요." },
+                        { label: "무거워~", score: 0, reply: "에.. 저 깃털처럼 가벼운데 ! 너무해 !" }
+                    ]
+                }
 
             ],
             "비": [
+                { text: "비 오는 날은 위험하니까 숲에 가지 말고 저랑 여기 있어요. 알겠지요 ?", emotion: "serious" },
+                {
+                    text: "만약에 제가 갑자기 멀리 떠나면 어떨 것 같아요 ?", // 키워드
+                    emotion: "sad",
+                    type: "keyword",
+                    answers: {
+                        "슬퍼": { text: "저도요.. 상상만 해도 너무 슬퍼요. 그러니까 안 떠날래요 !", emotion: "happy", score: 10 },
+                        "안돼": { text: "에.. 감동 ! ^_^ 절대 안 떠날게요. 딱 붙어있어야지 ~", emotion: "love", score: 10 }
+                    }
+                },
+                {
+                    text: "천둥 칠 때마다 깜짝 놀라요.. 손 잡아주면 안 무서울 것 같은데 !", // 선택지
+                    emotion: "shy",
+                    choices: [
+                        { label: "(말없이 손을 잡아준다)", score: 10, reply: "와.. 손 진짜 따뜻하다. 계속 잡고 있어도 돼요 ? 😙" },
+                        { label: "겁쟁이네~", score: 3, reply: "아니거든요 ! 그냥 {user} 손이 잡고 싶었던.. 에.. 아무것도 아니에요 !" }
+                    ]
+                }
                 
             ],
             "벚꽃": [
+                { text: "꽃구경 다른 사람이랑 가지 마요. 저랑 가기로 했잖아요 ~ 기억나지요 ?", emotion: "default" },
+                {
+                    text: "내년에도, 내후년에도 벚꽃 필 때.. 제 옆에 있어 주세요 !", // 키워드
+                    emotion: "shy",
+                    type: "keyword",
+                    answers: {
+                        "당연하지": { text: "약속했어요 ! 도장 꾹 😙 어기면 안 돼요 ~", emotion: "love", score: 10 },
+                        "글쎄": { text: "에.. 너무해 ! 저는 계속 기다릴 건데..", emotion: "sad", score: 0 }
+                    }
+                },
             ]
         }
     },    
@@ -736,7 +841,7 @@ const endingScripts = {
     yushi: {
         title: "수줍은 고백",
         image: "assets/images/portraits/yushi_happy.png",
-        text: "에.. 사실 처음 뵀을 때부터 농장주님이 신경 쓰였어요.\n\n제가 표현은 서툴지만.. 제 마음은 진심이에요.\n저의 곁에 있어 주시겠어요?"
+        text: "(숲속 깊은 곳, 유우시가 나무 그루터기에 앉아 하늘을 보고 있다.)\n\n어 ? {user} ! 어떻게 알고 왔어요 ? 여기 제 비밀 기지인데 😙\n사실.. 아까부터 {user} 생각을 좀 하고 있었거든요.\n\n저는 원래 혼자 있는 게 제일 편하거든요 ? 누가 옆에 있으면 신경 쓰이고.. 귀찮고.."
     },
     jaehee: {
         title: "든든한 파트너",
@@ -883,6 +988,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
