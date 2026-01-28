@@ -5,17 +5,27 @@ const npcs = {
         sprite: "assets/images/sprites/sion.png",
         portrait: "assets/images/portraits/sion_default.png",
         gifts: {
-            love: ["커피", "에너지 드링크", "설탕", "회"],
+            best: "스타드롭커피",  // ★ [추가] 가장 좋아하는 선물 딱 하나 지정
+            love: ["설탕", "회", "커피"],
             hate: ["블롭피쉬"]
         },
         giftReactions: {
-            love: { text: "와... 이거 제가 제일 좋아하는 건데. 어떻게 아셨어요? 진짜 감동이다. 고마워요.", emotion: "default" },
+            best: [
+                { text: "우와, 향기 뭐예요? 그냥 커피가 아닌데?", emotion: "happy" }, 
+                { text: "저 주려고 직접 만들었다고요? 와... 이건 좀 감동이다.", emotion: "happy" },
+                { text: "(한 모금 마셔본다)", emotion: "happy" },
+                { text: "...!!", emotion: "happy" },
+                { text: "제가 마셔본 커피 중에 제일 맛있어요. 진짜로요!", emotion: "happy" },
+                { text: "피곤한 게 싹 사라지는 기분인데요?", emotion: "happy" },
+                { text: "{user}(은)는 진짜... 저한테 필요한 게 뭔지 너무 잘 아는 것 같아요.", emotion: "happy" },
+                { text: "아껴서 마셔야지ㅎㅎ 고마워요 진짜.", emotion: "happy" }
+                ],
+            love: { text: "어? 이거 제가 제일 좋아하는 건데 어떻게 아셨어요? 진짜 감동이다. 고마워요.", emotion: "default" },
             hate: { text: "마음은 고맙지만... 이건 좀 처치하기 곤란하네요.", emotion: "default" },
             default: { text: "오, 선물인가요? 고맙습니다.", emotion: "default" }
         },
         unknownReaction: { text: "음... 무슨 말씀이신지 잘 모르겠네요.", emotion: "default" },
         locations: { sunny: "hall", rainy: "hall", blossom: "forest" },
-        // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
             hall: { top: "75%", left: "25%" },
             forest: { top: "48%", left: "16%" }
@@ -27,16 +37,22 @@ const npcs = {
         portrait: "assets/images/portraits/riku_default.png",
         unknownReaction: { text: "엥? 그게 뭐예여? 먹는 거예여?", emotion: "shock" },
         gifts: {
-            love: ["도토리", "초코케이크", "아이스크림"],
+            best: "도토리",
+            love: ["초코케이크", "아이스크림", "수선화"],
             hate: ["흙"]
         },
         giftReactions: {
+            best: [
+                { text: "에?? 도토리?? ㅋㅋㅋㅋ 리쿠 다람쥐 닮아서 주는 거예여??", emotion: "happy" }, 
+                { text: "진짜 귀엽당... 빤질빤질하니 맘에 들엉", emotion: "happy" },
+                { text: "볼에 저장은 못 하지만 주머니에 넣고 다닐게여 헤헤", emotion: "happy" },
+                { text: "역시 리쿠 맘 아는 건 {user} 밖에 없엉! 최고예여!", emotion: "happy" }
+                ],
             love: { text: "{user}(은)는 리쿠를 잘 아는구낭? 고마워영!", emotion: "happy" },
             hate: { text: "왜 리쿠한테 이런 거 줬어여? 리쿠 이거 싫어하는 거 몰랏어여? 속상해여 ㅠㅠ", emotion: "serious" },
             default: { text: "와아, 리쿠 넘 행복해영!", emotion: "default" }
         },
         locations: { sunny: "shop", rainy: "saloon", blossom: "shop" },
-        // ★ [추가] 장소별 좌표 설정 (top: 위에서 거리, left: 왼쪽에서 거리)
         positions: {
             shop: { top: "75%", left: "24%" },
             saloon: { top: "80%", left: "16%" }
@@ -47,10 +63,20 @@ const npcs = {
         sprite: "assets/images/sprites/yushi.png",
         portrait: "assets/images/portraits/yushi_default.png",
         gifts: { // gifts 속성 추가 (코드 일관성을 위해 임의 추가함, 필요시 수정)
-             love: ["스타푸르트", "블루 재즈"],
+             best: "외계인 인형",
+             love: ["스타푸르트", "블루 재즈", "치즈볼", "푸딩"],
              hate: ["쓰레기"]
         },
         giftReactions: {
+            best: [
+                { text: "에... 이거... (인형에서 눈을 떼지 못한다)", emotion: "happy" }, 
+                { text: "외계인인가요 ? 너무너무 귀엽네요 !", emotion: "happy" },
+                { text: "{user} 눈에는 제가 이런 이미지인가요 ?", emotion: "happy" },
+                { text: "보자마자 제 생각이 났어요 ? ㅎㅎ", emotion: "happy" },
+                { text: "아주 마음에 들어요 !", emotion: "happy" },
+                { text: "새 친구가 하나 생긴 기분이네요 ^_^", emotion: "happy" },
+                { text: "잘 때 머리맡에 두고 잘게요 ~ 볼 때마다 {user} 생각이 날 거야 !", emotion: "happy" }
+                ],
             love: { text: "에 ! 저 주는 거예요 ? 너무 예쁘다 ~ {user} 저 이거 진짜 좋아해요 ! ^_^", emotion: "happy" },
             hate: { text: "에..? 이건.. 너무해요 !", emotion: "serious" },
             default: { text: "고마워요 ! 잘 간직할게요 ^_^ 우리 기분 좋은 추억이 하나 더 생겼네요 ~", emotion: "default" }
@@ -68,10 +94,18 @@ const npcs = {
         sprite: "assets/images/sprites/jaehee.png",
         portrait: "assets/images/portraits/jaehee_default.png",
         gifts: {
-            love: ["행운의 점심", "에너지 드링크"],
+            best: "제로콜라",
+            love: ["에너지 드링크", "행운의 점심", "무화과"],
             hate: ["쓰레기"]
         },
         giftReactions: {
+             best: [
+                { text: "으아!! 제로 콜라!! 대박!! 저 이거 좋아하는 거 어떻게 알았어요?", emotion: "happy" }, 
+                { text: "마침 사러 가려고 했는데!!", emotion: "happy" },
+                { text: "와... 역시 {user}은(는) 저랑 뭔가 통하는 게 있다 그쵸??", emotion: "happy" },
+                { text: "시원하게 원샷 할게요! 진짜 고마워요!!", emotion: "happy" },
+                { text: "앗 아니다! {user} 먼저 한 입 해요!", emotion: "happy" }
+                ],
             love: { text: "우와아!! 진짜 대박!! 저 이거 진짜 좋아하는데! 최고예요!!", emotion: "happy" },
             hate: { text: "마음은 고맙지만.. 이건 좀 처치하기 곤란하네요.", emotion: "serious" },
             default: { text: "오..! 와! 대박! 뭔지 모르겠지만 그래도 {user}(이)가 준 거니까 일단 잘 챙겨둘게요! 허허", emotion: "default" }
@@ -91,10 +125,19 @@ const npcs = {
         sprite: "assets/images/sprites/ryo.png",
         portrait: "assets/images/portraits/ryo_default.png",
         gifts: {
+            best: "별의 책",
             love: ["블롭피쉬", "에너지 드링크"],
             hate: ["쓰레기", "잉어"]
         },
         giftReactions: {
+             best: [
+                { text: "에! 별의 책이다!!", emotion: "happy" }, 
+                { text: "진짜 읽고 싶었던 건데... 와! 안에 성운 사진도 있어 대박!", emotion: "happy" },
+                { text: "{user} 센스 진짜 야바이다...", emotion: "happy" },
+                { text: "오늘 밤새서 다 읽어야지!", emotion: "happy" },
+                { text: "진짜진짜 고마워요! 우주만큼! 다 읽고 무슨 내용인지 알려줄게요! ", emotion: "happy" },
+                { text: "나중에 책에 나온 별자리 같이 보러 가요! ", emotion: "happy" }
+                ],
             love: { text: "야하항~! 진짜 최고! 이거 완전 희귀한 건데! 고마워료!", emotion: "happy" },
             hate: { text: "오, 센스 대박! 감사해료!", emotion: "serious" },
             default: { text: "선물인가요? 고맙습니다.", emotion: "default" }
@@ -113,10 +156,19 @@ const npcs = {
         sprite: "assets/images/sprites/sakuya.png",
         portrait: "assets/images/portraits/sakuya_default.png",
         gifts: {
-            love: ["핑크케이크"],
-            hate: ["쓰레기", "잉어"]
+            best: "핑크케이크",
+            love: ["스타푸르트", "레몬", "아이스크림", "치즈볼"],
+            hate: ["쓰레기", "제로콜라"]
         },
         giftReactions: {
+            best: [
+                { text: "에―?! 핑크 케이크?!", emotion: "happy" }, 
+                { text: "색깔 진짜 예쁘다... 딸기 향도 나고.", emotion: "happy" },
+                { text: "아까워서 어떻게 먹지? 일단 사진부터 찍어서 간직해야겠어요., emotion: "happy" },
+                { text: "역시 {user} 센스 진짜 인정. 잘 먹을게요! 기분 완전 좋아졌어요.", emotion: "happy" },
+                { text: "근데 혼자 먹기엔 너무 커요. 같이 먹을래요?", emotion: "happy" }
+                ],
+            best: { text: "아까워서 어떻게 먹지? 일단 사진부터 찍어서 간직해야겠어요. 잘 먹을게요! 역시 {user} 센스 진짜 인정.", emotion: "happy" },
             love: { text: "에에! 이거 완전 제 스타일! 센스 짱이네요. 잘 먹을게요!", emotion: "happy" },
             hate: { text: "아... 진짜 죄송한데... 이건 다른 사람 주는 게 어때요?", emotion: "serious" },
             default: { text: "에- 엄청 다정하네요. 이런 걸 다 챙겨주고. 고맙습니다.", emotion: "default" }
@@ -1714,24 +1766,25 @@ const affinityEvents = {
 // 3. 장소 및 레시피 데이터
 const locations = {
     farm: { name: "농장", bg: "assets/images/backgrounds/farm.png", 
-           items: ["수선화", "흙", "딸기", "우유"]
+           items: ["수선화", "흙", "딸기", "우유", "무화과"]
           },
     
     square: { name: "마을 광장", bg: "assets/images/backgrounds/square.png", 
-             items: ["흙", "콜라",
+             items: ["흙", { id: "제로콜라", chance: 0.3 },
                      { id: "에너지 드링크", chance: 0.3 },
                      { id: "외계인 인형", chance: 0.1 },
                      { id: "카메라", days: [3, 5], chance: 0.5 },
-                     { id: "별자리 도감", days: [2, 5], chance: 0.1 },
+                     { id: "별의 책", days: [2, 5], chance: 0.1 },
                     ]
             },
     
     forest: { name: "비밀의 숲", bg: "assets/images/backgrounds/forest.png", 
-             items: [{ id: "스타푸르트", chance: 0.3 }, { id: "블루 재즈", chance: 0.3 }, { id: "블롭 피쉬", chance: 0.3 },
+             items: [{ id: "스타푸르트", chance: 0.3 }, { id: "블루 재즈", chance: 0.3 }, { id: "블롭피쉬", chance: 0.3 },
                      { id: "만년필", days: [2, 5], chance: 0.5 }, "딸기", { id: "도토리", chance: 0.5 }, "흙", ] },
     
     shop: { name: "피에르 상점", bg: "assets/images/backgrounds/shop.png", 
-           items: ["설탕", "치즈", "밀가루", "달걀", ] },
+           items: ["설탕", "치즈", "밀가루", "달걀", { id: "책", days: [2, 5], chance: 0.5 }]
+          },
     
     hall: { name: "마을 회관", bg: "assets/images/backgrounds/hall.png",
            items: [{ id: "에너지 드링크", chance: 0.3 },
@@ -1763,20 +1816,27 @@ const itemData = {
     "밀가루": { img: "assets/images/items/Flour.png", desc: "제빵의 기본 재료" }, //ㅎㅇ
     "달걀": { img: "assets/images/items/egg.png", desc: "작고 소중한 달걀" }, //ㅎㅇ
     "흙": { img: "assets/images/items/Clay.png", desc: "흙이다" }, //ㅎㅇ
+    "책": { img: "assets/images/items/book.png", desc: "정대건의 장편소설 <급류>. 열일곱 살 동갑내기 도담과 해솔의 관계를 통해 첫사랑으로 인한 상처의 극복과 성장을 다룬 작품이다." }, //ㅎㅇ
     "우유": { img: "assets/images/items/Milk.png", desc: "신선한 우유" }, //ㅎㅇ
     "카메라": { img: "assets/images/items/camera.png", desc: "누군가의 카메라" }, //ㅎㅇ
-    "콜라": { img: "assets/images/items/Cola.png", desc: "흙이다" }, //ㅎㅇ
+    "제로콜라": { img: "assets/images/items/Cola.png", desc: "혈당 관리를 위한 콜라" }, //ㅎㅇ
+    "무화과": { img: "assets/images/items/fig.png", desc: "꽃 없이 열리는 열매라는 뜻을 가져 은화과라고도 불리지만, 실제로는 열매 안의 꽃이 보이지 않을 뿐 꽃이 없는 것은 아니다." }, //ㅎㅇ
     "외계인 인형": { img: "assets/images/items/doll.png", desc: "왹.." }, //ㅎㅇ
     "만년필": { img: "assets/images/items/pen.png", desc: "누군가의 만년필" }, //ㅎㅇ
+    "푸딩": { img: "assets/images/items/pudding.png", desc: "카라멜 시럽이 없는 커스터드 푸딩" }, //ㅎㅇ
     "아이스크림": { img: "assets/images/items/Clay.png", desc: "세가지 맛의 아이스크림 콘" }, //ㅎㅇ
     "스타푸르트": { img: "assets/images/items/Ice.png", desc: "별 모양의 과일" }, //ㅎㅇ
     "스타드롭커피": { img: "assets/images/items/stardropcoffee.png", desc: "커피가 상큼할 수 있다니" }, //ㅎㅇ
     "리모컨": { img: "assets/images/items/Remote.png", desc: "음...?" }, //ㅎㅇ
     "꽃다발": { img: "assets/images/items/Bouquet.png", desc: "받으면 행복할 것 같다" }, //ㅎㅇ
-    "오마모리": { img: "assets/images/items/Bouquet.png", desc: "누군가의 오마모리 키링" }, //ㅎㅇ
+    "오마모리": { img: "assets/images/items/omamori.png", desc: "누군가의 오마모리 키링" }, //ㅎㅇ
     "블롭피쉬": { img: "assets/images/items/Blobfish.png", desc: "오우..." }, //ㅎㅇ
-    "별자리 도감": { img: "assets/images/items/Starbook.png", desc: "별들의 이야기가 가득 담긴 책이다." }, //ㅎㅇ
+    "별의 책": { img: "assets/images/items/Starbook.png", desc: "별들의 이야기가 가득 담긴 책" }, //ㅎㅇ
     "도토리": { img: "assets/images/items/Acorn.png", desc: "다람쥐가 좋아할 것 같다" }, //ㅎㅇ
+    "치즈볼": { img: "assets/images/items/chesseball.png", desc: "식기 전에 먹어야 해!" }, //ㅎㅇ
+    "쓰레기": { img: "assets/images/items/trash.png", desc: "으..." }, //ㅎㅇ
+    "깨진 안경": { img: "assets/images/items/glasses.png", desc: "더이상 쓸 수 없는 안경" }, //ㅎㅇ
+    "젖은 신문지": { img: "assets/images/items/news.png", desc: "글자도 번져서 읽을 수 없다" }, //ㅎㅇ
     "에너지 드링크": { img: "assets/images/items/energytonic.png", desc: "피로가 싹 가신다" } //ㅎㅇ
 };
 
@@ -1942,6 +2002,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
