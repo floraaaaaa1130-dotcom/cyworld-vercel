@@ -606,6 +606,10 @@ button:active { transform: translateY(1px); box-shadow: none; }
     pointer-events: all;
 }
 
+* {
+    cursor: url('../assets/images/ui/star_cursor.png'), auto !important;
+}
+
 
 
 

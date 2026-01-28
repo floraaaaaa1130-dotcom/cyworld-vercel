@@ -641,7 +641,7 @@ function finishTyping() {
         nextCursor.classList.remove('hidden');
 
         // ★ [문제 해결 2] 행동 묘사(이미 대화함) 상황이면 바로 선물 버튼 띄우기
-        if (shouldShowInput) {
+        if (shouldShowInput && !gameState.isEnding) {
             inputArea.classList.remove('hidden');
             
             // 선물 버튼만 보이고 나머지는 숨김
@@ -652,6 +652,7 @@ function finishTyping() {
     }
 }
 
+/* js/main.js 파일의 renderChoices 함수를 이걸로 덮어쓰세요 */
 function renderChoices(choices) {
     const choiceArea = document.getElementById('choice-area');
     choiceArea.innerHTML = "";
@@ -665,10 +666,20 @@ function renderChoices(choices) {
         btn.onclick = (e) => {
             e.stopPropagation();
             if (choice.score) gameState.affinities[lastInteractedNPC] += choice.score;
-            dialogueQueue = [{ 
-                text: choice.reply, 
-                emotion: choice.score > 0 ? "happy" : "shock" 
-            }]; 
+            
+            // ★ [수정됨] reply가 배열(여러 줄)이면 나눠서 보여주고, 아니면 한 줄로 처리
+            if (Array.isArray(choice.reply)) {
+                dialogueQueue = choice.reply.map(line => ({
+                    text: line,
+                    emotion: choice.score > 0 ? "happy" : "shock" // 감정은 일단 통일 (필요하면 데이터 구조 변경 필요)
+                }));
+            } else {
+                dialogueQueue = [{ 
+                    text: choice.reply, 
+                    emotion: choice.score > 0 ? "happy" : "shock" 
+                }]; 
+            }
+
             currentDialogueIndex = 0;
             choiceArea.classList.add('hidden');
             showNextLine(lastInteractedNPC);
@@ -805,8 +816,15 @@ document.getElementById('dialogue-overlay').onclick = (e) => {
     }
 };
 
+/* js/main.js 파일의 맨 아래쪽에 있는 displayDialogue 함수를 이걸로 덮어쓰세요 */
 function displayDialogue(npcKey, dialogueObj) {
-    dialogueQueue = [dialogueObj];
+    // ★ [수정됨] 들어온 데이터가 배열(여러 개)이면 그대로 쓰고, 한 개면 배열로 감싸기
+    if (Array.isArray(dialogueObj)) {
+        dialogueQueue = dialogueObj;
+    } else {
+        dialogueQueue = [dialogueObj];
+    }
+    
     currentDialogueIndex = 0;
     document.getElementById('input-area').classList.add('hidden');
     showNextLine(npcKey);
@@ -859,7 +877,7 @@ function goToSleep() {
 }
 
 function startNextDay() {
-    if (gameState.day >= 7) { 
+    if (gameState.day >= 5) { 
         checkEnding(); 
         return; 
     }
@@ -941,6 +959,11 @@ function checkEnding() {
 
 function playEndingSequence(data, npcKey) {
     if (!data) return;
+
+   // ★ [추가] 엔딩 시작 시 선물 버튼 표시 기능 강제 종료
+    shouldShowInput = false; 
+    
+    // ... (기존 코드 계속) ...
     
     currentEndingData = data; 
     gameState.isEnding = true;
@@ -1093,6 +1116,10 @@ function endEvent() {
         if (fadeOverlay) fadeOverlay.classList.remove('visible');
     }, 1000);
 }
+
+
+
+
 
 
 
