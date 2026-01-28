@@ -265,7 +265,7 @@ const dailyScripts = {
                 ]
             },
         ] 
-    },
+    }
     };
 
 // ★ 기존 randomDialogues 삭제!
@@ -2304,6 +2304,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
