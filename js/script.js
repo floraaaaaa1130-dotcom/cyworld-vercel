@@ -156,9 +156,13 @@ const dailyScripts = {
                 choices: [
                     { label: "마을을 위해 열심히 일하겠습니다! 잘 부탁드려요.", score: 5, reply: "오... 열정이 대단하시네요. 저도 도울 수 있는 건 도울게요." },
                     { label: "네 어쩌다보니...(ㅎㅎ) 잘 부탁드려요!", score: 0, reply: "네, 필요한 거 있으시면 말씀해주세요." },
-                    { label: "혹시... 소랑 대화 가능하세요?", score: 5, reply: "...네? 소를 키우기는 하는데 대화는... 음... 시도는 해볼게요." }
-                ]
-            },
+                    { label: "혹시... 소랑 대화 가능하세요?", score: 5,
+                     reply: [ 
+                         "...네? 소를 키우기는 하는데 대화는...",
+                         "음... 시도는 해볼게요." ]
+                    }
+                    ],
+            }
         ],
         
         yushi: [
@@ -1909,6 +1913,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
