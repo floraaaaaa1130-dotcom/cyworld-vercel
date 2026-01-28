@@ -1397,7 +1397,7 @@ const affinityDialogues = {
             
             "벚꽃": [
                 [
-                    { text: "꽃구경 따로 갈 필요 없겠는데요? 여기 꽃이 있는데~?, emotion: "shock" },
+                    { text: "꽃구경 따로 갈 필요 없겠는데요? 여기 꽃이 있는데~?", emotion: "shock" },
                 { text: "으악 오글거려! 취소 취소! 죄송해요!", emotion: "shock" }
              ],
                  { 
@@ -2304,6 +2304,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 
 
