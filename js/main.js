@@ -781,14 +781,21 @@ function giveGift(npcKey) {
     let points = 5;
     let response = npc.giftReactions?.default || { text: "고마워요.", emotion: "default" };
 
-    if (npc.gifts.love.includes(item)) {
+    // 1. 최고(Best) 선물인지 확인
+    if (npc.gifts.best === item) {
+        points = 50; // ★ 점수 대박 (원하는 만큼 조절)
+        if (npc.giftReactions?.best) response = npc.giftReactions.best;
+    } 
+    // 2. 좋아하는(Love) 선물인지 확인
+    else if (npc.gifts.love.includes(item)) {
         points = 20;
-        if(npc.giftReactions?.love) response = npc.giftReactions.love;
-    } else if (npc.gifts.hate.includes(item)) {
+        if (npc.giftReactions?.love) response = npc.giftReactions.love;
+    } 
+    // 3. 싫어하는(Hate) 선물인지 확인
+    else if (npc.gifts.hate.includes(item)) {
         points = -10;
-        if(npc.giftReactions?.hate) response = npc.giftReactions.hate;
+        if (npc.giftReactions?.hate) response = npc.giftReactions.hate;
     }
-
     gameState.affinities[npcKey] += points;
     gameState.hasGiftedToday[npcKey] = true;
     gameState.inventory.splice(selectedSlotIndex, 1);
@@ -1137,6 +1144,7 @@ function endEvent() {
         if (fadeOverlay) fadeOverlay.classList.remove('visible');
     }, 1000);
 }
+
 
 
 
