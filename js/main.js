@@ -1015,14 +1015,19 @@ function playEndingSequence(data, npcKey) {
     document.getElementById('input-area').classList.add('hidden');
     document.getElementById('choice-area').classList.add('hidden');
     
-    const lines = data.text.split('\n').filter(line => line.trim() !== "");
-    
-    dialogueQueue = lines.map(line => {
-        return { text: line, emotion: 'happy' }; 
-    });
+    if (data.script) {
+        dialogueQueue = data.script;
+    } else {
+        const lines = data.text.split('\n').filter(line => line.trim() !== "");
+        dialogueQueue = lines.map(line => {
+            return { text: line, emotion: 'happy' };
+        });
+    }
 
     currentDialogueIndex = 0;
-    showNextLine(lastInteractedNPC);
+    
+    // 엔딩이므로 초상화가 필요 없을 수도 있지만, 필요하면 npcKey를 넘김
+    showNextLine(lastInteractedNPC || 'sion'); // npcKey가 null일 경우 대비
 }
 
 function showFinalPopup() {
@@ -1144,5 +1149,6 @@ function endEvent() {
         if (fadeOverlay) fadeOverlay.classList.remove('visible');
     }, 1000);
 }
+
 
 
