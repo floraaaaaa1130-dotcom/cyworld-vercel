@@ -598,7 +598,7 @@ function showNextLine(npcKey) {
     }
    
     const textZone = document.getElementById('dialogue-text');
-    let textContent = data.text.replace(/{user}/g, gameState.playerName);
+    let textContent = resolveJosa(data.text);
     typeWriter(textContent, textZone);
 }
 
@@ -1145,6 +1145,45 @@ function endEvent() {
     }, 1000);
 }
 
+/* ==========================================================================
+   [추가] 한국어 조사 자동 처리 함수 (Josa Resolver)
+   ========================================================================== */
+function resolveJosa(text) {
+    // 1. 먼저 {user}를 플레이어 이름으로 바꿉니다.
+    let result = text.replace(/{user}/g, gameState.playerName);
+
+    // 2. 변경해야 할 조사 패턴 정의 (괄호 문법 사용)
+    // (이)가, (을)를, (은)는, (와)과
+    const patterns = [
+        { marker: '(이)가', has: '이', no: '가' },
+        { marker: '(을)를', has: '을', no: '를' },
+        { marker: '(은)는', has: '은', no: '는' },
+        { marker: '(와)과', has: '과', no: '와' },
+        { marker: '(이)여', has: '이어', no: '여' } // "용사(이)여" 같은 호격
+    ];
+
+    patterns.forEach(p => {
+        // "글자" + "조사패턴" 형태를 찾습니다.
+        // 예: "길동(이)가" -> match: "동(이)가", prevChar: "동"
+        const regex = new RegExp(`(.)\\${p.marker}`, 'g');
+        
+        result = result.replace(regex, (match, prevChar) => {
+            // 한글 유니코드 범위: AC00 ~ D7A3
+            const charCode = prevChar.charCodeAt(0);
+            const isKorean = (charCode >= 0xAC00 && charCode <= 0xD7A3);
+
+            // 한글이 아니면(영어, 숫자 등) 기본값(받침 없는 쪽)으로 처리
+            if (!isKorean) return prevChar + p.no;
+
+            // 받침 유무 확인 ((문자코드 - 0xAC00) % 28 이 0이 아니면 받침 있음)
+            const hasBatchim = (charCode - 0xAC00) % 28 !== 0;
+
+            return prevChar + (hasBatchim ? p.has : p.no);
+        });
+    });
+
+    return result;
+}
 
 
 
