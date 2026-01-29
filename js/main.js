@@ -673,7 +673,7 @@ function finishTyping() {
     }
 }
 
-/* js/main.js 파일의 renderChoices 함수를 이걸로 덮어쓰세요 */
+/* main.js 파일의 renderChoices 함수를 이걸로 덮어쓰세요 */
 function renderChoices(choices) {
     const choiceArea = document.getElementById('choice-area');
     choiceArea.innerHTML = "";
@@ -686,21 +686,40 @@ function renderChoices(choices) {
         
         btn.onclick = (e) => {
             e.stopPropagation();
+            
+            // 점수 반영
             if (choice.score) gameState.affinities[lastInteractedNPC] += choice.score;
             
-            // ★ [수정됨] reply가 배열(여러 줄)이면 나눠서 보여주고, 아니면 한 줄로 처리
+            let newQueue = [];
+
+            // ★ [수정 핵심] 데이터 타입에 따라 다르게 처리
             if (Array.isArray(choice.reply)) {
-                dialogueQueue = choice.reply.map(line => ({
-                    text: line,
-                    emotion: choice.score > 0 ? "happy" : "shock" // 감정은 일단 통일 (필요하면 데이터 구조 변경 필요)
-                }));
+                // 배열인 경우 (여러 줄 대사)
+                newQueue = choice.reply.map(line => {
+                    // 이미 {text: "...", emotion: "..."} 형태라면 그대로 사용
+                    if (typeof line === 'object' && line.text) {
+                        return line;
+                    }
+                    // 단순 문자열 "안녕" 형태라면 객체로 변환
+                    return {
+                        text: line,
+                        emotion: choice.score > 0 ? "happy" : "shock"
+                    };
+                });
             } else {
-                dialogueQueue = [{ 
-                    text: choice.reply, 
-                    emotion: choice.score > 0 ? "happy" : "shock" 
-                }]; 
+                // 단일 대사인 경우
+                if (typeof choice.reply === 'object' && choice.reply.text) {
+                    newQueue = [choice.reply];
+                } else {
+                    newQueue = [{ 
+                        text: choice.reply, 
+                        emotion: choice.score > 0 ? "happy" : "shock" 
+                    }]; 
+                }
             }
 
+            // 대사 큐 교체 및 진행
+            dialogueQueue = newQueue;
             currentDialogueIndex = 0;
             choiceArea.classList.add('hidden');
             showNextLine(lastInteractedNPC);
@@ -708,7 +727,6 @@ function renderChoices(choices) {
         choiceArea.appendChild(btn);
     });
 }
-
 function checkKeywordAnswer(currentData) {
     const inputVal = document.getElementById('keyword-input').value.trim();
     if (!inputVal) return; 
@@ -1149,6 +1167,7 @@ function endEvent() {
         if (fadeOverlay) fadeOverlay.classList.remove('visible');
     }, 1000);
 }
+
 
 
 
