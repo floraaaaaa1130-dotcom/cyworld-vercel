@@ -2185,8 +2185,8 @@ const itemData = {
     "외계인 인형": { img: "assets/images/items/doll.png", desc: "왹.." }, //ㅎㅇ
     "만년필": { img: "assets/images/items/pen.png", desc: "누군가의 만년필" }, //ㅎㅇ
     "푸딩": { img: "assets/images/items/pudding.png", desc: "카라멜 시럽이 없는 커스터드 푸딩" }, //ㅎㅇ
-    "아이스크림": { img: "assets/images/items/Clay.png", desc: "세가지 맛의 아이스크림 콘" }, //ㅎㅇ
-    "스타푸르트": { img: "assets/images/items/Ice.png", desc: "별 모양의 과일" }, //ㅎㅇ
+    "아이스크림": { img: "assets/images/items/Ice.png", desc: "세가지 맛의 아이스크림 콘" }, //ㅎㅇ
+    "스타푸르트": { img: "assets/images/items/Starfruit.png", desc: "별 모양의 과일" }, //ㅎㅇ
     "스타드롭커피": { img: "assets/images/items/stardropcoffee.png", desc: "커피가 상큼할 수 있다니" }, //ㅎㅇ
     "리모컨": { img: "assets/images/items/Remote.png", desc: "음...?" }, //ㅎㅇ
     "꽃다발": { img: "assets/images/items/Bouquet.png", desc: "받으면 행복할 것 같다" }, //ㅎㅇ
@@ -2421,4 +2421,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
