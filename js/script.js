@@ -1947,6 +1947,130 @@ const affinityEvents = {
         {
             id: "sion_event_30", // 이벤트 고유 ID
             threshold: 30,       // 발동 조건 호감도
+            bg: "assets/images/backgrounds/hall.png", // 이벤트 배경 (원하는 이미지 경로)
+            script: [
+                { text: "(마을회관 사무실. 책상 위에 서류가 산더미처럼 쌓여있다.)", emotion: "default" },
+                { text: "아... 숫자가 왜 안 맞지... 분명 세 번 검토했는데.", emotion: "happy" },
+                { text: "당 떨어져... 머리가 안 돌아가...", emotion: "default" },
+                { text: "(다가가자 시온이 화들짝 놀라며 일어난다.)", emotion: "happy" },
+                { text: "...아, {user}? 무슨 일로 오셨어요?",
+                    choices: [
+                        {
+                            label: "(쫀득쿠키를 건넨다.)",
+                            score: 5, // 호감도 증가
+                            // 선택 후 이어지는 대사 (배열로 작성)
+                            reply: [
+                                { text: "어? 이거... 저 주시는 거예요? 와, 진짜... 센스쟁이", emotion: "happy" },
+                                { text: "마침 커피 내리려고 했는데 같이 드실래요? 제가 또 커피는 기가 막히게 타거든요.", emotion: "default" }
+                            ]
+                        },
+                        {
+                            label: "일이 많이 힘든가 봐요.",
+                            score: 0,
+                            reply: [
+                                { text: "아... 힘든 건 아닌데 완벽하게 하려고 하니까 일이 자꾸 밀리네요...", emotion: "sad" },
+                                { text: "마침 커피 내리려고 했는데 같이 드실래요? 제가 또 커피는 기가 막히게 타거든요.", emotion: "default" }
+                            ]
+                        },
+                        {
+                            label: "열심히 하는 모습이 멋있어요. 그래도 쉬엄쉬엄해요.",
+                            score: 3,
+                            reply: [
+                                { text: "...고마워요. 그렇게 말해주니까 힘이 좀 나네요. ", emotion: "sad" },
+                                { text: "그럼 말씀대로 오늘은 이만 정리하고 퇴근해야겠어요. ", emotion: "default" },
+                                { text: "(시온은 자리에서 일어나 기지개를 켠다. 당신을 보는 눈빛이 전보다 한결 편안해 보인다.)", emotion: "sad" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+
+        {
+            id: "sion_event_50", 
+            threshold: 50,      
+            bg: "assets/images/backgrounds/square.png", // 이벤트 배경 (원하는 이미지 경로)
+            script: [
+                { text: "(노을이 지기 시작하는 마을 광장 구석. 시온이 벽에다 테니스 공을 던지고 받고 있다.)", emotion: "default" },
+                { text: "좋아, 이번엔 코너웍 제대로...", emotion: "happy" },
+                { text: "얍!", emotion: "default" },
+                { text: "(공이 빗나가서 당신의 발밑으로 굴러온다.)", emotion: "happy" },
+                { text: "앗. ...어? {user}?",
+                { text: "아 방금... 못 본 걸로 해주세요. 폼 진짜 엉성했는데...", emotion: "happy" },
+                { text: "네? 멋있었다고요? 빈말도 잘하시네요ㅋㅋ", emotion: "default" },
+                { text: "...전 야구가 좋아요. 던진 만큼 결과가 나오잖아요.", emotion: "happy" },
+                { text: "물론 운도 필요하지만 기본적으론 땀 흘린 만큼 돌아오니까.", emotion: "default" },
+                { text: "저도 그런 사람이 되고 싶거든요. 요행 바라지 않고 묵묵히 제 몫을 해내는 사람.",
+                    choices: [
+                        {
+                            label: "이미 그런 사람 같은데요?",
+                            score: 0,
+                            reply: [
+                                { text: "ㅎㅎ아직 멀었어요. 그래도 그렇게 말해주니 힘이 좀 나네요.", emotion: "happy" },
+                                { text: "...그거 알아요? 저 원래 낯 진짜 많이 가리는데.", emotion: "happy" },
+                                { text: "{user}랑은 벌써 이만큼 편하게 말할 수 있다는 게... 좀 신기해요.", emotion: "happy" }
+                            ]
+                        },
+                        {
+                            label: "나랑 캐치볼 한 판 할래요?",
+                            score: 5,
+                            reply: [
+                                { text: "진짜요? 저 꽤 진심으로 던질 건데 받을 수 있겠어요?", emotion: "sad" },
+                                { text: "농담이고 ㅎㅎ 살살 할게요. 이리 와요!", emotion: "default" },
+                                { text: "(잠시 후, 둘은 나란히 벤치에 앉아 물을 마신다.)", emotion: "default" },
+                                { text: "...그거 알아요? 저 원래 낯 진짜 많이 가리는데.", emotion: "happy" },
+                                { text: "{user}랑은 벌써 이만큼 편하게 말할 수 있다는 게... 좀 신기해요.", emotion: "happy" }
+                            ]
+                        },
+                        {
+                            label: "야구 잘 모르는데 시온 씨가 좋아하니까 관심 가네요.",
+                            score: 3,
+                            reply: [
+                                { text: "진짜요? 나중에 제가 직관 데려가 줄게요. 직접 보면 룰은 금방 배울 수 있을 거예요.", emotion: "sad" },
+                                { text: "...그거 알아요? 저 원래 낯 진짜 많이 가리는데.", emotion: "happy" },
+                                { text: "{user}랑은 벌써 이만큼 편하게 말할 수 있다는 게... 좀 신기해요.", emotion: "happy" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+
+        {
+            id: "sion_event_70", 
+            threshold: 70,       
+            bg: "assets/images/backgrounds/hall.png", // 이벤트 배경 (원하는 이미지 경로)
+            script: [
+                { text: "(고소한 원두 향기를 따라와보니 시온이 진지한 표정으로 커피를 내리고 있다. )", emotion: "default" },
+                { text: "어, 타이밍 기가 막히네요. 지금 막 추출 끝났는데.", emotion: "happy" },
+                { text: "한 잔 드실래요? 산미는 적고 고소한 원두예요. 좋아하실지 모르겠네.", emotion: "default" },
+                { text: "(시온이 예쁜 찻잔에 김이 모락모락 나는 커피를 따라 당신 앞에 놓아준다.)", emotion: "happy" },
+                { text: "...요즘 그런 생각이 들어요.", emotion: "happy" },
+                { text: "매일 반복되는 일상이 좀 지루했거든요.", emotion: "happy" },
+                { text: "근데 {user}(이)가 마을에 오고 나서는, 내일은 또 무슨 일이 생길까 기대가 돼요.", emotion: "happy" },
+                { text: "어때요? ...맛있어요?", emotion: "happy" },
+                { text: "다행이다. 앞으로 커피 마시고 싶으면 언제든 와요.", emotion: "happy" },
+                { text: "멀리 나갈 필요 없게 제가 {user} 전용 바리스타 할게요 ㅎㅎ", emotion: "happy" }
+            ]
+        }
+    ],
+    
+    riku: [
+        {
+            id: "riku_event_50",
+            threshold: 50,
+            bg: "assets/images/backgrounds/shop.png",
+            script: [
+                { text: "누나! 이거 봐바여! 리쿠가 아꼈던 사탕인데 누나 줄게여!", emotion: "happy" },
+                { text: "(리쿠의 소중한 사탕을 받았다...)", emotion: "default" }
+            ]
+        }
+    ],
+    
+    yushi: [
+        {
+            id: "sion_event_30", // 이벤트 고유 ID
+            threshold: 30,       // 발동 조건 호감도
             bg: "assets/images/backgrounds/forest.png", // 이벤트 배경 (원하는 이미지 경로)
             script: [
                 { text: "(시온이 숲속에서 혼자 무언가를 보고 있다.)", emotion: "default" },
@@ -1956,14 +2080,45 @@ const affinityEvents = {
             ]
         }
     ],
-    riku: [
+
+    jaehee: [
         {
-            id: "riku_event_50",
-            threshold: 50,
-            bg: "assets/images/backgrounds/shop.png",
+            id: "sion_event_30", // 이벤트 고유 ID
+            threshold: 30,       // 발동 조건 호감도
+            bg: "assets/images/backgrounds/forest.png", // 이벤트 배경 (원하는 이미지 경로)
             script: [
-                { text: "누나! 이거 봐바여! 리쿠가 아꼈던 사탕인데 누나 줄게여!", emotion: "happy" },
-                { text: "(리쿠의 소중한 사탕을 받았다...)", emotion: "default" }
+                { text: "(시온이 숲속에서 혼자 무언가를 보고 있다.)", emotion: "default" },
+                { text: "아, 농장주님. 오셨군요.", emotion: "happy" },
+                { text: "사실 여기서만 보이는 희귀한 꽃을 찾고 있었어요.", emotion: "default" },
+                { text: "당신에게 보여주고 싶었거든요.", emotion: "happy" }
+            ]
+        }
+    ],
+
+    ryo: [
+        {
+            id: "sion_event_30", // 이벤트 고유 ID
+            threshold: 30,       // 발동 조건 호감도
+            bg: "assets/images/backgrounds/forest.png", // 이벤트 배경 (원하는 이미지 경로)
+            script: [
+                { text: "(시온이 숲속에서 혼자 무언가를 보고 있다.)", emotion: "default" },
+                { text: "아, 농장주님. 오셨군요.", emotion: "happy" },
+                { text: "사실 여기서만 보이는 희귀한 꽃을 찾고 있었어요.", emotion: "default" },
+                { text: "당신에게 보여주고 싶었거든요.", emotion: "happy" }
+            ]
+        }
+    ],
+
+    sakuya: [
+        {
+            id: "sion_event_30", // 이벤트 고유 ID
+            threshold: 30,       // 발동 조건 호감도
+            bg: "assets/images/backgrounds/forest.png", // 이벤트 배경 (원하는 이미지 경로)
+            script: [
+                { text: "(시온이 숲속에서 혼자 무언가를 보고 있다.)", emotion: "default" },
+                { text: "아, 농장주님. 오셨군요.", emotion: "happy" },
+                { text: "사실 여기서만 보이는 희귀한 꽃을 찾고 있었어요.", emotion: "default" },
+                { text: "당신에게 보여주고 싶었거든요.", emotion: "happy" }
             ]
         }
     ]
@@ -2266,42 +2421,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
