@@ -1995,7 +1995,7 @@ const affinityEvents = {
                 { text: "좋아, 이번엔 코너웍 제대로...", emotion: "happy" },
                 { text: "얍!", emotion: "default" },
                 { text: "(공이 빗나가서 당신의 발밑으로 굴러온다.)", emotion: "happy" },
-                { text: "앗. ...어? {user}?",
+                { text: "앗. ...어? {user}?", },
                 { text: "아 방금... 못 본 걸로 해주세요. 폼 진짜 엉성했는데...", emotion: "happy" },
                 { text: "네? 멋있었다고요? 빈말도 잘하시네요ㅋㅋ", emotion: "default" },
                 { text: "...전 야구가 좋아요. 던진 만큼 결과가 나오잖아요.", emotion: "happy" },
@@ -2041,7 +2041,7 @@ const affinityEvents = {
             threshold: 70,       
             bg: "assets/images/backgrounds/hall.png", // 이벤트 배경 (원하는 이미지 경로)
             script: [
-                { text: "(고소한 원두 향기를 따라와보니 시온이 진지한 표정으로 커피를 내리고 있다. )", emotion: "default" },
+                { text: "(고소한 원두 향기를 따라와보니 시온이 진지한 표정으로 커피를 내리고 있다.)", emotion: "default" },
                 { text: "어, 타이밍 기가 막히네요. 지금 막 추출 끝났는데.", emotion: "happy" },
                 { text: "한 잔 드실래요? 산미는 적고 고소한 원두예요. 좋아하실지 모르겠네.", emotion: "default" },
                 { text: "(시온이 예쁜 찻잔에 김이 모락모락 나는 커피를 따라 당신 앞에 놓아준다.)", emotion: "happy" },
@@ -2421,3 +2421,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
